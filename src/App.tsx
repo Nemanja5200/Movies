@@ -31,13 +31,13 @@ function App() {
             <div key={movie.id}>
               <h3>{movie.title}</h3>
               <p>{movie.overview}</p>
-              {movie.poster && (
+              {movie.poster? (
                   <img
                       src={`https://image.tmdb.org/t/p/w300${movie.poster}`}
                       alt={movie.title}
                       style={{ width: '200px' }}
                   />
-              )}
+              ):null}
             </div>
         ))}
       </div>
