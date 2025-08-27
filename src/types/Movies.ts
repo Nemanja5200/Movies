@@ -1,20 +1,15 @@
-
-
-export  interface Movie {
-    id:number,
-    overview:string,
-    poster:string | null,
-    title:string,
-
+export interface Movie {
+    id: number;
+    overview: string;
+    poster: string | null;
+    title: string;
 }
-
 
 export interface MoviesResponse {
     results: Movie[];
     total_pages: number;
     page: number;
 }
-
 
 export interface RawMovie {
     id: number;
@@ -32,7 +27,6 @@ export interface RawMovie {
     popularity: number;
     video: boolean;
 }
-
 
 export interface RawTMDBResponse {
     page: number;
