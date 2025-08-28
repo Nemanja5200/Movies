@@ -10,5 +10,4 @@ export const tmdbService = {
 
         return ParseMoviesResponse(response.data);
     },
-
 };
