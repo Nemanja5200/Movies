@@ -26,7 +26,7 @@ function App() {
         <>
             <GlobalStyles />
             <Header />
-            <Home movies={movies[0]} />
+            <Home movies={movies} />
         </>
     );
 }
