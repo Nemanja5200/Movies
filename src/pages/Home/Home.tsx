@@ -1,23 +1,15 @@
 import { FC } from 'react';
-import { Movie } from '@/types/Movies.ts';
-import { Card } from '@/components/Card';
-import { CardsContainerStyle } from '@/pages/Home/styles/CardsContainer.style.ts';
+import {  useSuspenseQuery } from '@tanstack/react-query';
+import { gotNowPlayingMoviesOptions } from '@/queryOptions/gotNowPlayingMoviesOptions.ts';
 
-interface HomeProps {
-    movies: Movie[];
-}
-
-
-export const Home: FC<HomeProps> = ({ movies }) => {
-
+export const Home: FC = () => {
+    const {data,isPending} = useSuspenseQuery(gotNowPlayingMoviesOptions())
+    const movies = data.results.slice(0, 10);
 
     return (
         <>
-            <CardsContainerStyle>
-                {movies.map(item =>
-                    item.title ? <Card key={item.id || item.title} {...item} /> : null
-                )}
-            </CardsContainerStyle>
+
+
         </>
     );
 };

@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 
-
 export const CardsContainerStyle = styled.div`
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 20px;
+    grid-gap: 3em 0.5em;
     width: 100%;
     max-width: 1500px;
     margin: 50px auto;
@@ -14,16 +13,15 @@ export const CardsContainerStyle = styled.div`
 
     place-items: center;
 
-    @media (max-width: 1024px) {
-        grid-template-columns: repeat(3, 1fr); 
+    @media (max-width: 1130px) {
+        grid-template-columns: repeat(3, 1fr);
     }
 
     @media (max-width: 768px) {
         grid-template-columns: repeat(1, 1fr);
-        
     }
 
     @media (max-width: 480px) {
-        grid-template-columns: 1fr; 
+        grid-template-columns: 1fr;
     }
 `;
