@@ -3,7 +3,8 @@ import styled from 'styled-components';
 export const TableContainerStyle = styled.div`
     width: 100%;
     max-width: 2000px;
-    margin: 50px auto;
+    margin: 0px auto;
+    margin-top: 70px;
     padding: 20px;
 
     display: flex;

@@ -1,18 +1,25 @@
 import { FC } from 'react';
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { gotNowPlayingMoviesOptions } from '@/queryOptions/gotNowPlayingMoviesOptions.ts';
 import { Table } from '@/components/Table';
 import { TableContainerStyle } from '@/pages/Home/styles/TableContainer.style.ts';
+import { Pagination } from '@/components/Pagination/Pagination.tsx';
+import { usePagination } from '@/hooks/usePagination.tsx';
 
 export const Home: FC = () => {
-    const { data } = useSuspenseQuery(gotNowPlayingMoviesOptions());
-    const movies = data.results.slice(0, 5);
+
+    const {movies, currentPage,totalPages,hasNext,hasPrev, goToPage} = usePagination(4)
 
     return (
         <>
             <TableContainerStyle>
                 <Table movies={movies} />
             </TableContainerStyle>
+            <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={goToPage}
+            hasNext={hasNext}
+            hasPrev={hasPrev}
+            />
         </>
     );
 };
