@@ -5,8 +5,8 @@ import { Pagination } from '@/components/Pagination/Pagination.tsx';
 import { usePagination } from '@/hooks/usePagination.tsx';
 
 export const Home: FC = () => {
-
-    const {movies, currentPage,totalPages,hasNext,hasPrev, goToPage} = usePagination(4)
+    const { movies, currentPage, totalPages, hasNext, hasPrev, goToPage } =
+        usePagination(20);
 
     return (
         <>
@@ -14,11 +14,11 @@ export const Home: FC = () => {
                 <Table movies={movies} />
             </TableContainerStyle>
             <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={goToPage}
-            hasNext={hasNext}
-            hasPrev={hasPrev}
+                currentPage={currentPage}
+                totalPages={totalPages}
+                hasNext={hasNext}
+                hasPrev={hasPrev}
+                onPageChange={goToPage}
             />
         </>
     );

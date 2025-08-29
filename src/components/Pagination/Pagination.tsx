@@ -1,5 +1,8 @@
 import { FC } from 'react';
-import { PaginationButton, PaginationContainer } from '@/components/Pagination/styles/Pagination.style.ts';
+import {
+    PaginationButton,
+    PaginationContainer,
+} from '@/components/Pagination/styles/Pagination.style.ts';
 
 interface PaginationProps {
     currentPage: number;
@@ -9,27 +12,51 @@ interface PaginationProps {
     hasPrev: boolean;
 }
 
-export const Pagination: FC<PaginationProps> = () => {
-  return (
-    <>
+export const Pagination: FC<PaginationProps> = ({
+    currentPage,
+    totalPages,
+    onPageChange,
+    hasNext,
+    hasPrev,
+}) => {
+    return (
+        <>
+        {/* First Page */}
         <PaginationContainer>
-          <PaginationButton>
-              {'<<'}
-          </PaginationButton>
-            <PaginationButton>
+            <PaginationButton
+                onClick={() => onPageChange(1)}
+                disabled={!hasPrev}
+            >
+                {'<<'}
+            </PaginationButton>
+
+            {/* Previus Page */}
+            <PaginationButton
+                onClick={() => onPageChange(currentPage - 1)}
+                disabled={!hasPrev}
+            >
                 {'<'}
             </PaginationButton>
-            <PaginationButton>
+
+            <PaginationButton>{currentPage}</PaginationButton>
+
+            {/* Next Page */}
+            <PaginationButton
+                onClick={() => onPageChange(currentPage + 1)}
+                disabled={!hasNext}
+            >
                 {'>'}
             </PaginationButton>
-            <PaginationButton>
+
+            {/* Last Page */}
+            <PaginationButton
+                onClick={() => onPageChange(totalPages)}
+                disabled={!hasNext}
+            >
                 {'>>'}
             </PaginationButton>
         </PaginationContainer>
 
-    </>
-  );
+        </>
+    );
 };
-
-
-
