@@ -1,12 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSuspenseQuery } from '@tanstack/react-query';
+import { useSearchParams } from 'react-router-dom';
 import { gotNowPlayingMoviesOptions } from '@/queryOptions/gotNowPlayingMoviesOptions.ts';
 
 export const usePagination = (
     items: number,
     storageKey = 'pagination-current-page'
 ) => {
-    const [currentPage, setCurrentPage] = useState(() => {
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const getInitialPage = () => {
+        const urlPage = searchParams.get('page');
+        if (urlPage) {
+            const parsed = parseInt(urlPage, 10);
+            if (parsed > 0) return parsed;
+        }
+
         if (typeof window !== 'undefined') {
             const saved = localStorage.getItem(storageKey);
             if (saved) {
@@ -14,8 +23,35 @@ export const usePagination = (
                 return parsedPage > 0 ? parsedPage : 1;
             }
         }
+
         return 1;
-    });
+    };
+
+    const [currentPage, setCurrentPage] = useState(getInitialPage());
+    useEffect(() => {
+        const urlPage = searchParams.get('page');
+        const urlPageNum = urlPage ? parseInt(urlPage, 10) : null;
+
+        if (urlPageNum !== currentPage) {
+            const newSearchParams = new URLSearchParams(searchParams);
+            if (currentPage === 1) {
+                newSearchParams.delete('page');
+            } else {
+                newSearchParams.set('page', currentPage.toString());
+            }
+
+            setSearchParams(newSearchParams);
+        }
+    }, [currentPage, searchParams, setSearchParams]);
+
+    useEffect(() => {
+        const urlPage = searchParams.get('page');
+        const urlPageNum = urlPage ? parseInt(urlPage, 10) : 1;
+
+        if (urlPageNum !== currentPage && urlPageNum > 0) {
+            setCurrentPage(urlPageNum);
+        }
+    }, [searchParams]);
 
     const { data } = useSuspenseQuery(gotNowPlayingMoviesOptions(currentPage));
 
@@ -26,39 +62,28 @@ export const usePagination = (
 
     const currentMovies = allMovies;
 
-    const goToPage = (page: number) => {
-        const newPage = Math.max(1, Math.min(totalPages, page));
-        setCurrentPage(newPage);
+    const updatePage = (newPage: number) => {
+        const validPage = Math.max(1, Math.min(totalPages, newPage));
+        setCurrentPage(validPage);
 
         if (typeof window !== 'undefined') {
-            localStorage.setItem(storageKey, newPage.toString());
+            localStorage.setItem(storageKey, validPage.toString());
         }
+    };
+
+    const goToPage = (page: number) => {
+        updatePage(page);
     };
 
     const nextPage = () => {
         if (hasNext) {
-            setCurrentPage(prevState => {
-                const newPage = prevState + 1;
-
-                if (typeof window !== 'undefined') {
-                    localStorage.setItem(storageKey, newPage.toString());
-                }
-                return newPage;
-            });
+            updatePage(currentPage + 1);
         }
     };
 
     const prevPage = () => {
         if (hasPrev) {
-            setCurrentPage(prevState => {
-                const newPage = prevState - 1;
-
-                if (typeof window !== 'undefined') {
-                    localStorage.setItem(storageKey, newPage.toString());
-                }
-
-                return newPage;
-            });
+            updatePage(currentPage - 1);
         }
     };
 
