@@ -1,91 +1,75 @@
-import { useEffect, useState } from 'react';
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { useSearchParams } from 'react-router-dom';
+// hooks/usePagination.ts (Ultra clean version)
+import { QueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { gotNowPlayingMoviesOptions } from '@/queryOptions/gotNowPlayingMoviesOptions.ts';
+import { useUrlState } from './useUrlState';
 
-export const usePagination = (
-    items: number,
-    storageKey = 'pagination-current-page'
-) => {
-    const [searchParams, setSearchParams] = useSearchParams();
-
-    const getInitialPage = () => {
-        const urlPage = searchParams.get('page');
-        if (urlPage) {
-            const parsed = parseInt(urlPage, 10);
-            if (parsed > 0) return parsed;
-        }
-
-        if (typeof window !== 'undefined') {
-            const saved = localStorage.getItem(storageKey);
-            if (saved) {
-                const parsedPage = parseInt(saved, 10);
-                return parsedPage > 0 ? parsedPage : 1;
-            }
-        }
-
-        return 1;
-    };
-
-    const [currentPage, setCurrentPage] = useState(getInitialPage());
-    useEffect(() => {
-        const urlPage = searchParams.get('page');
-        const urlPageNum = urlPage ? parseInt(urlPage, 10) : null;
-
-        if (urlPageNum !== currentPage) {
-            const newSearchParams = new URLSearchParams(searchParams);
-            if (currentPage === 1) {
-                newSearchParams.delete('page');
-            } else {
-                newSearchParams.set('page', currentPage.toString());
-            }
-
-            setSearchParams(newSearchParams);
-        }
-    }, [currentPage, searchParams, setSearchParams]);
-
-    useEffect(() => {
-        const urlPage = searchParams.get('page');
-        const urlPageNum = urlPage ? parseInt(urlPage, 10) : 1;
-
-        if (urlPageNum !== currentPage && urlPageNum > 0) {
-            setCurrentPage(urlPageNum);
-        }
-    }, [searchParams]);
+export const usePagination = (storageKey = 'pagination-current-page') => {
+    const [currentPage, updateValue, clearCurrentPage] = useUrlState({
+        storageKey,
+        defaultValue: 1,
+        paramName: 'page'
+    });
 
     const { data } = useSuspenseQuery(gotNowPlayingMoviesOptions(currentPage));
+    const queryClient = new QueryClient();
 
     const allMovies = data.results;
-
     const totalPages = data.total_pages;
     const apiCurrentPage = data.page;
-
     const currentMovies = allMovies;
 
     const updatePage = (newPage: number) => {
         const validPage = Math.max(1, Math.min(totalPages, newPage));
-        setCurrentPage(validPage);
-
-        if (typeof window !== 'undefined') {
-            localStorage.setItem(storageKey, validPage.toString());
-        }
+        updateValue(validPage);
     };
 
-    const goToPage = (page: number) => {
-        updatePage(page);
-    };
+    const goToPage = (page: number) => updatePage(page);
+    const nextPage = () => hasNext && updatePage(currentPage + 1);
+    const prevPage = () => hasPrev && updatePage(currentPage - 1);
 
-    const nextPage = () => {
+    const prefetchNextPage = async () => {
         if (hasNext) {
-            updatePage(currentPage + 1);
+            try {
+                await queryClient.prefetchQuery(
+                    gotNowPlayingMoviesOptions(currentPage + 1)
+                );
+            } catch (error) {
+                console.error('Prefetch failed', error);
+            }
         }
     };
 
-    const prevPage = () => {
-        if (hasPrev) {
-            updatePage(currentPage - 1);
+
+    const prefetchLastPage = async () => {
+            try {
+                await queryClient.prefetchQuery(
+                    gotNowPlayingMoviesOptions(totalPages)
+                );
+            } catch (error) {
+                console.error('Prefetch failed', error);
+            }
+    };
+
+
+    const prefetchPrevPage = async () => {
+        const prevPage = currentPage - 1;
+
+        if (prevPage < 1) return;
+
+        const queryKey = gotNowPlayingMoviesOptions(prevPage).queryKey;
+
+        const isCached = queryClient.getQueryData(queryKey);
+
+        if (!isCached) {
+            try {
+                await queryClient.prefetchQuery(gotNowPlayingMoviesOptions(prevPage));
+            } catch (error) {
+                console.error('Prefetch prev page failed', error);
+            }
         }
     };
+
+
 
     const hasNext = currentPage < totalPages;
     const hasPrev = currentPage > 1;
@@ -93,23 +77,19 @@ export const usePagination = (
     return {
         movies: currentMovies,
         allMovies,
-
         currentPage,
         totalPages,
         apiCurrentPage,
-
         goToPage,
         nextPage,
         prevPage,
-
+        prefetchNextPage,
+        prefetchLastPage,
+        prefetchPrevPage,
         hasNext,
         hasPrev,
-
         clearSavedPage: () => {
-            if (typeof window !== 'undefined') {
-                localStorage.removeItem(storageKey);
-            }
-            setCurrentPage(1);
-        },
+            clearCurrentPage();
+        }
     };
 };
