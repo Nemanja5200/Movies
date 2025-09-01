@@ -11,21 +11,18 @@ export const SearchBar: FC = () => {
 
     const handleSearch = () => {
         console.log('Searching for:', searchTerm);
-
     };
 
     return (
         <SearchBarContainerStyle>
             <SearchWrapper>
+                <SearchButton>🔍</SearchButton>
                 <SearchInput
                     type="text"
                     placeholder="Search movies..."
                     value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onChange={e => setSearchTerm(e.target.value)}
                 />
-                <SearchButton onClick={handleSearch}>
-                    🔍
-                </SearchButton>
             </SearchWrapper>
         </SearchBarContainerStyle>
     );

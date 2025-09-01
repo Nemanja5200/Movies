@@ -21,11 +21,9 @@ export const Home: FC = () => {
     } = usePagination();
 
     return (
-        <>
-            <HomeContainerStyle>
-
+        <HomeContainerStyle>
             <TableContainerStyle>
-                <SearchBar/>
+                <SearchBar />
                 <Table movies={movies} />
             </TableContainerStyle>
             <Pagination
@@ -39,7 +37,6 @@ export const Home: FC = () => {
                 hasPrev={hasPrev}
                 onPageChange={goToPage}
             />
-            </HomeContainerStyle>
-        </>
+        </HomeContainerStyle>
     );
 };
