@@ -4,16 +4,19 @@ import { gotNowPlayingMoviesOptions } from '@/queryOptions/gotNowPlayingMoviesOp
 
 export const usePagination = (items: number) => {
     const [currentPage, setCurrentPage] = useState(1);
-    const [maxPagesLoad,setMaxPagesLoad] = useState(1)
 
-    const { data } = useSuspenseQuery(gotNowPlayingMoviesOptions());
+
+    const { data } = useSuspenseQuery(gotNowPlayingMoviesOptions(currentPage));
+
+
     const allMovies = data.results;
 
-    const totalPages = Math.ceil(allMovies.length / items);
 
-    const startIndex = (currentPage - 1) * items;
-    const endIndex = startIndex + items;
-    const currentMovies = allMovies.slice(startIndex, endIndex);
+    const totalPages = data.total_pages;
+    const apiCurrentPage = data.page;
+
+
+    const currentMovies = allMovies;
 
     const goToPage = (page: number) => {
         setCurrentPage(Math.max(1, Math.min(totalPages, page)));
@@ -40,6 +43,7 @@ export const usePagination = (items: number) => {
 
         currentPage,
         totalPages,
+        apiCurrentPage,
 
         goToPage,
         nextPage,
