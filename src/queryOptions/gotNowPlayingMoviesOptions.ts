@@ -6,24 +6,24 @@ export const gotNowPlayingMoviesOptions = (page: number) => {
         queryKey: ['now-playing', page],
         queryFn: () => tmdbService.gotNowPlayingMovies(page),
 
-
         staleTime: 5 * 60 * 1000,
         gcTime: 10 * 60 * 1000,
         refetchOnWindowFocus: false,
     });
 };
 
-
-export const gotNowPlayingInfinityMoviesOptions = ()=>{
+export const gotNowPlayingInfinityMoviesOptions = () => {
     return infiniteQueryOptions({
         queryKey: ['now-playing'],
-        queryFn: ({pageParam}) => tmdbService.gotNowPlayingMovies(pageParam),
+        queryFn: ({ pageParam }) => tmdbService.gotNowPlayingMovies(pageParam),
         initialPageParam: 1,
         getNextPageParam: lastPage => {
-            return lastPage.page !== lastPage.total_pages? lastPage.page +1: undefined
+            return lastPage.page !== lastPage.total_pages
+                ? lastPage.page + 1
+                : undefined;
         },
         getPreviousPageParam: firstPage => {
-            return firstPage.page !== 1? firstPage.page -1: undefined
-        }
-        })
-}
+            return firstPage.page !== 1 ? firstPage.page - 1 : undefined;
+        },
+    });
+};

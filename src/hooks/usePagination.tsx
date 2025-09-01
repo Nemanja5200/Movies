@@ -7,7 +7,7 @@ export const usePagination = (storageKey = 'pagination-current-page') => {
     const [currentPage, updateValue, clearCurrentPage] = useUrlState({
         storageKey,
         defaultValue: 1,
-        paramName: 'page'
+        paramName: 'page',
     });
 
     const { data } = useSuspenseQuery(gotNowPlayingMoviesOptions(currentPage));
@@ -39,17 +39,15 @@ export const usePagination = (storageKey = 'pagination-current-page') => {
         }
     };
 
-
     const prefetchLastPage = async () => {
-            try {
-                await queryClient.prefetchQuery(
-                    gotNowPlayingMoviesOptions(totalPages)
-                );
-            } catch (error) {
-                console.error('Prefetch failed', error);
-            }
+        try {
+            await queryClient.prefetchQuery(
+                gotNowPlayingMoviesOptions(totalPages)
+            );
+        } catch (error) {
+            console.error('Prefetch failed', error);
+        }
     };
-
 
     const prefetchPrevPage = async () => {
         const prevPage = currentPage - 1;
@@ -62,14 +60,14 @@ export const usePagination = (storageKey = 'pagination-current-page') => {
 
         if (!isCached) {
             try {
-                await queryClient.prefetchQuery(gotNowPlayingMoviesOptions(prevPage));
+                await queryClient.prefetchQuery(
+                    gotNowPlayingMoviesOptions(prevPage)
+                );
             } catch (error) {
                 console.error('Prefetch prev page failed', error);
             }
         }
     };
-
-
 
     const hasNext = currentPage < totalPages;
     const hasPrev = currentPage > 1;
@@ -90,6 +88,6 @@ export const usePagination = (storageKey = 'pagination-current-page') => {
         hasPrev,
         clearSavedPage: () => {
             clearCurrentPage();
-        }
+        },
     };
 };

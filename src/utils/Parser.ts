@@ -8,7 +8,7 @@ import {
 export const ParseMoviesResponse = (
     rawResponce: RawTMDBResponse
 ): MoviesResponse => {
-    const { page, total_pages, results , total_results } = rawResponce;
+    const { page, total_pages, results, total_results } = rawResponce;
 
     return {
         page,

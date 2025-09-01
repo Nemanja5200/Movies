@@ -5,8 +5,17 @@ import { Pagination } from '@/components/Pagination/Pagination.tsx';
 import { usePagination } from '@/hooks/usePagination.tsx';
 
 export const Home: FC = () => {
-    const { movies, currentPage, totalPages, hasNext, hasPrev, goToPage , prefetchNextPage , prefetchLastPage , prefetchPrevPage} =
-        usePagination();
+    const {
+        movies,
+        currentPage,
+        totalPages,
+        hasNext,
+        hasPrev,
+        goToPage,
+        prefetchNextPage,
+        prefetchLastPage,
+        prefetchPrevPage,
+    } = usePagination();
 
     return (
         <>
@@ -16,8 +25,8 @@ export const Home: FC = () => {
             <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}
-                preFetchNextPage= {prefetchNextPage}
-                preFetchLastPage = {prefetchLastPage}
+                preFetchNextPage={prefetchNextPage}
+                preFetchLastPage={prefetchLastPage}
                 preFetchPrevPage={prefetchPrevPage}
                 hasNext={hasNext}
                 hasPrev={hasPrev}
