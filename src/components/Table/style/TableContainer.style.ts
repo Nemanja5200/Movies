@@ -4,12 +4,12 @@ export const TableContainerStyle = styled.div`
     width: 100%;
     max-width: 2000px;
     margin: 0px auto;
-    margin-top: 70px;
+    margin-top: 10px;
     padding: 20px;
 
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: baseline;
 
     @media (max-width: 768px) {
         padding: 15px;

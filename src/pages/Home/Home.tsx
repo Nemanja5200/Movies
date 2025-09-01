@@ -1,8 +1,10 @@
 import { FC } from 'react';
 import { Table } from '@/components/Table';
-import { TableContainerStyle } from '@/pages/Home/styles/TableContainer.style.ts';
+import { TableContainerStyle } from '@/components/Table/style/TableContainer.style.ts';
 import { Pagination } from '@/components/Pagination/Pagination.tsx';
 import { usePagination } from '@/hooks/usePagination.tsx';
+import { SearchBar } from '@/components/SearchBar/SearchBar.tsx';
+import { HomeContainerStyle } from '@/pages/Home/styles/HomeContainer.style.tsx';
 
 export const Home: FC = () => {
     const {
@@ -20,7 +22,10 @@ export const Home: FC = () => {
 
     return (
         <>
+            <HomeContainerStyle>
+
             <TableContainerStyle>
+                <SearchBar/>
                 <Table movies={movies} />
             </TableContainerStyle>
             <Pagination
@@ -34,6 +39,7 @@ export const Home: FC = () => {
                 hasPrev={hasPrev}
                 onPageChange={goToPage}
             />
+            </HomeContainerStyle>
         </>
     );
 };
