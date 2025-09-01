@@ -21,42 +21,41 @@ export const Pagination: FC<PaginationProps> = ({
 }) => {
     return (
         <>
-        {/* First Page */}
-        <PaginationContainer>
-            <PaginationButton
-                onClick={() => onPageChange(1)}
-                disabled={!hasPrev}
-            >
-                {'<<'}
-            </PaginationButton>
+            {/* First Page */}
+            <PaginationContainer>
+                <PaginationButton
+                    onClick={() => onPageChange(1)}
+                    disabled={!hasPrev}
+                >
+                    {'<<'}
+                </PaginationButton>
 
-            {/* Previus Page */}
-            <PaginationButton
-                onClick={() => onPageChange(currentPage - 1)}
-                disabled={!hasPrev}
-            >
-                {'<'}
-            </PaginationButton>
+                {/* Previus Page */}
+                <PaginationButton
+                    onClick={() => onPageChange(currentPage - 1)}
+                    disabled={!hasPrev}
+                >
+                    {'<'}
+                </PaginationButton>
 
-            <PaginationButton>{currentPage}</PaginationButton>
+                <PaginationButton>{currentPage}</PaginationButton>
 
-            {/* Next Page */}
-            <PaginationButton
-                onClick={() => onPageChange(currentPage + 1)}
-                disabled={!hasNext}
-            >
-                {'>'}
-            </PaginationButton>
+                {/* Next Page */}
+                <PaginationButton
+                    onClick={() => onPageChange(currentPage + 1)}
+                    disabled={!hasNext}
+                >
+                    {'>'}
+                </PaginationButton>
 
-            {/* Last Page */}
-            <PaginationButton
-                onClick={() => onPageChange(totalPages)}
-                disabled={!hasNext}
-            >
-                {'>>'}
-            </PaginationButton>
-        </PaginationContainer>
-
+                {/* Last Page */}
+                <PaginationButton
+                    onClick={() => onPageChange(totalPages)}
+                    disabled={!hasNext}
+                >
+                    {'>>'}
+                </PaginationButton>
+            </PaginationContainer>
         </>
     );
 };
