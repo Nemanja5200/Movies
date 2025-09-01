@@ -1,1 +1,1 @@
-import { Pagination } from '@/components/Pagination/Pagination.tsx';
+export { Pagination } from './Pagination.tsx'

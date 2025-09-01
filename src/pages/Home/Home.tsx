@@ -3,8 +3,9 @@ import { Table } from '@/components/Table';
 import { TableContainerStyle } from '@/components/Table/style/TableContainer.style.ts';
 import { Pagination } from '@/components/Pagination/Pagination.tsx';
 import { usePagination } from '@/hooks/usePagination.tsx';
-import { SearchBar } from '@/components/SearchBar/SearchBar.tsx';
+import { SearchBar } from '@/components/SearchBar';
 import { HomeContainerStyle } from '@/pages/Home/styles/HomeContainer.style.tsx';
+import { useSearchTerm } from '@/hooks/useSearchTerm.tsx';
 
 export const Home: FC = () => {
     const {
@@ -20,10 +21,16 @@ export const Home: FC = () => {
         getPageRange,
     } = usePagination();
 
+
+    const { searchTerm, handleChange } = useSearchTerm();
+
     return (
         <HomeContainerStyle>
             <TableContainerStyle>
-                <SearchBar />
+                <SearchBar
+                    value={searchTerm}
+                    onChange={handleChange}
+                />
                 <Table movies={movies} />
             </TableContainerStyle>
             <Pagination

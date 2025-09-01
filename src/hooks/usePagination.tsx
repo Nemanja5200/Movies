@@ -1,4 +1,4 @@
-// hooks/usePagination.ts (Ultra clean version)
+
 import { QueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { gotNowPlayingMoviesOptions } from '@/queryOptions/gotNowPlayingMoviesOptions.ts';
 import { useUrlState } from './useUrlState';

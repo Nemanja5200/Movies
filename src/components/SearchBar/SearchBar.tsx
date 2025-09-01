@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import {
     SearchBarContainerStyle,
     SearchButton,
@@ -6,13 +6,14 @@ import {
     SearchInput, // Import SearchInput instead of SearchBar
 } from '@/components/SearchBar/styles/SearchBar.style.tsx';
 
-export const SearchBar: FC = () => {
-    const [searchTerm, setSearchTerm] = useState('');
+interface SearchBarProps {
+    value:string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
-    const handleSearch = () => {
-        console.log('Searching for:', searchTerm);
-    };
 
+export const SearchBar: FC<SearchBarProps> = ({value,onChange}) => {
+    {console.log(value);}
     return (
         <SearchBarContainerStyle>
             <SearchWrapper>
@@ -20,8 +21,8 @@ export const SearchBar: FC = () => {
                 <SearchInput
                     type="text"
                     placeholder="Search movies..."
-                    value={searchTerm}
-                    onChange={e => setSearchTerm(e.target.value)}
+                    value={value}
+                    onChange={onChange}
                 />
             </SearchWrapper>
         </SearchBarContainerStyle>
