@@ -69,6 +69,21 @@ export const usePagination = (storageKey = 'pagination-current-page') => {
         }
     };
 
+    const getPageRange = (windowSize = 4) => {
+        let start = currentPage;
+        let end = currentPage + windowSize - 1;
+
+        if (end > totalPages) {
+            end = totalPages;
+            start = Math.max(1, end - windowSize + 1);
+        }
+        const pages = [];
+        for (let i = start; i <= end; i++) {
+            pages.push(i);
+        }
+        return pages;
+    };
+
     const hasNext = currentPage < totalPages;
     const hasPrev = currentPage > 1;
 
@@ -84,6 +99,7 @@ export const usePagination = (storageKey = 'pagination-current-page') => {
         prefetchNextPage,
         prefetchLastPage,
         prefetchPrevPage,
+        getPageRange,
         hasNext,
         hasPrev,
         clearSavedPage: () => {

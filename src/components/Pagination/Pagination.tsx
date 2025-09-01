@@ -11,6 +11,7 @@ interface PaginationProps {
     preFetchNextPage: () => void;
     preFetchLastPage: () => void;
     preFetchPrevPage: () => void;
+    pageRange: (windowSize: number) => number[];
     hasNext: boolean;
     hasPrev: boolean;
 }
@@ -22,6 +23,7 @@ export const Pagination: FC<PaginationProps> = ({
     preFetchNextPage,
     preFetchLastPage,
     preFetchPrevPage,
+    pageRange,
     hasNext,
     hasPrev,
 }) => {
@@ -45,7 +47,15 @@ export const Pagination: FC<PaginationProps> = ({
                     {'<'}
                 </PaginationButton>
 
-                <PaginationButton>{currentPage}</PaginationButton>
+                {pageRange(4).map(page => (
+                    <PaginationButton
+                        key={page}
+                        onClick={() => onPageChange(page)}
+                        disabled={page === currentPage}
+                    >
+                        {page}
+                    </PaginationButton>
+                ))}
 
                 {/* Next Page */}
                 <PaginationButton

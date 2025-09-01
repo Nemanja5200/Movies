@@ -15,6 +15,7 @@ export const Home: FC = () => {
         prefetchNextPage,
         prefetchLastPage,
         prefetchPrevPage,
+        getPageRange,
     } = usePagination();
 
     return (
@@ -28,6 +29,7 @@ export const Home: FC = () => {
                 preFetchNextPage={prefetchNextPage}
                 preFetchLastPage={prefetchLastPage}
                 preFetchPrevPage={prefetchPrevPage}
+                pageRange={getPageRange}
                 hasNext={hasNext}
                 hasPrev={hasPrev}
                 onPageChange={goToPage}
