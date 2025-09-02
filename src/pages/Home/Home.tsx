@@ -4,10 +4,14 @@ import { TableContainerStyle } from '@/components/Table/style/TableContainer.sty
 import { Pagination } from '@/components/Pagination/Pagination.tsx';
 import { usePagination } from '@/hooks/usePagination.tsx';
 import { SearchBar } from '@/components/SearchBar';
-import { HomeContainerStyle } from '@/pages/Home/styles/HomeContainer.style.tsx';
+import {
+    FilterSearchContainer,
+    HomeContainerStyle,
+} from '@/pages/Home/styles/HomeContainer.style.tsx';
 import { useSearchTerm } from '@/hooks/useSearchTerm.tsx';
 import { useMovies } from '@/hooks/useMovies.tsx';
 import { useUrlState } from '@/hooks/useUrlState.tsx';
+import { Filter } from '@/components/Fillter';
 
 export const Home: FC = () => {
     const { searchTerm, debouncedSearchTerm, handleChange } = useSearchTerm();
@@ -35,7 +39,10 @@ export const Home: FC = () => {
     return (
         <HomeContainerStyle>
             <TableContainerStyle>
-                <SearchBar value={searchTerm} onChange={handleChange} />
+                <FilterSearchContainer>
+                    <SearchBar value={searchTerm} onChange={handleChange} />
+                    <Filter />
+                </FilterSearchContainer>
                 <Table movies={currentMovies} />
             </TableContainerStyle>
             <Pagination
