@@ -1,12 +1,13 @@
-
 import { QueryClient } from '@tanstack/react-query';
 import { gotNowPlayingMoviesOptions } from '@/queryOptions/gotNowPlayingMoviesOptions.ts';
 
-export const usePagination = (totalPages : number,currentPage:number, updateValue: (value:number) => void, clearCurrentPage:() =>void ) => {
-
-    const queryClient = new QueryClient()
-
-
+export const usePagination = (
+    totalPages: number,
+    currentPage: number,
+    updateValue: (value: number) => void,
+    clearCurrentPage: () => void
+) => {
+    const queryClient = new QueryClient();
 
     const updatePage = (newPage: number) => {
         const validPage = Math.max(1, Math.min(totalPages, newPage));

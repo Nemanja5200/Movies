@@ -10,14 +10,17 @@ import { useMovies } from '@/hooks/useMovies.tsx';
 import { useUrlState } from '@/hooks/useUrlState.tsx';
 
 export const Home: FC = () => {
-    const { searchTerm, debouncedSearchTerm ,handleChange } = useSearchTerm();
+    const { searchTerm, debouncedSearchTerm, handleChange } = useSearchTerm();
     const [currentPage, updateValue, clearCurrentPage] = useUrlState({
         storageKey: 'pagination-current-page',
         defaultValue: 1,
         paramName: 'page',
     });
 
-    const {currentMovies, totalPages} = useMovies(debouncedSearchTerm,currentPage)
+    const { currentMovies, totalPages } = useMovies(
+        debouncedSearchTerm,
+        currentPage
+    );
 
     const {
         hasNext,
@@ -27,19 +30,12 @@ export const Home: FC = () => {
         prefetchLastPage,
         prefetchPrevPage,
         getPageRange,
-    } = usePagination(totalPages,currentPage,updateValue,clearCurrentPage);
-
-
-
-
+    } = usePagination(totalPages, currentPage, updateValue, clearCurrentPage);
 
     return (
         <HomeContainerStyle>
             <TableContainerStyle>
-                <SearchBar
-                    value={searchTerm}
-                    onChange={handleChange}
-                />
+                <SearchBar value={searchTerm} onChange={handleChange} />
                 <Table movies={currentMovies} />
             </TableContainerStyle>
             <Pagination

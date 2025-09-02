@@ -7,13 +7,14 @@ import {
 } from '@/components/SearchBar/styles/SearchBar.style.tsx';
 
 interface SearchBarProps {
-    value:string;
+    value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-
-export const SearchBar: FC<SearchBarProps> = ({value,onChange}) => {
-    {console.log(value);}
+export const SearchBar: FC<SearchBarProps> = ({ value, onChange }) => {
+    {
+        console.log(value);
+    }
     return (
         <SearchBarContainerStyle>
             <SearchWrapper>

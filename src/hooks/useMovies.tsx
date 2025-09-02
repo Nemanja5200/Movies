@@ -1,5 +1,7 @@
-
-import { getSearchTermMoviesOptions, gotNowPlayingMoviesOptions } from '@/queryOptions/gotNowPlayingMoviesOptions.ts';
+import {
+    getSearchTermMoviesOptions,
+    gotNowPlayingMoviesOptions,
+} from '@/queryOptions/gotNowPlayingMoviesOptions.ts';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 export const useMovies = (searchTerm: string, currentPage: number) => {
@@ -12,14 +14,11 @@ export const useMovies = (searchTerm: string, currentPage: number) => {
     );
 
     return {
-
         currentMovies: data?.results || [],
-
 
         totalPages: data?.total_pages || 1,
         totalResults: data?.total_results || 0,
         apiCurrentPage: data?.page || currentPage,
-
 
         isSearching,
     };
