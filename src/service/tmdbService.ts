@@ -15,12 +15,12 @@ export const tmdbService = {
         query: string,
         page: number = 1
     ): Promise<MoviesResponse> => {
-        const response = await api.get('/search/collection', {
+        const response = await api.get('/search/movie', {
             params: {
                 query,
                 page,
             },
         });
-        return response.data;
+        return ParseMoviesResponse(response.data);
     },
 };
