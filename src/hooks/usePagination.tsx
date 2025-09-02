@@ -1,22 +1,12 @@
 
-import { QueryClient, useSuspenseQuery } from '@tanstack/react-query';
+import { QueryClient } from '@tanstack/react-query';
 import { gotNowPlayingMoviesOptions } from '@/queryOptions/gotNowPlayingMoviesOptions.ts';
-import { useUrlState } from './useUrlState';
 
-export const usePagination = (storageKey = 'pagination-current-page') => {
-    const [currentPage, updateValue, clearCurrentPage] = useUrlState({
-        storageKey,
-        defaultValue: 1,
-        paramName: 'page',
-    });
+export const usePagination = (totalPages : number,currentPage:number, updateValue: (value:number) => void, clearCurrentPage:() =>void ) => {
 
-    const { data } = useSuspenseQuery(gotNowPlayingMoviesOptions(currentPage));
-    const queryClient = new QueryClient();
+    const queryClient = new QueryClient()
 
-    const allMovies = data.results;
-    const totalPages = data.total_pages;
-    const apiCurrentPage = data.page;
-    const currentMovies = allMovies;
+
 
     const updatePage = (newPage: number) => {
         const validPage = Math.max(1, Math.min(totalPages, newPage));
@@ -88,11 +78,8 @@ export const usePagination = (storageKey = 'pagination-current-page') => {
     const hasPrev = currentPage > 1;
 
     return {
-        movies: currentMovies,
-        allMovies,
         currentPage,
         totalPages,
-        apiCurrentPage,
         goToPage,
         nextPage,
         prevPage,
