@@ -11,7 +11,8 @@ import {
 import { useSearchTerm } from '@/hooks/useSearchTerm.tsx';
 import { useMovies } from '@/hooks/useMovies.tsx';
 import { useUrlState } from '@/hooks/useUrlState.tsx';
-import { Filter } from '@/components/Fillter';
+import { FilterBtn } from '@/components/Fillter/FilterBtn';
+import { FilterModal } from '@/components/Fillter/FilterModal';
 
 export const Home: FC = () => {
     const { searchTerm, debouncedSearchTerm, handleChange } = useSearchTerm();
@@ -41,7 +42,8 @@ export const Home: FC = () => {
             <TableContainerStyle>
                 <FilterSearchContainer>
                     <SearchBar value={searchTerm} onChange={handleChange} />
-                    <Filter />
+                    <FilterBtn />
+                    <FilterModal />
                 </FilterSearchContainer>
                 <Table movies={currentMovies} />
             </TableContainerStyle>

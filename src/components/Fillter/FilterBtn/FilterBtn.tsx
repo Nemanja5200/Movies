@@ -3,10 +3,10 @@ import {
     FillterContainerStyle,
     FilterButtonWithIcon,
     SvgContainer,
-} from '@/components/Fillter/styles/Filter.style.ts';
+} from '@/components/Fillter/FilterBtn/styles/FilterBtn.style.ts';
 import FilterIcon from '@/assets/icons/FilterIcon.svg?react';
 
-export const Filter: FC = () => {
+export const FilterBtn: FC = () => {
     return (
         <>
             <FillterContainerStyle>
