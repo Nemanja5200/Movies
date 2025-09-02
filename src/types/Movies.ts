@@ -8,6 +8,7 @@ export interface Movie {
 export interface MoviesResponse {
     results: Movie[];
     total_pages: number;
+    total_results: number;
     page: number;
 }
 
@@ -32,4 +33,5 @@ export interface RawTMDBResponse {
     page: number;
     results: RawMovie[];
     total_pages: number;
+    total_results: number;
 }

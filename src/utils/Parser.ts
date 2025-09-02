@@ -8,11 +8,12 @@ import {
 export const ParseMoviesResponse = (
     rawResponce: RawTMDBResponse
 ): MoviesResponse => {
-    const { page, total_pages, results } = rawResponce;
+    const { page, total_pages, results, total_results } = rawResponce;
 
     return {
         page,
         total_pages,
+        total_results,
         results: results.map(movie => ParseMovie(movie)),
     };
 };
