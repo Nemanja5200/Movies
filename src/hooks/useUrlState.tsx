@@ -49,7 +49,7 @@ export const useUrlState = (options: UseUrlStateOptions = {}) => {
         if (urlNum !== value && urlNum > 0) {
             setValue(urlNum);
         }
-    }, [searchParams, paramName, defaultValue]);
+    }, [searchParams, paramName, defaultValue, value]);
 
     const updateValue = useCallback(
         (newValue: number) => {

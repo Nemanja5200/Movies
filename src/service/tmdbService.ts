@@ -10,4 +10,17 @@ export const tmdbService = {
 
         return ParseMoviesResponse(response.data);
     },
+
+    getSearchTermMovies: async (
+        query: string,
+        page: number = 1
+    ): Promise<MoviesResponse> => {
+        const response = await api.get('/search/movie', {
+            params: {
+                query,
+                page,
+            },
+        });
+        return ParseMoviesResponse(response.data);
+    },
 };
