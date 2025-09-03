@@ -1,23 +1,27 @@
 import { queryOptions } from '@tanstack/react-query';
 import { tmdbService } from '@/service/tmdbService.ts';
-import { TMDBSortOption } from '@/types/Filter.ts';
+import { FilterParams } from '@/types/Filter.ts';
 
 export const getFillterOptions = (
     page: number = 1,
-    year?: number,
-    genres?: string,
-    vote_average?: number,
-    sortBy?: TMDBSortOption
+    filterParams: FilterParams
 ) => {
     return queryOptions({
-        queryKey: ['search-tearm', page, year, genres, vote_average, sortBy],
+        queryKey: [
+            'search-tearm',
+            page,
+            filterParams.year ?? 0,
+            filterParams.genres?.join(',') ?? '',
+            filterParams.ratingMin ?? 0,
+            filterParams.sortBy ?? '',
+        ],
         queryFn: () =>
             tmdbService.getFilterMovies(
                 page,
-                year,
-                genres,
-                vote_average,
-                sortBy
+                filterParams.year,
+                filterParams.genres?.join(',') || '',
+                filterParams.ratingMin,
+                filterParams.sortBy
             ),
 
         staleTime: 5 * 60 * 1000,

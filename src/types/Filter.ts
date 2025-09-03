@@ -1,4 +1,4 @@
-export const Sorting_Options = {
+export const SORTING_OPTIONS = {
     POPULARITY_DESC: 'popularity.desc',
     POPULARITY_ASC: 'popularity.asc',
     VOTE_AVERAGE_DESC: 'vote_average.desc',
@@ -8,7 +8,7 @@ export const Sorting_Options = {
 };
 
 export type TMDBSortOption =
-    (typeof Sorting_Options)[keyof typeof Sorting_Options];
+    (typeof SORTING_OPTIONS)[keyof typeof SORTING_OPTIONS];
 
 export const SORT_DISPLAY_NAMES: Record<TMDBSortOption, string> = {
     'popularity.desc': 'Most Popular',

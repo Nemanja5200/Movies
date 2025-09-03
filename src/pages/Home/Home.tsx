@@ -13,9 +13,19 @@ import { useMovies } from '@/hooks/useMovies.tsx';
 import { useUrlState } from '@/hooks/useUrlState.tsx';
 import { FilterBtn } from '@/components/Fillter/FilterBtn';
 import { FilterModal } from '@/components/Fillter/FilterModal';
+import { useFilter } from '@/hooks/useFilter.tsx';
 
 export const Home: FC = () => {
     const { searchTerm, debouncedSearchTerm, handleChange } = useSearchTerm();
+    const {
+        openModal,
+        closeModal,
+        isModalOpen,
+        toggleGenres,
+        filterParams,
+        updateFilter,
+        onClear,
+    } = useFilter();
     const [currentPage, updateValue, clearCurrentPage] = useUrlState({
         storageKey: 'pagination-current-page',
         defaultValue: 1,
@@ -24,7 +34,8 @@ export const Home: FC = () => {
 
     const { currentMovies, totalPages } = useMovies(
         debouncedSearchTerm,
-        currentPage
+        currentPage,
+        filterParams
     );
 
     const {
@@ -42,8 +53,15 @@ export const Home: FC = () => {
             <TableContainerStyle>
                 <FilterSearchContainer>
                     <SearchBar value={searchTerm} onChange={handleChange} />
-                    <FilterBtn />
-                    <FilterModal />
+                    <FilterBtn onClick={openModal} />
+                    <FilterModal
+                        isModal={isModalOpen}
+                        onClose={closeModal}
+                        toggleGenre={toggleGenres}
+                        filterParams={filterParams}
+                        updateFilter={updateFilter}
+                        onClear={onClear}
+                    />
                 </FilterSearchContainer>
                 <Table movies={currentMovies} />
             </TableContainerStyle>

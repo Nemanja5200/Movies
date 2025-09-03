@@ -75,7 +75,7 @@ export const usePagination = (
         return pages;
     };
 
-    const hasNext = currentPage < totalPages;
+    const hasNext = currentPage < 500;
     const hasPrev = currentPage > 1;
 
     return {

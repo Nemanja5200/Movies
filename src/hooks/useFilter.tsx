@@ -42,6 +42,7 @@ export const useFilter = () => {
 
     return {
         setFilterParams,
+        filterParams,
         isActive,
         onClear,
         updateFilter,

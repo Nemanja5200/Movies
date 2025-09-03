@@ -17,15 +17,49 @@ import {
 } from '@/components/Fillter/FilterModal/styles/FilterModal.style.ts';
 
 import CloseIcon from '@/assets/icons/CloseIcon.svg?react';
+import {
+    FilterParams,
+    GENRE_NAMES,
+    GenreId,
+    GENRES,
+    TMDBSortOption,
+} from '@/types/Filter.ts';
+import { generateYearOptions } from '@/utils/genereteYears.ts';
 
-export const FilterModal: FC = () => {
+import { SORTING_OPTIONS, SORT_DISPLAY_NAMES } from '@/types/Filter';
+
+interface FilterModalProps {
+    isModal: boolean;
+    onClose: () => void;
+    toggleGenre: (genreId: GenreId) => void;
+    filterParams: FilterParams;
+    updateFilter: <K extends keyof FilterParams>(
+        key: K,
+        value: FilterParams[K]
+    ) => void;
+    onClear: () => void;
+}
+
+export const GENRE_LIST = Object.entries(GENRES).map(([key, id]) => ({
+    id,
+    name: GENRE_NAMES[id],
+}));
+
+export const FilterModal: FC<FilterModalProps> = ({
+    isModal,
+    onClose,
+    toggleGenre,
+    filterParams,
+    updateFilter,
+    onClear,
+}) => {
     return (
         <>
-            <ModalOverlay $isOpen={true}>
-                <ModalContainer $isOpen={true}>
+            <ModalOverlay $isOpen={isModal}>
+                <ModalContainer $isOpen={isModal}>
                     <ModalHeader>
                         <h2>Filter</h2>
-                        <CloseButton>
+                        <CloseButton onClick={onClose}>
                             <CloseIcon />
                         </CloseButton>
                     </ModalHeader>
@@ -34,63 +68,97 @@ export const FilterModal: FC = () => {
                         <FilterSection>
                             <FilterTitle>Genres</FilterTitle>
                             <FilterOptionsGrid>
-                                <FilterOption key={'Genres'}>
-                                    <input type="checkbox" />
-                                    {'Genres'}
-                                </FilterOption>
+                                {GENRE_LIST.map(genre => (
+                                    <FilterOption key={genre.id}>
+                                        <input
+                                            type="checkbox"
+                                            checked={
+                                                filterParams.genres?.includes(
+                                                    genre.id
+                                                ) || false
+                                            }
+                                            onChange={() =>
+                                                toggleGenre(genre.id)
+                                            }
+                                        />
+                                        {genre.name}
+                                    </FilterOption>
+                                ))}
                             </FilterOptionsGrid>
                         </FilterSection>
 
-                        {/*{Year}*/}
+                        {/* Year */}
                         <FilterSection>
                             <FilterTitle>Release Year</FilterTitle>
-                            <YearSelect value={'2020'}>
+                            <YearSelect
+                                value={filterParams.year || ''}
+                                onChange={e =>
+                                    updateFilter(
+                                        'year',
+                                        e.target.value
+                                            ? parseInt(e.target.value)
+                                            : undefined
+                                    )
+                                }
+                            >
                                 <option value="">All Years</option>
+                                {generateYearOptions().map(year => (
+                                    <option key={year} value={year}>
+                                        {year}
+                                    </option>
+                                ))}
                             </YearSelect>
                         </FilterSection>
 
-                        {/*{Ratings}*/}
+                        {/* Ratings */}
                         <FilterSection>
-                            <FilterTitle>Minimum Rating: {'0'}</FilterTitle>
+                            <FilterTitle>
+                                Minimum Rating: {filterParams.ratingMin || 0}
+                            </FilterTitle>
                             <RangeSlider>
                                 <input
                                     type="range"
                                     min="0"
                                     max="10"
                                     step="0.5"
-                                    value={'5'}
+                                    value={filterParams.ratingMin || 0}
+                                    onChange={e =>
+                                        updateFilter(
+                                            'ratingMin',
+                                            parseFloat(e.target.value)
+                                        )
+                                    }
                                 />
                             </RangeSlider>
                         </FilterSection>
 
-                        {/*{Sort By}*/}
+                        {/* Sort By */}
                         <FilterSection>
                             <FilterTitle>Sort By</FilterTitle>
-                            <YearSelect>
-                                <option value="popularity.desc">
-                                    Most Popular
-                                </option>
-                                <option value="popularity.asc">
-                                    Least Popular
-                                </option>
-                                <option value="vote_average.desc">
-                                    Highest Rated
-                                </option>
-                                <option value="vote_average.asc">
-                                    Lowest Rated
-                                </option>
-                                <option value="release_date.desc">
-                                    Newest First
-                                </option>
-                                <option value="release_date.asc">
-                                    Oldest First
-                                </option>
+                            <YearSelect
+                                value={
+                                    filterParams.sortBy ||
+                                    SORTING_OPTIONS.POPULARITY_DESC
+                                }
+                                onChange={e =>
+                                    updateFilter(
+                                        'sortBy',
+                                        e.target.value as TMDBSortOption
+                                    )
+                                }
+                            >
+                                {Object.values(SORTING_OPTIONS).map(option => (
+                                    <option key={option} value={option}>
+                                        {SORT_DISPLAY_NAMES[option]}
+                                    </option>
+                                ))}
                             </YearSelect>
                         </FilterSection>
 
                         <ModalFooter>
-                            <ClearButton>Clear All</ClearButton>
-                            <ApplyButton>Apply Filters</ApplyButton>
+                            <ClearButton onClick={onClear}>
+                                Clear All
+                            </ClearButton>
                         </ModalFooter>
                     </ModalBody>
                 </ModalContainer>

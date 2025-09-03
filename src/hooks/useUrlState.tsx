@@ -21,14 +21,14 @@ export const useUrlState = (options: UseUrlStateOptions = {}) => {
         const urlValue = searchParams.get(paramName);
         if (urlValue) {
             const parsed = parseInt(urlValue, 10);
-            if (parsed > 0) return parsed;
+            if (parsed > 0 && parsed <= 500) return parsed;
         }
 
         if (typeof window !== 'undefined') {
             const saved = localStorage.getItem(storageKey);
             if (saved) {
                 const parsed = parseInt(saved, 10);
-                if (parsed > 0) return parsed;
+                if (parsed > 0 && parsed <= 500) return parsed;
             }
         }
 
@@ -53,7 +53,7 @@ export const useUrlState = (options: UseUrlStateOptions = {}) => {
 
     const updateValue = useCallback(
         (newValue: number) => {
-            const validValue = Math.max(1, newValue);
+            const validValue = Math.min(Math.max(1, newValue), 500);
             setValue(validValue);
 
             if (typeof window !== 'undefined') {
