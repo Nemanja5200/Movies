@@ -30,6 +30,12 @@ export const Home: FC = () => {
         storageKey: 'pagination-current-page',
         defaultValue: 1,
         paramName: 'page',
+        serialize: (value: number) => value.toString(),
+        deserialize: (value: string) => {
+            const parsed = parseInt(value, 10);
+            return parsed > 0 && parsed <= 500 ? parsed : null;
+        },
+        validate: (value: number) => value >= 1 && value <= 500,
     });
 
     const { currentMovies, totalPages } = useMovies(
