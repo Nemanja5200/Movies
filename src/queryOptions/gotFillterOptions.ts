@@ -10,8 +10,15 @@ export const getFillterOptions = (
     sortBy?: TMDBSortOption
 ) => {
     return queryOptions({
-        queryKey: ['search-tearm', page , year,genres,vote_average,sortBy],
-        queryFn: () => tmdbService.getFilterMovies(page,year,genres,vote_average,sortBy),
+        queryKey: ['search-tearm', page, year, genres, vote_average, sortBy],
+        queryFn: () =>
+            tmdbService.getFilterMovies(
+                page,
+                year,
+                genres,
+                vote_average,
+                sortBy
+            ),
 
         staleTime: 5 * 60 * 1000,
         gcTime: 10 * 60 * 1000,

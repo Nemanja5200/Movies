@@ -1,6 +1,4 @@
-import {
-    gotNowPlayingMoviesOptions,
-} from '@/queryOptions/gotNowPlayingMoviesOptions.ts';
+import { gotNowPlayingMoviesOptions } from '@/queryOptions/gotNowPlayingMoviesOptions.ts';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { getSearchTermMoviesOptions } from '@/queryOptions/gotSearchTermOptions.ts';
 import { getFillterOptions } from '@/queryOptions/gotFillterOptions.ts';

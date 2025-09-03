@@ -11,4 +11,3 @@ export const gotNowPlayingMoviesOptions = (page: number) => {
         refetchOnWindowFocus: false,
     });
 };
-

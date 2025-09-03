@@ -25,7 +25,6 @@ export const tmdbService = {
         return ParseMoviesResponse(response.data);
     },
 
-
     getFilterMovies: async (
         page: number = 1,
         year?: number,
@@ -39,11 +38,10 @@ export const tmdbService = {
                 primary_release_year: year,
                 with_genres: genres,
                 vote_average_gte: vote_average,
-                sort_by: sortBy
+                sort_by: sortBy,
             },
         });
 
         return ParseMoviesResponse(response.data);
-    }
-
+    },
 };
