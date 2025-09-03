@@ -187,7 +187,7 @@ export const YearSelect = styled.select`
 
 export const ModalFooter = styled.div`
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     padding: 20px 24px;
     font-family: Popins, sans-serif;
@@ -207,5 +207,23 @@ export const ClearButton = styled.button`
 
     &:hover {
         border: 2px solid gold;
+    }
+`;
+
+export const ApplyButton = styled.button`
+    padding: 10px 24px;
+    background: #0a0e12;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #11a9c8;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+        border: 2px solid gold;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(255, 204, 0, 0.3);
     }
 `;

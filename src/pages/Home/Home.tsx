@@ -14,34 +14,34 @@ import { useUrlState } from '@/hooks/useUrlState.tsx';
 import { FilterBtn } from '@/components/Fillter/FilterBtn';
 import { FilterModal } from '@/components/Fillter/FilterModal';
 import { useFilter } from '@/hooks/useFilter.tsx';
+import { createPageSerializer } from '@/utils/urlStateSerializers.ts';
 
 export const Home: FC = () => {
     const { searchTerm, debouncedSearchTerm, handleChange } = useSearchTerm();
+
+    const [currentPage, setCurrentPage, clearCurrentPage] = useUrlState({
+        storageKey: 'pagination-current-page',
+        defaultValue: 1,
+        paramName: 'page',
+        ...createPageSerializer(1, 500),
+    });
+
     const {
         openModal,
         closeModal,
         isModalOpen,
-        toggleGenres,
-        filterParams,
+        toggleGenre,
+        clearFilters,
+        appliedFilters,
+        applyFilters,
         updateFilter,
-        onClear,
+        filterParams: currentFilterParams,
     } = useFilter();
-    const [currentPage, updateValue, clearCurrentPage] = useUrlState({
-        storageKey: 'pagination-current-page',
-        defaultValue: 1,
-        paramName: 'page',
-        serialize: (value: number) => value.toString(),
-        deserialize: (value: string) => {
-            const parsed = parseInt(value, 10);
-            return parsed > 0 && parsed <= 500 ? parsed : null;
-        },
-        validate: (value: number) => value >= 1 && value <= 500,
-    });
 
     const { currentMovies, totalPages } = useMovies(
         debouncedSearchTerm,
         currentPage,
-        filterParams
+        appliedFilters
     );
 
     const {
@@ -52,7 +52,12 @@ export const Home: FC = () => {
         prefetchLastPage,
         prefetchPrevPage,
         getPageRange,
-    } = usePagination(totalPages, currentPage, updateValue, clearCurrentPage);
+    } = usePagination(
+        totalPages,
+        currentPage,
+        setCurrentPage,
+        clearCurrentPage
+    );
 
     return (
         <HomeContainerStyle>
@@ -63,10 +68,11 @@ export const Home: FC = () => {
                     <FilterModal
                         isModal={isModalOpen}
                         onClose={closeModal}
-                        toggleGenre={toggleGenres}
-                        filterParams={filterParams}
+                        toggleGenre={toggleGenre}
+                        filterParams={currentFilterParams}
                         updateFilter={updateFilter}
-                        onClear={onClear}
+                        onClear={clearFilters}
+                        onApply={applyFilters}
                     />
                 </FilterSearchContainer>
                 <Table movies={currentMovies} />

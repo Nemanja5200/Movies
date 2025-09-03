@@ -12,9 +12,6 @@ interface SearchBarProps {
 }
 
 export const SearchBar: FC<SearchBarProps> = ({ value, onChange }) => {
-    {
-        console.log(value);
-    }
     return (
         <SearchBarContainerStyle>
             <SearchWrapper>

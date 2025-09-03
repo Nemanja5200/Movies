@@ -23,11 +23,22 @@ export const useUrlState = <T,>(options: UseUrlStateOptions<T>) => {
     const [searchParams, setSearchParams] = useSearchParams();
     const isUpdatingRef = useRef(false);
 
+    // Store functions for stability
+    const serializeRef = useRef(serialize);
+    const deserializeRef = useRef(deserialize);
+    const validateRef = useRef(validate);
+
+    useEffect(() => {
+        serializeRef.current = serialize;
+        deserializeRef.current = deserialize;
+        validateRef.current = validate;
+    }, [serialize, deserialize, validate]);
+
     const getInitialValue = (): T => {
         const urlValue = searchParams.get(paramName);
         if (urlValue) {
-            const parsed = deserialize(urlValue);
-            if (parsed !== null && validate(parsed)) {
+            const parsed = deserializeRef.current(urlValue);
+            if (parsed !== null && validateRef.current(parsed)) {
                 return parsed;
             }
         }
@@ -35,8 +46,8 @@ export const useUrlState = <T,>(options: UseUrlStateOptions<T>) => {
         if (typeof window !== 'undefined') {
             const saved = localStorage.getItem(storageKey);
             if (saved) {
-                const parsed = deserialize(saved);
-                if (parsed !== null && validate(parsed)) {
+                const parsed = deserializeRef.current(saved);
+                if (parsed !== null && validateRef.current(parsed)) {
                     return parsed;
                 }
             }
@@ -47,51 +58,58 @@ export const useUrlState = <T,>(options: UseUrlStateOptions<T>) => {
 
     const [value, setValue] = useState<T>(getInitialValue);
 
+    const urlParamValue = searchParams.get(paramName);
+
     useEffect(() => {
         if (isUpdatingRef.current) {
             isUpdatingRef.current = false;
             return;
         }
 
-        const urlValue = searchParams.get(paramName);
-        if (urlValue) {
-            const parsed = deserialize(urlValue);
-            if (parsed !== null && validate(parsed) && parsed !== value) {
-                setValue(parsed);
+        if (urlParamValue) {
+            const parsed = deserializeRef.current(urlParamValue);
+            if (parsed !== null && validateRef.current(parsed)) {
+                const currentSerialized = serializeRef.current(value);
+                const parsedSerialized = serializeRef.current(parsed);
+                if (currentSerialized !== parsedSerialized) {
+                    setValue(parsed);
+                }
             }
         }
-    }, [searchParams, paramName, defaultValue, value, deserialize, validate]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [urlParamValue, paramName]);
+    // We intentionally don't include 'value' to avoid infinite loops
 
     const updateValue = useCallback(
         (newValue: T) => {
-            if (!validate(newValue)) return;
+            if (!validateRef.current(newValue)) return;
 
             setValue(newValue);
 
             if (typeof window !== 'undefined') {
-                localStorage.setItem(storageKey, serialize(newValue));
+                localStorage.setItem(
+                    storageKey,
+                    serializeRef.current(newValue)
+                );
             }
 
             isUpdatingRef.current = true;
             const newParams = new URLSearchParams(searchParams);
 
-            if (serialize(newValue) === serialize(defaultValue)) {
+            if (
+                serializeRef.current(newValue) ===
+                serializeRef.current(defaultValue)
+            ) {
                 newParams.delete(paramName);
             } else {
-                newParams.set(paramName, serialize(newValue));
+                newParams.set(paramName, serializeRef.current(newValue));
             }
 
             setSearchParams(newParams);
         },
-        [
-            storageKey,
-            searchParams,
-            setSearchParams,
-            paramName,
-            defaultValue,
-            serialize,
-            validate,
-        ]
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [storageKey, paramName, setSearchParams]
+        // We use refs for functions to avoid recreating this callback
     );
 
     const clearValue = useCallback(() => {
@@ -105,7 +123,9 @@ export const useUrlState = <T,>(options: UseUrlStateOptions<T>) => {
         const newParams = new URLSearchParams(searchParams);
         newParams.delete(paramName);
         setSearchParams(newParams);
-    }, [defaultValue, storageKey, searchParams, setSearchParams, paramName]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [defaultValue, storageKey, paramName, setSearchParams]);
+    // searchParams is intentionally omitted as we create new params
 
     return [value, updateValue, clearValue] as const;
 };

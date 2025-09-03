@@ -17,16 +17,12 @@ import {
 } from '@/components/Fillter/FilterModal/styles/FilterModal.style.ts';
 
 import CloseIcon from '@/assets/icons/CloseIcon.svg?react';
-import {
-    FilterParams,
-    GENRE_NAMES,
-    GenreId,
-    GENRES,
-    TMDBSortOption,
-} from '@/types/Filter.ts';
+import { FilterParams, GenreId, TMDBSortOption } from '@/types/Filter.ts';
 import { generateYearOptions } from '@/utils/genereteYears.ts';
 
 import { SORTING_OPTIONS, SORT_DISPLAY_NAMES } from '@/types/Filter';
+import { GENRE_LIST } from '@/utils/constants/genres.ts';
+import App from '@/App.tsx';
 
 interface FilterModalProps {
     isModal: boolean;
@@ -38,12 +34,8 @@ interface FilterModalProps {
         value: FilterParams[K]
     ) => void;
     onClear: () => void;
+    onApply: () => void;
 }
-
-export const GENRE_LIST = Object.entries(GENRES).map(([key, id]) => ({
-    id,
-    name: GENRE_NAMES[id],
-}));
 
 export const FilterModal: FC<FilterModalProps> = ({
     isModal,
@@ -52,6 +44,7 @@ export const FilterModal: FC<FilterModalProps> = ({
     filterParams,
     updateFilter,
     onClear,
+    onApply,
 }) => {
     return (
         <>
@@ -159,6 +152,9 @@ export const FilterModal: FC<FilterModalProps> = ({
                             <ClearButton onClick={onClear}>
                                 Clear All
                             </ClearButton>
+                            <ApplyButton onClick={onApply}>
+                                Apply Filter
+                            </ApplyButton>
                         </ModalFooter>
                     </ModalBody>
                 </ModalContainer>
