@@ -192,6 +192,7 @@ export const ModalFooter = styled.div`
     padding: 20px 24px;
     font-family: Popins, sans-serif;
     font-weight: 700;
+    font-size: 0.87rem;
     border-top: 1px solid #e0e0e0;
     gap: 12px;
 `;
@@ -201,7 +202,6 @@ export const ClearButton = styled.button`
     background: #0a0e12;
     border: 2px solid #e0e0e0;
     border-radius: 8px;
-    font-size: 14px;
     color: #11a9c8;
     cursor: pointer;
 
@@ -215,8 +215,6 @@ export const ApplyButton = styled.button`
     background: #0a0e12;
     border: 2px solid #e0e0e0;
     border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
     color: #11a9c8;
     cursor: pointer;
     transition: all 0.2s ease;

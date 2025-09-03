@@ -1,11 +1,16 @@
 import {
-    getSearchTermMoviesOptions,
     gotNowPlayingMoviesOptions,
 } from '@/queryOptions/gotNowPlayingMoviesOptions.ts';
 import { useSuspenseQuery } from '@tanstack/react-query';
+import { getSearchTermMoviesOptions } from '@/queryOptions/gotSearchTermOptions.ts';
+import { getFillterOptions } from '@/queryOptions/gotFillterOptions.ts';
 
 export const useMovies = (searchTerm: string, currentPage: number) => {
     const isSearching = !!searchTerm;
+
+    // const {data:FilterData} = useSuspenseQuery(getFillterOptions(1,2012));
+    //
+    // console.log(FilterData.results);
 
     const { data } = useSuspenseQuery(
         isSearching
