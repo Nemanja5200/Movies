@@ -76,9 +76,9 @@ export const useUrlState = <T,>(options: UseUrlStateOptions<T>) => {
                 }
             }
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [urlParamValue, paramName]);
-    // We intentionally don't include 'value' to avoid infinite loops
+
+    }, [urlParamValue, paramName, value]);
+
 
     const updateValue = useCallback(
         (newValue: T) => {
@@ -107,9 +107,9 @@ export const useUrlState = <T,>(options: UseUrlStateOptions<T>) => {
 
             setSearchParams(newParams);
         },
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        [storageKey, paramName, setSearchParams]
-        // We use refs for functions to avoid recreating this callback
+
+        [searchParams, defaultValue, setSearchParams, storageKey, paramName]
+
     );
 
     const clearValue = useCallback(() => {
@@ -123,9 +123,9 @@ export const useUrlState = <T,>(options: UseUrlStateOptions<T>) => {
         const newParams = new URLSearchParams(searchParams);
         newParams.delete(paramName);
         setSearchParams(newParams);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [defaultValue, storageKey, paramName, setSearchParams]);
-    // searchParams is intentionally omitted as we create new params
+
+    }, [defaultValue, searchParams, paramName, setSearchParams, storageKey]);
+
 
     return [value, updateValue, clearValue] as const;
 };
