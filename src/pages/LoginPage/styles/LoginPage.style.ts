@@ -64,7 +64,6 @@ export const Input = styled.input`
     border-radius: 8px;
     color: white;
     font-size: 1rem;
-    transition: all 0.3s ease;
     background: #212529;
     margin-bottom: 20px;
 
@@ -107,5 +106,25 @@ export const LoginButton = styled.button`
     &:disabled {
         opacity: 0.6;
         cursor: not-allowed;
+    }
+`;
+
+export const ErrorMessage = styled.div`
+    background: red;
+    width: 100%;
+    max-width: 400px;
+    color: white;
+    padding: 0.75rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+    border: 1px solid #fcc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @media (max-width: 640px) {
+        font-size: 0.813rem;
+        max-width: 300px;
     }
 `;

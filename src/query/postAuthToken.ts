@@ -1,4 +1,3 @@
-
 import { tmdbService } from '@/service/tmdbService.ts';
 import { LoginInfo } from '@/types/LoginInfo.ts';
 

@@ -17,4 +17,7 @@ export const LoginButtonStyle = styled.button`
     &:hover {
         opacity: 0.8;
     }
+
+    @media (max-width: 446px) {
+    }
 `;
