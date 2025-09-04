@@ -3,8 +3,10 @@ import { LogoStyle } from '@/components/Header/styles/Logo.style.ts';
 import { FC } from 'react';
 import { TabStyle } from '@/components/Header/styles/Tab.style.ts';
 import { LoginButtonStyle } from '@/components/Header/styles/LoginButton.style.ts';
+import { useNavigate } from 'react-router-dom';
 
 export const Header: FC = () => {
+    const navigate = useNavigate();
     return (
         <>
             <HeaderStyle>
@@ -16,7 +18,9 @@ export const Header: FC = () => {
                     <a href="/chart">CHART</a>
                 </TabStyle>
                 <TabStyle>
-                    <LoginButtonStyle>Login</LoginButtonStyle>
+                    <LoginButtonStyle onClick={() => navigate('/login')}>
+                        Login
+                    </LoginButtonStyle>
                 </TabStyle>
             </HeaderStyle>
         </>
