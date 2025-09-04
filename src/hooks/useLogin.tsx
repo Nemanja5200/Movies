@@ -12,7 +12,7 @@ export const useLogin = () => {
     const { mutate: login, isPending } = useMutation({
         mutationFn: postAuthToken,
         onSuccess: async (token: string) => {
-            document.cookie = `authToken=${token}; path=/; max-age=604800; SameSite=Strict`;
+            document.cookie = `authToken=${token}; path=/; max-age=30; SameSite=Strict`;
             console.log(token);
             await queryClient.fetchQuery(getUserOptions(token));
             navigate('/');
