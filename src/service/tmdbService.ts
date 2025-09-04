@@ -3,6 +3,7 @@ import { MoviesResponse } from '@/types/Movies.ts';
 import { ParseMoviesResponse } from '@/utils/Parser.ts';
 import { TMDBSortOption } from '@/types/Filter.ts';
 import { LoginInfo } from '@/types/LoginInfo.ts';
+import { User } from '@/types/User.ts';
 
 export const tmdbService = {
     gotNowPlayingMovies: async (page: number = 1): Promise<MoviesResponse> => {
@@ -53,5 +54,15 @@ export const tmdbService = {
         });
 
         return response.data.token;
+    },
+
+    getUserData: async (token: string): Promise<User> => {
+        const response = await loginApi.get('/user', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        return response.data;
     },
 };

@@ -2,13 +2,20 @@ import { useState } from 'react';
 import { LoginInfo } from '@/types/LoginInfo.ts';
 import * as React from 'react';
 import { postAuthToken } from '@/query/postAuthToken.ts';
-import { useMutation } from '@tanstack/react-query';
+import { QueryClient, useMutation } from '@tanstack/react-query';
+import { getUserOptions } from '@/queryOptions/getUserOptions.ts';
+import { useNavigate } from 'react-router-dom';
 
 export const useLogin = () => {
+    const queryClient = new QueryClient();
+    const navigate = useNavigate();
     const { mutate: login, isPending } = useMutation({
         mutationFn: postAuthToken,
-        onSuccess: token => {
-            console.log('Token:', token);
+        onSuccess: async (token: string) => {
+            document.cookie = `authToken=${token}; path=/; max-age=604800; SameSite=Strict`;
+            console.log(token);
+            await queryClient.fetchQuery(getUserOptions(token));
+            navigate('/');
         },
 
         onError: error => {
