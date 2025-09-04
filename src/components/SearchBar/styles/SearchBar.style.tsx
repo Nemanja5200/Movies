@@ -6,12 +6,6 @@ export const SearchBarContainerStyle = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 50px 190px;
-
-    @media (max-width: 793px) {
-        margin: 30px auto;
-        width: 90%;
-    }
 `;
 
 export const SearchWrapper = styled.div`
@@ -54,4 +48,5 @@ export const SearchButton = styled.button`
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
+    flex-shrink: 0;
 `;
