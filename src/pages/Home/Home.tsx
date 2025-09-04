@@ -43,8 +43,7 @@ export const Home: FC = () => {
     const { currentMovies, totalPages } = useMovies(
         debouncedSearchTerm,
         currentPage,
-        appliedFilters,
-        isActive
+        appliedFilters
     );
 
     const {

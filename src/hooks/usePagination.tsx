@@ -1,6 +1,6 @@
 import { QueryClient } from '@tanstack/react-query';
-import { gotNowPlayingMoviesOptions } from '@/queryOptions/gotNowPlayingMoviesOptions.ts';
-import { getFillterOptions } from '@/queryOptions/gotFillterOptions.ts';
+import { getNowPlayingMoviesOptions } from '@/queryOptions/getNowPlayingMoviesOptions.ts';
+import { getFillterOptions } from '@/queryOptions/getFilterOptions.ts';
 import { FilterParams } from '@/types/Filter.ts';
 
 export const usePagination = (
@@ -38,7 +38,7 @@ export const usePagination = (
 
             try {
                 await queryClient.prefetchQuery(
-                    gotNowPlayingMoviesOptions(currentPage + 1)
+                    getNowPlayingMoviesOptions(currentPage + 1)
                 );
             } catch (error) {
                 console.error('Prefetch failed', error);
@@ -61,7 +61,7 @@ export const usePagination = (
 
         try {
             await queryClient.prefetchQuery(
-                gotNowPlayingMoviesOptions(totalPages)
+                getNowPlayingMoviesOptions(totalPages)
             );
         } catch (error) {
             console.error('Prefetch failed', error);
@@ -85,14 +85,14 @@ export const usePagination = (
             return;
         }
 
-        const queryKey = gotNowPlayingMoviesOptions(prevPage).queryKey;
+        const queryKey = getNowPlayingMoviesOptions(prevPage).queryKey;
 
         const isCached = queryClient.getQueryData(queryKey);
 
         if (!isCached) {
             try {
                 await queryClient.prefetchQuery(
-                    gotNowPlayingMoviesOptions(prevPage)
+                    getNowPlayingMoviesOptions(prevPage)
                 );
             } catch (error) {
                 console.error('Prefetch prev page failed', error);

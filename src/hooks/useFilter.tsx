@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { FilterParams, GenreId } from '@/types/Filter.ts';
 import { useUrlState } from '@/hooks/useUrlState.tsx';
 import { filterParamsSerializer } from '@/utils/urlStateSerializers.ts';
-import { getFillterOptions } from '@/queryOptions/gotFillterOptions.ts';
+import { getFillterOptions } from '@/queryOptions/getFilterOptions.ts';
 import { QueryClient } from '@tanstack/react-query';
 export const useFilter = (
     currentPage: number,
