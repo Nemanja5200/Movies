@@ -1,27 +1,24 @@
 import { User } from '@/types/User.ts';
-import { createContext, ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getUserOptions } from '@/queryOptions/getUserOptions.ts';
+import { AuthContext } from './AuthContext.ts';
+import { useLocation } from 'react-router-dom';
 
-interface AuthContextType {
-    token: string | null;
-    user: User | null;
-    isAuth: boolean;
-    logout: () => void;
-}
-
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [token, setToken] = useState<string | null>(null);
     const [user, setUser] = useState<User | null>(null);
+    const location = useLocation(); 
 
     useEffect(() => {
         const match = document.cookie.match(/authToken=([^;]+)/);
         if (match) {
             setToken(match[1]);
+        } else {
+            setToken(null);
         }
-    }, []);
+    }, [location]);
 
     const { data } = useQuery({
         ...getUserOptions(token as string),
@@ -34,7 +31,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
     }, [data]);
 
-    console.log(user);
 
     const isAuth = !!token && !!user;
 
@@ -45,8 +41,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ token, user, logout, isAuth }}>
+        <AuthContext.Provider value={{ token, user, isAuth, logout }}>
             {children}
         </AuthContext.Provider>
     );
 };
+export { AuthContext };
+

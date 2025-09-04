@@ -3,19 +3,21 @@ import { LogoStyle } from '@/components/Header/styles/Logo.style.ts';
 import { FC } from 'react';
 import { TabStyle } from '@/components/Header/styles/Tab.style.ts';
 import { LoginButtonStyle } from '@/components/Header/styles/LoginButton.style.ts';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '@/context/Auth/useAuth.ts';
 
 export const Header: FC = () => {
     const navigate = useNavigate();
+    const { isAuth } = useAuth();
     return (
         <>
             <HeaderStyle>
                 <LogoStyle>
-                    <a href="/">MOVIES</a>
+                    <Link to="/">MOVIES</Link>
                 </LogoStyle>
                 <TabStyle>
-                    <a href="/">HOME</a>
-                    <a href="/chart">CHART</a>
+                    <Link to="/">HOME</Link>
+                    {isAuth? <Link to="/chart">CHART</Link>:null}
                 </TabStyle>
                 <TabStyle>
                     <LoginButtonStyle onClick={() => navigate('/login')}>

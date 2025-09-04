@@ -14,18 +14,19 @@ import {
 import { useLogin } from '@/hooks/useLogin.tsx';
 import { ClipLoader } from 'react-spinners';
 
+
 export const Login: FC = () => {
     const {
         onPasswordChange,
         onChangeName,
-        logIn,
         handleSubmit,
         isError,
         errorMessage,
         isPending,
     } = useLogin();
 
-    console.log(logIn);
+
+
     return (
         <PageWrapper>
             <LoginPageContainer>
