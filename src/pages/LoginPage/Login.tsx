@@ -10,23 +10,28 @@ import {
     PageWrapper,
     SubHeader,
 } from '@/pages/LoginPage/styles/LoginPage.style.ts';
+import { useLogin } from '@/hooks/useLogin.tsx';
 
 export const Login: FC = () => {
+    const { onPasswordChange, onChangeName, logIn, handleSubmit } = useLogin();
+
+    console.log(logIn);
     return (
         <PageWrapper>
             <LoginPageContainer>
                 <HeaderStyle>LogIn</HeaderStyle>
                 <SubHeader>Sign in to continue to your account</SubHeader>
-                <FormContainer>
-                    {/*{Email}*/}
+                <FormContainer onSubmit={handleSubmit}>
+                    {/*{Name}*/}
                     <InputGroup>
-                        <Label htmlFor="email">Email Address</Label>
+                        <Label htmlFor="email">Username</Label>
                         <Input
-                            type="email"
-                            id="email"
-                            name="email"
-                            placeholder="you@example.com"
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="Enter your Username"
                             required
+                            onChange={onChangeName}
                         />
                     </InputGroup>
 
@@ -38,12 +43,13 @@ export const Login: FC = () => {
                             id="password"
                             name="password"
                             placeholder="Enter your password"
+                            onChange={onPasswordChange}
                             required
                         />
                     </InputGroup>
 
                     {/*{Login}*/}
-                    <LoginButton>Sing in</LoginButton>
+                    <LoginButton type="submit">Sing in</LoginButton>
                 </FormContainer>
             </LoginPageContainer>
         </PageWrapper>

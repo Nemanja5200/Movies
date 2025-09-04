@@ -1,7 +1,8 @@
-import api from '../api/api.ts';
+import { api, loginApi } from '../api/api.ts';
 import { MoviesResponse } from '@/types/Movies.ts';
 import { ParseMoviesResponse } from '@/utils/Parser.ts';
 import { TMDBSortOption } from '@/types/Filter.ts';
+import { LoginInfo } from '@/types/LoginInfo.ts';
 
 export const tmdbService = {
     gotNowPlayingMovies: async (page: number = 1): Promise<MoviesResponse> => {
@@ -41,7 +42,16 @@ export const tmdbService = {
                 sort_by: sortBy,
             },
         });
-
         return ParseMoviesResponse(response.data);
+    },
+
+    getAuthToken: async (loginInfo: LoginInfo): Promise<string> => {
+        const response = await loginApi.post('/login', {
+            username: loginInfo.username,
+            password: loginInfo.password,
+            code: '12345',
+        });
+
+        return response.data.token;
     },
 };

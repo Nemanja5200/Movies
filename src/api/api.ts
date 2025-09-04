@@ -7,4 +7,8 @@ const api = axios.create({
     },
 });
 
-export default api;
+const loginApi = axios.create({
+    baseURL: import.meta.env.VITE_MOCK_USERS_API_BASE_URL,
+});
+
+export { api, loginApi };
