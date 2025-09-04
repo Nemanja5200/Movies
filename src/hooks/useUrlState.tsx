@@ -76,9 +76,7 @@ export const useUrlState = <T,>(options: UseUrlStateOptions<T>) => {
                 }
             }
         }
-
     }, [urlParamValue, paramName, value]);
-
 
     const updateValue = useCallback(
         (newValue: T) => {
@@ -109,7 +107,6 @@ export const useUrlState = <T,>(options: UseUrlStateOptions<T>) => {
         },
 
         [searchParams, defaultValue, setSearchParams, storageKey, paramName]
-
     );
 
     const clearValue = useCallback(() => {
@@ -123,9 +120,7 @@ export const useUrlState = <T,>(options: UseUrlStateOptions<T>) => {
         const newParams = new URLSearchParams(searchParams);
         newParams.delete(paramName);
         setSearchParams(newParams);
-
     }, [defaultValue, searchParams, paramName, setSearchParams, storageKey]);
-
 
     return [value, updateValue, clearValue] as const;
 };

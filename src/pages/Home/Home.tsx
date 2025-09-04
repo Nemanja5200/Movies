@@ -36,12 +36,15 @@ export const Home: FC = () => {
         applyFilters,
         updateFilter,
         filterParams: currentFilterParams,
-    } = useFilter();
+        prefetchFilter,
+        isActive,
+    } = useFilter(currentPage, setCurrentPage);
 
     const { currentMovies, totalPages } = useMovies(
         debouncedSearchTerm,
         currentPage,
-        appliedFilters
+        appliedFilters,
+        isActive
     );
 
     const {
@@ -56,7 +59,9 @@ export const Home: FC = () => {
         totalPages,
         currentPage,
         setCurrentPage,
-        clearCurrentPage
+        clearCurrentPage,
+        isActive,
+        currentFilterParams
     );
 
     return (
@@ -73,6 +78,7 @@ export const Home: FC = () => {
                         updateFilter={updateFilter}
                         onClear={clearFilters}
                         onApply={applyFilters}
+                        prefetchFilter={prefetchFilter}
                     />
                 </FilterSearchContainer>
                 <Table movies={currentMovies} />

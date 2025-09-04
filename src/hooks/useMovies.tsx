@@ -17,10 +17,6 @@ export const useMovies = (
         appliedFilters.sortBy
     );
 
-    // const {data:FilterData} = useSuspenseQuery(getFillterOptions(1,2012));
-    //
-    // console.log(FilterData.results);
-
     const queryOptions = isFiltering
         ? getFillterOptions(currentPage, appliedFilters)
         : isSearching
@@ -31,8 +27,7 @@ export const useMovies = (
 
     return {
         currentMovies: data?.results || [],
-
-        totalPages: data?.total_pages || 1,
+        totalPages: Math.min(data?.total_pages || 1, 500),
         totalResults: data?.total_results || 0,
         apiCurrentPage: data?.page || currentPage,
 

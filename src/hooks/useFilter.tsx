@@ -3,8 +3,12 @@ import { useState } from 'react';
 import { FilterParams, GenreId } from '@/types/Filter.ts';
 import { useUrlState } from '@/hooks/useUrlState.tsx';
 import { filterParamsSerializer } from '@/utils/urlStateSerializers.ts';
-
-export const useFilter = () => {
+import { getFillterOptions } from '@/queryOptions/gotFillterOptions.ts';
+import { QueryClient } from '@tanstack/react-query';
+export const useFilter = (
+    currentPage: number,
+    setCurrentPage: (value: number) => void
+) => {
     const [draftFilters, setDraftFilters] = useState<FilterParams>({});
 
     const [appliedFilters, setAppliedFilters] = useUrlState<FilterParams>({
@@ -46,6 +50,7 @@ export const useFilter = () => {
 
     const applyFilters = () => {
         setAppliedFilters(draftFilters);
+        setCurrentPage(1);
         closeModal();
     };
 
@@ -62,6 +67,17 @@ export const useFilter = () => {
         );
     };
 
+    const queryClient = new QueryClient();
+    const prefetchFilter = async () => {
+        try {
+            await queryClient.prefetchQuery(
+                getFillterOptions(currentPage, draftFilters)
+            );
+        } catch (error) {
+            console.error('Prefetch failed', error);
+        }
+    };
+
     return {
         filterParams: draftFilters,
         appliedFilters,
@@ -72,6 +88,7 @@ export const useFilter = () => {
         toggleGenre,
         applyFilters,
         clearFilters,
+        prefetchFilter,
         isActive,
     };
 };

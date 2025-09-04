@@ -1,11 +1,15 @@
 import { QueryClient } from '@tanstack/react-query';
 import { gotNowPlayingMoviesOptions } from '@/queryOptions/gotNowPlayingMoviesOptions.ts';
+import { getFillterOptions } from '@/queryOptions/gotFillterOptions.ts';
+import { FilterParams } from '@/types/Filter.ts';
 
 export const usePagination = (
     totalPages: number,
     currentPage: number,
     updateValue: (value: number) => void,
-    clearCurrentPage: () => void
+    clearCurrentPage: () => void,
+    isActive: () => boolean,
+    currentFilterParams: FilterParams
 ) => {
     const queryClient = new QueryClient();
 
@@ -20,6 +24,18 @@ export const usePagination = (
 
     const prefetchNextPage = async () => {
         if (hasNext) {
+            if (isActive()) {
+                try {
+                    await queryClient.prefetchQuery(
+                        getFillterOptions(currentPage + 1, currentFilterParams)
+                    );
+                } catch (error) {
+                    console.error('Prefetch prev filtered page failed', error);
+                }
+
+                return;
+            }
+
             try {
                 await queryClient.prefetchQuery(
                     gotNowPlayingMoviesOptions(currentPage + 1)
@@ -31,6 +47,18 @@ export const usePagination = (
     };
 
     const prefetchLastPage = async () => {
+        if (isActive()) {
+            try {
+                await queryClient.prefetchQuery(
+                    getFillterOptions(totalPages, currentFilterParams)
+                );
+            } catch (error) {
+                console.error('Prefetch prev filtered page failed', error);
+            }
+
+            return;
+        }
+
         try {
             await queryClient.prefetchQuery(
                 gotNowPlayingMoviesOptions(totalPages)
@@ -44,6 +72,18 @@ export const usePagination = (
         const prevPage = currentPage - 1;
 
         if (prevPage < 1) return;
+
+        if (isActive()) {
+            try {
+                await queryClient.prefetchQuery(
+                    getFillterOptions(prevPage, currentFilterParams)
+                );
+            } catch (error) {
+                console.error('Prefetch prev filtered page failed', error);
+            }
+
+            return;
+        }
 
         const queryKey = gotNowPlayingMoviesOptions(prevPage).queryKey;
 

@@ -22,7 +22,6 @@ import { generateYearOptions } from '@/utils/genereteYears.ts';
 
 import { SORTING_OPTIONS, SORT_DISPLAY_NAMES } from '@/types/Filter';
 import { GENRE_LIST } from '@/utils/constants/genres.ts';
-import App from '@/App.tsx';
 
 interface FilterModalProps {
     isModal: boolean;
@@ -35,6 +34,7 @@ interface FilterModalProps {
     ) => void;
     onClear: () => void;
     onApply: () => void;
+    prefetchFilter: () => Promise<void>;
 }
 
 export const FilterModal: FC<FilterModalProps> = ({
@@ -45,6 +45,7 @@ export const FilterModal: FC<FilterModalProps> = ({
     updateFilter,
     onClear,
     onApply,
+    prefetchFilter,
 }) => {
     return (
         <>
@@ -152,7 +153,10 @@ export const FilterModal: FC<FilterModalProps> = ({
                             <ClearButton onClick={onClear}>
                                 Clear All
                             </ClearButton>
-                            <ApplyButton onClick={onApply}>
+                            <ApplyButton
+                                onClick={onApply}
+                                onMouseEnter={prefetchFilter}
+                            >
                                 Apply Filter
                             </ApplyButton>
                         </ModalFooter>
