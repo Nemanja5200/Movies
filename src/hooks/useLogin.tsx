@@ -5,16 +5,24 @@ import { postAuthToken } from '@/query/postAuthToken.ts';
 import { QueryClient, useMutation } from '@tanstack/react-query';
 import { getUserOptions } from '@/queryOptions/getUserOptions.ts';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/context/Auth/useAuth.ts';
 
 export const useLogin = () => {
     const queryClient = new QueryClient();
     const navigate = useNavigate();
+
+    const { login: loginAuth } = useAuth();
+
     const { mutate: login, isPending } = useMutation({
         mutationFn: postAuthToken,
         onSuccess: async (token: string) => {
-            document.cookie = `authToken=${token}; path=/; max-age=30; SameSite=Strict`;
+            const userData = await queryClient.fetchQuery(
+                getUserOptions(token)
+            );
+            loginAuth(token, userData);
+
             console.log(token);
-            await queryClient.fetchQuery(getUserOptions(token));
+
             navigate('/');
         },
 

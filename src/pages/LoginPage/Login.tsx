@@ -14,7 +14,6 @@ import {
 import { useLogin } from '@/hooks/useLogin.tsx';
 import { ClipLoader } from 'react-spinners';
 
-
 export const Login: FC = () => {
     const {
         onPasswordChange,
@@ -24,8 +23,6 @@ export const Login: FC = () => {
         errorMessage,
         isPending,
     } = useLogin();
-
-
 
     return (
         <PageWrapper>

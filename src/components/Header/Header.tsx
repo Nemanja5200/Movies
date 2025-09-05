@@ -5,6 +5,7 @@ import { TabStyle } from '@/components/Header/styles/Tab.style.ts';
 import { LoginButtonStyle } from '@/components/Header/styles/LoginButton.style.ts';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/Auth/useAuth.ts';
+import { UserDropdown } from '@/components/UserDropdown/userDropdown.tsx';
 
 export const Header: FC = () => {
     const navigate = useNavigate();
@@ -17,13 +18,17 @@ export const Header: FC = () => {
                 </LogoStyle>
                 <TabStyle>
                     <Link to="/">HOME</Link>
-                    {isAuth? <Link to="/chart">CHART</Link>:null}
+                    {isAuth ? <Link to="/chart">CHART</Link> : null}
                 </TabStyle>
-                <TabStyle>
-                    <LoginButtonStyle onClick={() => navigate('/login')}>
-                        Login
-                    </LoginButtonStyle>
-                </TabStyle>
+                {isAuth ? (
+                    <UserDropdown />
+                ) : (
+                    <TabStyle>
+                        <LoginButtonStyle onClick={() => navigate('/login')}>
+                            Login
+                        </LoginButtonStyle>
+                    </TabStyle>
+                )}
             </HeaderStyle>
         </>
     );
