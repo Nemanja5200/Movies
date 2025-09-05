@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState, useCallback } from 'react';
+import { FC, useCallback } from 'react';
 import {
     Avatar,
     DropdownContainer,
@@ -7,38 +7,17 @@ import {
     UserButton,
 } from '@/components/UserDropdown/styles/UserDropdown.style';
 import { useAuth } from '@/context/Auth/useAuth';
+import { useDropdown } from '@/hooks/useDropdown.tsx';
 
 export const UserDropdown: FC = () => {
-    const [isOpen, setIsOpen] = useState(false);
-    const dropdownRef = useRef<HTMLDivElement>(null);
-    const { user, logout, refreshAuth } = useAuth();
-
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (
-                dropdownRef.current &&
-                !dropdownRef.current.contains(event.target as Node)
-            ) {
-                setIsOpen(false);
-            }
-        };
-
-        if (isOpen) {
-            document.addEventListener('mousedown', handleClickOutside);
-            return () =>
-                document.removeEventListener('mousedown', handleClickOutside);
-        }
-    }, [isOpen]);
+    const { user, logout } = useAuth();
+    const { isOpen, dropdownRef, toggleDropdown, closeDropdown } =
+        useDropdown();
 
     const handleLogout = useCallback(() => {
-        setIsOpen(false);
-        refreshAuth();
+        closeDropdown();
         logout();
-    }, [logout, refreshAuth]);
-
-    const toggleDropdown = useCallback(() => {
-        setIsOpen(prev => !prev);
-    }, []);
+    }, [logout, closeDropdown]);
 
     return (
         <DropdownContainer ref={dropdownRef}>
