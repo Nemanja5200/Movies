@@ -1,41 +1,64 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-interface UseUrlStateOptions {
+interface UseUrlStateOptions<T> {
     storageKey?: string;
-    defaultValue?: number;
+    defaultValue: T;
     paramName?: string;
+    serialize: (value: T) => string;
+    deserialize: (value: string) => T | null;
+    validate?: (value: T) => boolean;
 }
 
-export const useUrlState = (options: UseUrlStateOptions = {}) => {
+export const useUrlState = <T,>(options: UseUrlStateOptions<T>) => {
     const {
         storageKey = 'url-state',
-        defaultValue = 1,
+        defaultValue,
         paramName = 'page',
+        serialize,
+        deserialize,
+        validate = () => true,
     } = options;
 
     const [searchParams, setSearchParams] = useSearchParams();
     const isUpdatingRef = useRef(false);
 
-    const getInitialValue = (): number => {
+    // Store functions for stability
+    const serializeRef = useRef(serialize);
+    const deserializeRef = useRef(deserialize);
+    const validateRef = useRef(validate);
+
+    useEffect(() => {
+        serializeRef.current = serialize;
+        deserializeRef.current = deserialize;
+        validateRef.current = validate;
+    }, [serialize, deserialize, validate]);
+
+    const getInitialValue = (): T => {
         const urlValue = searchParams.get(paramName);
         if (urlValue) {
-            const parsed = parseInt(urlValue, 10);
-            if (parsed > 0) return parsed;
+            const parsed = deserializeRef.current(urlValue);
+            if (parsed !== null && validateRef.current(parsed)) {
+                return parsed;
+            }
         }
 
         if (typeof window !== 'undefined') {
             const saved = localStorage.getItem(storageKey);
             if (saved) {
-                const parsed = parseInt(saved, 10);
-                if (parsed > 0) return parsed;
+                const parsed = deserializeRef.current(saved);
+                if (parsed !== null && validateRef.current(parsed)) {
+                    return parsed;
+                }
             }
         }
 
         return defaultValue;
     };
 
-    const [value, setValue] = useState(getInitialValue);
+    const [value, setValue] = useState<T>(getInitialValue);
+
+    const urlParamValue = searchParams.get(paramName);
 
     useEffect(() => {
         if (isUpdatingRef.current) {
@@ -43,35 +66,47 @@ export const useUrlState = (options: UseUrlStateOptions = {}) => {
             return;
         }
 
-        const urlValue = searchParams.get(paramName);
-        const urlNum = urlValue ? parseInt(urlValue, 10) : defaultValue;
-
-        if (urlNum !== value && urlNum > 0) {
-            setValue(urlNum);
+        if (urlParamValue) {
+            const parsed = deserializeRef.current(urlParamValue);
+            if (parsed !== null && validateRef.current(parsed)) {
+                const currentSerialized = serializeRef.current(value);
+                const parsedSerialized = serializeRef.current(parsed);
+                if (currentSerialized !== parsedSerialized) {
+                    setValue(parsed);
+                }
+            }
         }
-    }, [searchParams, paramName, defaultValue, value]);
+    }, [urlParamValue, paramName, value]);
 
     const updateValue = useCallback(
-        (newValue: number) => {
-            const validValue = Math.max(1, newValue);
-            setValue(validValue);
+        (newValue: T) => {
+            if (!validateRef.current(newValue)) return;
+
+            setValue(newValue);
 
             if (typeof window !== 'undefined') {
-                localStorage.setItem(storageKey, validValue.toString());
+                localStorage.setItem(
+                    storageKey,
+                    serializeRef.current(newValue)
+                );
             }
 
             isUpdatingRef.current = true;
             const newParams = new URLSearchParams(searchParams);
 
-            if (validValue === defaultValue) {
+            if (
+                serializeRef.current(newValue) ===
+                serializeRef.current(defaultValue)
+            ) {
                 newParams.delete(paramName);
             } else {
-                newParams.set(paramName, validValue.toString());
+                newParams.set(paramName, serializeRef.current(newValue));
             }
 
             setSearchParams(newParams);
         },
-        [storageKey, searchParams, setSearchParams, paramName, defaultValue]
+
+        [searchParams, defaultValue, setSearchParams, storageKey, paramName]
     );
 
     const clearValue = useCallback(() => {
@@ -85,7 +120,7 @@ export const useUrlState = (options: UseUrlStateOptions = {}) => {
         const newParams = new URLSearchParams(searchParams);
         newParams.delete(paramName);
         setSearchParams(newParams);
-    }, [defaultValue, storageKey, searchParams, setSearchParams, paramName]);
+    }, [defaultValue, searchParams, paramName, setSearchParams, storageKey]);
 
     return [value, updateValue, clearValue] as const;
 };
