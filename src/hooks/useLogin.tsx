@@ -6,6 +6,7 @@ import { QueryClient, useMutation } from '@tanstack/react-query';
 import { getUserOptions } from '@/queryOptions/getUserOptions.ts';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/Auth/useAuth.ts';
+import { getErrorMessage } from '@/utils/MapErrorMessages.ts';
 
 export const useLogin = () => {
     const queryClient = new QueryClient();
@@ -27,14 +28,19 @@ export const useLogin = () => {
         },
 
         onError: error => {
+            console.log(error.message.toString());
             setIsError(true);
-            setErrorMessage(error.message.toString() || 'Something went wrong');
+            setErrorMessage(
+                getErrorMessage(error.message.toString()) ||
+                    'Something went wrong'
+            );
         },
     });
 
     const [logInData, setLogInData] = useState<LoginInfo>({
         username: '',
         password: '',
+        code: 0,
     });
 
     const [isError, setIsError] = useState(false);
@@ -54,9 +60,49 @@ export const useLogin = () => {
         }));
     };
 
+    const onCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setLogInData(prevState => ({
+            ...prevState,
+            code: Number(e.target.value),
+        }));
+    };
+
+    const validateForm = (): boolean => {
+        if (!logInData.username.trim()) {
+            setIsError(true);
+            setErrorMessage('Username is required');
+            return false;
+        }
+
+        if (!logInData.password) {
+            setIsError(true);
+            setErrorMessage('Password is required');
+            return false;
+        }
+
+        if (
+            !logInData.code ||
+            isNaN(logInData.code) ||
+            logInData.code < 10000 ||
+            logInData.code > 99999
+        ) {
+            console.log(logInData.code);
+            setIsError(true);
+            setErrorMessage('Code must be a 5-digit number');
+            return false;
+        }
+
+        return true;
+    };
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (isError) setIsError(false);
+
+        if (!validateForm()) {
+            return;
+        }
+
         login(logInData);
     };
 
@@ -64,6 +110,7 @@ export const useLogin = () => {
         onChangeName,
         onPasswordChange,
         handleSubmit,
+        onCodeChange,
         isPending,
         errorMessage,
         isError,
