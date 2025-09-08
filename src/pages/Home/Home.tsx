@@ -4,22 +4,46 @@ import { TableContainerStyle } from '@/components/Table/style/TableContainer.sty
 import { Pagination } from '@/components/Pagination/Pagination.tsx';
 import { usePagination } from '@/hooks/usePagination.tsx';
 import { SearchBar } from '@/components/SearchBar';
-import { HomeContainerStyle } from '@/pages/Home/styles/HomeContainer.style.tsx';
+import {
+    FilterSearchContainer,
+    HomeContainerStyle,
+} from '@/pages/Home/styles/HomeContainer.style.tsx';
 import { useSearchTerm } from '@/hooks/useSearchTerm.tsx';
 import { useMovies } from '@/hooks/useMovies.tsx';
 import { useUrlState } from '@/hooks/useUrlState.tsx';
+import { FilterBtn } from '@/components/Fillter/FilterBtn';
+import { FilterModal } from '@/components/Fillter/FilterModal';
+import { useFilter } from '@/hooks/useFilter.tsx';
+import { createPageSerializer } from '@/utils/urlStateSerializers.ts';
 
 export const Home: FC = () => {
     const { searchTerm, debouncedSearchTerm, handleChange } = useSearchTerm();
-    const [currentPage, updateValue, clearCurrentPage] = useUrlState({
+
+    const [currentPage, setCurrentPage, clearCurrentPage] = useUrlState({
         storageKey: 'pagination-current-page',
         defaultValue: 1,
         paramName: 'page',
+        ...createPageSerializer(1, 500),
     });
+
+    const {
+        openModal,
+        closeModal,
+        isModalOpen,
+        toggleGenre,
+        clearFilters,
+        appliedFilters,
+        applyFilters,
+        updateFilter,
+        filterParams: currentFilterParams,
+        prefetchFilter,
+        isActive,
+    } = useFilter(currentPage, setCurrentPage);
 
     const { currentMovies, totalPages } = useMovies(
         debouncedSearchTerm,
-        currentPage
+        currentPage,
+        appliedFilters
     );
 
     const {
@@ -30,12 +54,32 @@ export const Home: FC = () => {
         prefetchLastPage,
         prefetchPrevPage,
         getPageRange,
-    } = usePagination(totalPages, currentPage, updateValue, clearCurrentPage);
+    } = usePagination(
+        totalPages,
+        currentPage,
+        setCurrentPage,
+        clearCurrentPage,
+        isActive,
+        currentFilterParams
+    );
 
     return (
         <HomeContainerStyle>
             <TableContainerStyle>
-                <SearchBar value={searchTerm} onChange={handleChange} />
+                <FilterSearchContainer>
+                    <SearchBar value={searchTerm} onChange={handleChange} />
+                    <FilterBtn onClick={openModal} />
+                    <FilterModal
+                        isModal={isModalOpen}
+                        onClose={closeModal}
+                        toggleGenre={toggleGenre}
+                        filterParams={currentFilterParams}
+                        updateFilter={updateFilter}
+                        onClear={clearFilters}
+                        onApply={applyFilters}
+                        prefetchFilter={prefetchFilter}
+                    />
+                </FilterSearchContainer>
                 <Table movies={currentMovies} />
             </TableContainerStyle>
             <Pagination
