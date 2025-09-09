@@ -1,4 +1,4 @@
-import { QueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { getNowPlayingMoviesOptions } from '@/queryOptions/getNowPlayingMoviesOptions.ts';
 import { getFillterOptions } from '@/queryOptions/getFilterOptions.ts';
 import { FilterParams } from '@/types/Filter.ts';
@@ -11,7 +11,7 @@ export const usePagination = (
     isActive: () => boolean,
     currentFilterParams: FilterParams
 ) => {
-    const queryClient = new QueryClient();
+    const queryClient = useQueryClient();
 
     const updatePage = (newPage: number) => {
         const validPage = Math.max(1, Math.min(totalPages, newPage));

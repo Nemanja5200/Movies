@@ -4,7 +4,7 @@ import { FilterParams, GenreId } from '@/types/Filter.ts';
 import { useUrlState } from '@/hooks/useUrlState.tsx';
 import { filterParamsSerializer } from '@/utils/urlStateSerializers.ts';
 import { getFillterOptions } from '@/queryOptions/getFilterOptions.ts';
-import { QueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 export const useFilter = (
     currentPage?: number,
     setCurrentPage?: (value: number) => void
@@ -69,7 +69,7 @@ export const useFilter = (
         );
     };
 
-    const queryClient = new QueryClient();
+    const queryClient = useQueryClient();
     const prefetchFilter = async () => {
         try {
             await queryClient.prefetchQuery(

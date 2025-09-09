@@ -17,12 +17,17 @@ export const MoviePieChart: FC = () => {
         closeModal,
         clearFilters,
         appliedFilters,
+        isActive,
         updateFilter,
         applyFilters,
         filterParams,
     } = useFilter();
 
-    const { data } = usePieChart(appliedFilters.year);
+    const { data, prefetchYear } = usePieChart(
+        appliedFilters,
+        filterParams,
+        isActive
+    );
 
     return (
         <>
@@ -31,6 +36,7 @@ export const MoviePieChart: FC = () => {
                 onClose={closeModal}
                 filterParams={filterParams}
                 updateFilter={updateFilter}
+                prefetchFilter={prefetchYear}
                 onClear={clearFilters}
                 onApply={applyFilters}
                 sections={{
