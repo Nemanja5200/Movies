@@ -67,12 +67,37 @@ export const tmdbService = {
     },
 
     getPieChartData: async (year: number): Promise<PieChartMovies[]> => {
-        const responce = await api.get('/discover/movie', {
+        const initialRes  = await api.get('/discover/movie', {
             params: {
+                page:1,
                 primary_release_year: year,
                 sort_by: 'popularity.desc',
             },
         });
-        return ParseChartResponse(responce.data);
+
+        const totalPages = Math.min(initialRes.data.total_pages, 50);
+        const allResults = [...initialRes.data.results];
+
+        const pagePromises = [];
+
+        for (let page = 2; page <= totalPages; page++) {
+            pagePromises.push(
+                api.get('/discover/movie', {
+                    params: {
+                        primary_release_year: year,
+                        sort_by: 'popularity.desc',
+                        page,
+                    },
+                })
+            );
+        }
+
+        const responses = await Promise.all(pagePromises);
+
+        responses.forEach(res => {
+            allResults.push(...res.data.results);
+        });
+
+        return ParseChartResponse(allResults);
     },
 };

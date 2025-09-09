@@ -14,6 +14,11 @@ export const usePieChart = (
     const year = appliedFilters.year ?? 1900;
 
     const { data } = useQuery(getPieChartDataOptions(year, isAuth));
+    const total = data?.reduce((sum, item) => sum + item.value, 0) ?? 0;
+
+    const visibleData = data?.filter(item => (item.value / total) * 100 >= 1);
+    console.log(data);
+
 
     const prefetchYear = async () => {
         if (isActive()) {
@@ -30,7 +35,7 @@ export const usePieChart = (
     };
 
     return {
-        data,
+        filtered:visibleData,
         prefetchYear,
     };
 };

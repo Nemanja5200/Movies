@@ -23,7 +23,7 @@ export const MoviePieChart: FC = () => {
         filterParams,
     } = useFilter();
 
-    const { data, prefetchYear } = usePieChart(
+    const { filtered, prefetchYear } = usePieChart(
         appliedFilters,
         filterParams,
         isActive
@@ -53,7 +53,7 @@ export const MoviePieChart: FC = () => {
                     <ResponsiveContainer width="100%" height="100%">
                         <PieChart>
                             <Pie
-                                data={data}
+                                data={filtered}
                                 cx="50%"
                                 cy="50%"
                                 labelLine={false}
@@ -64,7 +64,7 @@ export const MoviePieChart: FC = () => {
                                     `${name} ${((percent as number) * 100).toFixed(0)}%`
                                 }
                             >
-                                {data?.map((entry, index) => (
+                                {filtered?.map((entry, index) => (
                                     <Cell
                                         key={`cell-${entry.name}`}
                                         fill={COLORS[index % COLORS.length]}

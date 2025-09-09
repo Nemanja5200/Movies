@@ -31,9 +31,9 @@ export const ParseMovie = (rawMovie: RawMovie): Movie => {
 };
 
 export const ParseChartResponse = (
-    rawMovie: RawTMDBResponse
+    results: RawMovie[]
 ): PieChartMovies[] => {
-    const { results } = rawMovie;
+
 
     const pieChartMap = results.reduce<Record<string, number>>((acc, movie) => {
         movie.genre_ids.forEach(id => {
