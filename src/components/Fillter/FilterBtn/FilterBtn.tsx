@@ -7,18 +7,17 @@ import {
 import FilterIcon from '@/assets/icons/FilterIcon.svg?react';
 interface FilterBtnProps {
     onClick?: () => void;
+    className?: string;
 }
 
-export const FilterBtn: FC<FilterBtnProps> = ({ onClick }) => {
+export const FilterBtn: FC<FilterBtnProps> = ({ onClick, className }) => {
     return (
-        <>
-            <FillterContainerStyle>
-                <FilterButtonWithIcon onClick={onClick}>
-                    <SvgContainer>
-                        <FilterIcon />
-                    </SvgContainer>
-                </FilterButtonWithIcon>
-            </FillterContainerStyle>
-        </>
+        <FillterContainerStyle className={className}>
+            <FilterButtonWithIcon onClick={onClick}>
+                <SvgContainer>
+                    <FilterIcon />
+                </SvgContainer>
+            </FilterButtonWithIcon>
+        </FillterContainerStyle>
     );
 };
