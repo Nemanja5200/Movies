@@ -19,7 +19,6 @@ export const usePieChart = (
     const visibleData = data?.filter(item => (item.value / total) * 100 >= 1);
     console.log(data);
 
-
     const prefetchYear = async () => {
         if (isActive()) {
             try {
@@ -35,7 +34,7 @@ export const usePieChart = (
     };
 
     return {
-        filtered:visibleData,
+        filtered: visibleData,
         prefetchYear,
     };
 };

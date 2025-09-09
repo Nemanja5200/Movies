@@ -67,9 +67,9 @@ export const tmdbService = {
     },
 
     getPieChartData: async (year: number): Promise<PieChartMovies[]> => {
-        const initialRes  = await api.get('/discover/movie', {
+        const initialRes = await api.get('/discover/movie', {
             params: {
-                page:1,
+                page: 1,
                 primary_release_year: year,
                 sort_by: 'popularity.desc',
             },

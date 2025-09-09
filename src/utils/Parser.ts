@@ -30,11 +30,7 @@ export const ParseMovie = (rawMovie: RawMovie): Movie => {
     };
 };
 
-export const ParseChartResponse = (
-    results: RawMovie[]
-): PieChartMovies[] => {
-
-
+export const ParseChartResponse = (results: RawMovie[]): PieChartMovies[] => {
     const pieChartMap = results.reduce<Record<string, number>>((acc, movie) => {
         movie.genre_ids.forEach(id => {
             const genreName = GENRE_NAMES[id as GenreId];

@@ -42,6 +42,7 @@ interface FilterModalProps {
     onClear: () => void;
     onApply: () => void;
     prefetchFilter?: () => Promise<void>;
+    prefetchChartData?: (year: number) => Promise<void>;
     sections?: FilterSections;
 }
 
@@ -54,6 +55,7 @@ export const FilterModal: FC<FilterModalProps> = ({
     onClear,
     onApply,
     prefetchFilter,
+    prefetchChartData,
     sections = {
         showGenres: true,
         showRating: true,
@@ -105,14 +107,19 @@ export const FilterModal: FC<FilterModalProps> = ({
                                 <FilterTitle>Release Year</FilterTitle>
                                 <YearSelect
                                     value={filterParams.year || ''}
-                                    onChange={e =>
+                                    onChange={async e => {
                                         updateFilter(
                                             'year',
                                             e.target.value
                                                 ? parseInt(e.target.value)
                                                 : undefined
-                                        )
-                                    }
+                                        );
+                                        if (prefetchChartData) {
+                                            await prefetchChartData(
+                                                Number(e.target.value)
+                                            );
+                                        }
+                                    }}
                                 >
                                     <option value="">All Years</option>
                                     {generateYearOptions().map(year => (
