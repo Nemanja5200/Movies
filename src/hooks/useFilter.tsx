@@ -6,8 +6,8 @@ import { filterParamsSerializer } from '@/utils/urlStateSerializers.ts';
 import { getFillterOptions } from '@/queryOptions/getFilterOptions.ts';
 import { QueryClient } from '@tanstack/react-query';
 export const useFilter = (
-    currentPage: number,
-    setCurrentPage: (value: number) => void
+    currentPage?: number,
+    setCurrentPage?: (value: number) => void
 ) => {
     const [draftFilters, setDraftFilters] = useState<FilterParams>({});
 
@@ -50,7 +50,9 @@ export const useFilter = (
 
     const applyFilters = () => {
         setAppliedFilters(draftFilters);
-        setCurrentPage(1);
+        if (setCurrentPage) {
+            setCurrentPage(1);
+        }
         closeModal();
     };
 
