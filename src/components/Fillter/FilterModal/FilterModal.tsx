@@ -42,7 +42,7 @@ interface FilterModalProps {
     onClear: () => void;
     onApply: () => void;
     prefetchFilter?: () => Promise<void>;
-    prefetchChartData?: (year: number) => Promise<void>;
+    prefetchChartData?: (newYear: number) => Promise<void>;
     sections?: FilterSections;
 }
 
@@ -108,15 +108,19 @@ export const FilterModal: FC<FilterModalProps> = ({
                                 <YearSelect
                                     value={filterParams.year || ''}
                                     onChange={async e => {
+                                        const newYear = e.target.value
+                                            ? parseInt(e.target.value)
+                                            : undefined;
                                         updateFilter(
                                             'year',
-                                            e.target.value
+                                            newYear
                                                 ? parseInt(e.target.value)
                                                 : undefined
                                         );
+                                        console.log(prefetchChartData);
                                         if (prefetchChartData) {
                                             await prefetchChartData(
-                                                Number(e.target.value)
+                                                Number(newYear)
                                             );
                                         }
                                     }}

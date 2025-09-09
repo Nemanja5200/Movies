@@ -23,7 +23,7 @@ export const MoviePieChart: FC = () => {
         filterParams,
     } = useFilter();
 
-    const { filtered, prefetchYear } = usePieChart(
+    const { filtered, prefetchChartData } = usePieChart(
         appliedFilters,
         filterParams,
         isActive
@@ -36,7 +36,7 @@ export const MoviePieChart: FC = () => {
                 onClose={closeModal}
                 filterParams={filterParams}
                 updateFilter={updateFilter}
-                prefetchChartData={prefetchYear}
+                prefetchChartData={prefetchChartData}
                 onClear={clearFilters}
                 onApply={applyFilters}
                 sections={{
