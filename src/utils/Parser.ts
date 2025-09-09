@@ -1,14 +1,16 @@
 import {
     Movie,
     MoviesResponse,
+    PieChartMovies,
     RawMovie,
     RawTMDBResponse,
 } from '@/types/Movies.ts';
+import { GENRE_NAMES, GenreId } from '@/types/Genres.ts';
 
 export const ParseMoviesResponse = (
-    rawResponce: RawTMDBResponse
+    rawResponse: RawTMDBResponse
 ): MoviesResponse => {
-    const { page, total_pages, results, total_results } = rawResponce;
+    const { page, total_pages, results, total_results } = rawResponse;
 
     return {
         page,
@@ -26,4 +28,25 @@ export const ParseMovie = (rawMovie: RawMovie): Movie => {
         overview,
         poster: poster_path,
     };
+};
+
+export const ParseChartResponse = (
+    rawMovie: RawTMDBResponse
+): PieChartMovies[] => {
+    const { results } = rawMovie;
+
+    const pieChartMap = results.reduce<Record<string, number>>((acc, movie) => {
+        movie.genre_ids.forEach(id => {
+            const genreName = GENRE_NAMES[id as GenreId];
+            if (genreName) {
+                acc[genreName] = (acc[genreName] || 0) + 1;
+            }
+        });
+        return acc;
+    }, {});
+
+    return Object.entries(pieChartMap).map(([name, value]) => ({
+        name,
+        value,
+    }));
 };

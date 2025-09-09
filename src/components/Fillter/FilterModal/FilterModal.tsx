@@ -21,7 +21,7 @@ import { FilterParams, GenreId, TMDBSortOption } from '@/types/Filter.ts';
 import { generateYearOptions } from '@/utils/genereteYears.ts';
 
 import { SORTING_OPTIONS, SORT_DISPLAY_NAMES } from '@/types/Filter';
-import { GENRE_LIST } from '@/utils/constants/genres.ts';
+import { GENRE_LIST } from '@/utils/constants/GenresList.ts';
 
 interface FilterModalProps {
     isModal: boolean;

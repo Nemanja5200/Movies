@@ -1,6 +1,6 @@
 import { api, loginApi } from '../api/api.ts';
-import { MoviesResponse } from '@/types/Movies.ts';
-import { ParseMoviesResponse } from '@/utils/Parser.ts';
+import { MoviesResponse, PieChartMovies } from '@/types/Movies.ts';
+import { ParseChartResponse, ParseMoviesResponse } from '@/utils/Parser.ts';
 import { TMDBSortOption } from '@/types/Filter.ts';
 import { LoginInfo } from '@/types/LoginInfo.ts';
 import { User } from '@/types/User.ts';
@@ -64,5 +64,15 @@ export const tmdbService = {
         });
 
         return response.data;
+    },
+
+    getPieChartData: async (year: number): Promise<PieChartMovies[]> => {
+        const responce = await api.get('/discover/movie', {
+            params: {
+                primary_release_year: year,
+                sort_by: 'popularity.desc',
+            },
+        });
+        return ParseChartResponse(responce.data);
     },
 };

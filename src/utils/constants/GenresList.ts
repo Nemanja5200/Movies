@@ -1,4 +1,4 @@
-import { GENRE_NAMES, GENRES } from '@/types/Filter.ts';
+import { GENRE_NAMES, GENRES } from '@/types/Genres.ts';
 
 export const GENRE_LIST = Object.values(GENRES).map(id => ({
     id,

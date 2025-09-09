@@ -35,3 +35,8 @@ export interface RawTMDBResponse {
     total_pages: number;
     total_results: number;
 }
+
+export interface PieChartMovies {
+    name: string;
+    value: number;
+}
