@@ -22,28 +22,4 @@ export const ChartPageWrapper = styled.div`
     flex-direction: column;
     width: 100%;
     padding: 20px;
-
-    button {
-        position: absolute;
-        top: 15%; 
-        right: 35%; 
-        min-width: 100px;
-        height: 35px;
-        padding: 0 15px;
-        z-index: 1;
-        font-size: 14px;
-
-        svg {
-            width: 24px;
-            height: 24px;
-        }
-        
-        @media (max-width: 974px) {
-            position: static;
-            display: flex;
-            flex-direction: column;
-            margin-top: 30px;
-        }
-        
-        
 `;

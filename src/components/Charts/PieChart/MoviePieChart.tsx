@@ -1,53 +1,19 @@
 import { FC } from 'react';
-import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
-import { usePieChart } from '@/hooks/usePieChart.tsx';
+import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 import { COLORS } from '@/utils/constants/PiceChartColors.ts';
 import {
     ChartPageWrapper,
     ChartsContainer,
 } from '@/components/Charts/PieChart/style/MoviePieChart.style.ts';
-import { FilterBtn } from '@/components/Fillter/FilterBtn';
-import { FilterModal } from '@/components/Fillter/FilterModal';
-import { useFilter } from '@/hooks/useFilter.tsx';
+import { PieChartMovies } from '@/types/Movies.ts';
 
-export const MoviePieChart: FC = () => {
-    const {
-        isModalOpen,
-        openModal,
-        closeModal,
-        clearFilters,
-        appliedFilters,
-        isActive,
-        updateFilter,
-        applyFilters,
-        filterParams,
-    } = useFilter();
-
-    const { filtered, prefetchChartData } = usePieChart(
-        appliedFilters,
-        isActive
-    );
-
+interface Props {
+    filtered: PieChartMovies[];
+}
+export const MoviePieChart: FC<Props> = ({ filtered }) => {
     return (
         <>
-            <FilterModal
-                isModal={isModalOpen}
-                onClose={closeModal}
-                filterParams={filterParams}
-                updateFilter={updateFilter}
-                prefetchChartData={prefetchChartData}
-                onClear={clearFilters}
-                onApply={applyFilters}
-                sections={{
-                    showGenres: false,
-                    showYear: true,
-                    showRating: false,
-                    showSort: false,
-                }}
-            />
             <ChartPageWrapper>
-                <FilterBtn onClick={openModal} />
-
                 <ChartsContainer>
                     <ResponsiveContainer width="100%" height="100%">
                         <PieChart>
@@ -56,7 +22,7 @@ export const MoviePieChart: FC = () => {
                                 cx="50%"
                                 cy="50%"
                                 labelLine={false}
-                                outerRadius={120}
+                                outerRadius={150}
                                 fill="#8884d8"
                                 dataKey="value"
                                 label={({ name, percent }) =>
@@ -69,6 +35,8 @@ export const MoviePieChart: FC = () => {
                                         fill={COLORS[index % COLORS.length]}
                                     />
                                 ))}
+                                activeIndex={null}
+                                <Tooltip />
                             </Pie>
                         </PieChart>
                     </ResponsiveContainer>
