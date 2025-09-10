@@ -5,8 +5,7 @@ import { MovieBarChart } from '@/components/Charts/BarChart';
 import { FilterBtn } from '@/components/Fillter/FilterBtn';
 import { FilterModal } from '@/components/Fillter/FilterModal';
 import { useFilter } from '@/hooks/useFilter.tsx';
-import { usePieChart } from '@/hooks/usePieChart.tsx';
-
+import { useChart } from '@/hooks/useChart.tsx';
 export const Chart: FC = () => {
     const {
         isModalOpen,
@@ -20,7 +19,7 @@ export const Chart: FC = () => {
         filterParams,
     } = useFilter();
 
-    const { filtered, prefetchChartData } = usePieChart(
+    const { filtered, prefetchChartData, barChartData } = useChart(
         appliedFilters,
         isActive
     );
@@ -47,7 +46,7 @@ export const Chart: FC = () => {
                     <FilterBtn onClick={openModal} />
                 </ButtonRow>
                 <MoviePieChart filtered={filtered} />
-                <MovieBarChart />
+                <MovieBarChart barChartdata={barChartData} />
             </ChartWrapper>
         </>
     );

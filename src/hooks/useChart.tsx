@@ -2,10 +2,11 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getPieChartDataOptions } from '@/queryOptions/getPieChartDataOptions.tsx';
 import { useAuth } from '@/context/Auth/useAuth.ts';
 import { FilterParams } from '@/types/Filter.ts';
-import { PieChartMovies } from '@/types/Movies.ts';
 import { useMemo } from 'react';
+import { ChartData } from '@/types/Chart.ts';
+import { getBarChartOptions } from '@/queryOptions/getBarChartOptions.ts';
 
-export const usePieChart = (
+export const useChart = (
     appliedFilters: FilterParams,
     isActive: () => boolean
 ) => {
@@ -14,17 +15,21 @@ export const usePieChart = (
 
     const year = appliedFilters.year ?? 1900;
 
-    const { data } = useQuery(getPieChartDataOptions(year, isAuth));
-    const total = data?.reduce((sum, item) => sum + item.value, 0) ?? 0;
+    const { data: pieChartdata } = useQuery(
+        getPieChartDataOptions(year, isAuth)
+    );
+    const { data: barChartData } = useQuery(getBarChartOptions(year, isAuth));
 
-    const processedData = useMemo(() => {
-        if (!data || total === 0) return [];
+    const total = pieChartdata?.reduce((sum, item) => sum + item.value, 0) ?? 0;
+
+    const processedPieChartData = useMemo(() => {
+        if (!pieChartdata || total === 0) return [];
 
         const threshold = 3; // percentage threshold
-        const visibleData: PieChartMovies[] = [];
-        const otherItems: PieChartMovies[] = [];
+        const visibleData: ChartData[] = [];
+        const otherItems: ChartData[] = [];
 
-        data.forEach(item => {
+        pieChartdata.forEach(item => {
             const percentage = (item.value / total) * 100;
             if (percentage >= threshold) {
                 visibleData.push(item);
@@ -45,15 +50,19 @@ export const usePieChart = (
         }
 
         return visibleData;
-    }, [data, total]);
+    }, [pieChartdata, total]);
 
-    const prefetchChartData = async (yearToPrefetch: number) => {
+    const prefetchPieChartData = async (yearToPrefetch: number) => {
         if (isActive()) {
             try {
                 console.log(yearToPrefetch);
 
                 await queryClient.prefetchQuery(
                     getPieChartDataOptions(yearToPrefetch, isAuth)
+                );
+
+                await queryClient.prefetchQuery(
+                    getBarChartOptions(yearToPrefetch, isAuth)
                 );
             } catch (error) {
                 console.error('Prefetching pie chart data failed:', error);
@@ -62,7 +71,8 @@ export const usePieChart = (
     };
 
     return {
-        filtered: processedData,
-        prefetchChartData,
+        filtered: processedPieChartData,
+        prefetchChartData: prefetchPieChartData,
+        barChartData,
     };
 };

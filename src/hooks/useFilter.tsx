@@ -1,10 +1,11 @@
 // Modified useFilter hook
 import { useState } from 'react';
-import { FilterParams, GenreId } from '@/types/Filter.ts';
+import { FilterParams } from '@/types/Filter.ts';
 import { useUrlState } from '@/hooks/useUrlState.tsx';
 import { filterParamsSerializer } from '@/utils/urlStateSerializers.ts';
 import { getFillterOptions } from '@/queryOptions/getFilterOptions.ts';
 import { useQueryClient } from '@tanstack/react-query';
+import { GenreId } from '@/types/Genres.ts';
 export const useFilter = (
     currentPage?: number,
     setCurrentPage?: (value: number) => void

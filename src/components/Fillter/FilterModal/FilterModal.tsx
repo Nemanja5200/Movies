@@ -17,11 +17,12 @@ import {
 } from '@/components/Fillter/FilterModal/styles/FilterModal.style.ts';
 
 import CloseIcon from '@/assets/icons/CloseIcon.svg?react';
-import { FilterParams, GenreId, TMDBSortOption } from '@/types/Filter.ts';
+import { FilterParams, TMDBSortOption } from '@/types/Filter.ts';
 import { generateYearOptions } from '@/utils/genereteYears.ts';
 
 import { SORTING_OPTIONS, SORT_DISPLAY_NAMES } from '@/types/Filter';
 import { GENRE_LIST } from '@/utils/constants/GenresList.ts';
+import { GenreId } from '@/types/Genres.ts';
 
 interface FilterSections {
     showGenres?: boolean;

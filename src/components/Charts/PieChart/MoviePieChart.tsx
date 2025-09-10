@@ -5,10 +5,10 @@ import {
     ChartPageWrapper,
     ChartsContainer,
 } from '@/components/Charts/PieChart/style/MoviePieChart.style.ts';
-import { PieChartMovies } from '@/types/Movies.ts';
+import { ChartData } from '@/types/Chart.ts';
 
 interface Props {
-    filtered: PieChartMovies[];
+    filtered: ChartData[];
 }
 export const MoviePieChart: FC<Props> = ({ filtered }) => {
     return (
