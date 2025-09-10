@@ -21,13 +21,13 @@ export const usePieChart = (
         if (!data || total === 0) return [];
 
         const threshold = 3; // percentage threshold
-        const visableData: PieChartMovies[] = [];
+        const visibleData: PieChartMovies[] = [];
         const otherItems: PieChartMovies[] = [];
 
         data.forEach(item => {
-            const presentage = (item.value / total) * 100;
-            if (presentage >= threshold) {
-                visableData.push(item);
+            const percentage = (item.value / total) * 100;
+            if (percentage >= threshold) {
+                visibleData.push(item);
             } else {
                 otherItems.push(item);
             }
@@ -38,13 +38,13 @@ export const usePieChart = (
             0
         );
         if (otherItems.length > 0) {
-            visableData.push({
+            visibleData.push({
                 name: 'Other',
                 value: otherItemsValue,
             });
         }
 
-        return visableData;
+        return visibleData;
     }, [data, total]);
 
     const prefetchChartData = async (yearToPrefetch: number) => {
