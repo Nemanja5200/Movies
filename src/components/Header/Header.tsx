@@ -6,6 +6,7 @@ import { LoginButtonStyle } from '@/components/Header/styles/LoginButton.style.t
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/Auth/useAuth.ts';
 import { UserDropdown } from '@/components/UserDropdown/userDropdown.tsx';
+import { RoutePath } from '@/utils/constants/routes.ts';
 
 export const Header: FC = () => {
     const navigate = useNavigate();
@@ -14,7 +15,7 @@ export const Header: FC = () => {
         <>
             <HeaderStyle>
                 <LogoStyle>
-                    <Link to="/">MOVIES</Link>
+                    <Link to={RoutePath.HOME}>MOVIES</Link>
                 </LogoStyle>
                 <TabStyle>
                     <Link to="/">HOME</Link>

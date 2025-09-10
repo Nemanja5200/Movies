@@ -7,6 +7,7 @@ import { getUserOptions } from '@/queryOptions/getUserOptions.ts';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/Auth/useAuth.ts';
 import { getErrorMessage } from '@/utils/MapErrorMessages.ts';
+import { RoutePath } from '@/utils/constants/routes.ts';
 
 export const useLogin = () => {
     const queryClient = new QueryClient();
@@ -22,9 +23,7 @@ export const useLogin = () => {
             );
             loginAuth(token, userData);
 
-            console.log(token);
-
-            navigate('/');
+            navigate(RoutePath.HOME);
         },
 
         onError: error => {
@@ -86,7 +85,6 @@ export const useLogin = () => {
             logInData.code < 10000 ||
             logInData.code > 99999
         ) {
-            console.log(logInData.code);
             setIsError(true);
             setErrorMessage('Code must be a 5-digit number');
             return false;
