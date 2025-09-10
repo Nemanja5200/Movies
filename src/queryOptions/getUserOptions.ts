@@ -2,13 +2,12 @@ import { queryOptions } from '@tanstack/react-query';
 import { tmdbService } from '@/service/tmdbService.ts';
 import { getTime } from '@/utils/getTime.ts';
 
-export const getNowPlayingMoviesOptions = (page: number) => {
+export const getUserOptions = (token: string) => {
     return queryOptions({
-        queryKey: ['now-playing', page],
-        queryFn: () => tmdbService.gotNowPlayingMovies(page),
-
+        queryKey: ['auth-user'],
+        queryFn: () => tmdbService.getUserData(token),
+        enabled: !!localStorage.getItem('token'),
         staleTime: getTime(5),
-        gcTime: getTime(5),
         refetchOnWindowFocus: false,
     });
 };

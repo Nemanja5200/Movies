@@ -15,4 +15,17 @@ export const HeaderStyle = styled.header`
     > *:last-child {
         margin-left: auto;
     }
+
+    @media (max-width: 446px) {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        > *:nth-child(2) {
+            margin-left: 0;
+        }
+        > *:last-child {
+            margin-left: 0;
+        }
+    }
 `;

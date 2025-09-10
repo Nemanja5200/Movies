@@ -1,5 +1,6 @@
 import { queryOptions } from '@tanstack/react-query';
 import { tmdbService } from '@/service/tmdbService.ts';
+import { getTime } from '@/utils/getTime.ts';
 
 export const getSearchTermMoviesOptions = (
     searchTerm: string,
@@ -9,8 +10,8 @@ export const getSearchTermMoviesOptions = (
         queryKey: ['search-tearm', searchTerm, page],
         queryFn: () => tmdbService.getSearchTermMovies(searchTerm, page),
 
-        staleTime: 5 * 60 * 1000,
-        gcTime: 10 * 60 * 1000,
+        staleTime: getTime(5),
+        gcTime: getTime(5),
         refetchOnWindowFocus: false,
     });
 };
