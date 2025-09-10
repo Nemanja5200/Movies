@@ -18,14 +18,14 @@ export const Header: FC = () => {
                     <Link to={RoutePath.HOME}>MOVIES</Link>
                 </LogoStyle>
                 <TabStyle>
-                    <Link to="/">HOME</Link>
-                    {isAuth ? <Link to="/chart">CHART</Link> : null}
+                    <Link to={RoutePath.HOME}>HOME</Link>
+                    {isAuth ? <Link to={RoutePath.CHART}>CHART</Link> : null}
                 </TabStyle>
                 {isAuth ? (
                     <UserDropdown />
                 ) : (
                     <TabStyle>
-                        <LoginButtonStyle onClick={() => navigate('/login')}>
+                        <LoginButtonStyle onClick={() => navigate(RoutePath.LOGIN)}>
                             Login
                         </LoginButtonStyle>
                     </TabStyle>
