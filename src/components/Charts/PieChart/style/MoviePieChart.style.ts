@@ -14,7 +14,6 @@ export const ChartsContainer = styled.div`
 
     @media (max-width: 973px) {
         width: 100%;
-        margin-top: 30px;
     }
 `;
 

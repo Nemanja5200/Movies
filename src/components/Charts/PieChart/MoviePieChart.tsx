@@ -25,7 +25,6 @@ export const MoviePieChart: FC = () => {
 
     const { filtered, prefetchChartData } = usePieChart(
         appliedFilters,
-        filterParams,
         isActive
     );
 
