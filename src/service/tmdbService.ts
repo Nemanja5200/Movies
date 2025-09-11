@@ -1,9 +1,10 @@
 import { api, loginApi } from '../api/api.ts';
 import { MoviesResponse } from '@/types/Movies.ts';
-import { ParseMoviesResponse } from '@/utils/Parser.ts';
+import { ParseDetails, ParseMoviesResponse } from '@/utils/Parser.ts';
 import { TMDBSortOption } from '@/types/Filter.ts';
 import { LoginInfo } from '@/types/LoginInfo.ts';
 import { User } from '@/types/User.ts';
+import { Details } from '@/types/Details.ts';
 
 export const tmdbService = {
     gotNowPlayingMovies: async (page: number = 1): Promise<MoviesResponse> => {
@@ -64,5 +65,11 @@ export const tmdbService = {
         });
 
         return response.data;
+    },
+
+    getDetailsData: async (id: number): Promise<Details> => {
+        const responce = await api.get(`/movie/${id}`);
+
+        return ParseDetails(responce.data);
     },
 };

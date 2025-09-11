@@ -14,7 +14,7 @@ function App() {
             <Routes>
                 <Route path={RoutePath.HOME} element={<Home />} />
                 <Route path={RoutePath.LOGIN} element={<Login />} />
-                <Route path={RoutePath.DETAILS} element={<Details/>}/>
+                <Route path={RoutePath.DETAILS} element={<Details />} />
             </Routes>
         </>
     );

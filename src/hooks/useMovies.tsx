@@ -29,9 +29,9 @@ export const useMovies = (
 
     const navigate = useNavigate();
 
-    const handleRowClick = (id : number)=>{
+    const handleRowClick = (id: number) => {
         navigate(`${RoutePath.DETAILS.replace(':id', String(id))}`);
-    }
+    };
 
     return {
         currentMovies: data?.results || [],

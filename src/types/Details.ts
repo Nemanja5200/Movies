@@ -42,7 +42,6 @@ export interface RawDetails {
     vote_count: number;
 }
 
-
 export interface Details {
     title: string;
     originalTitle: string;

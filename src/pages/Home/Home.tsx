@@ -40,7 +40,7 @@ export const Home: FC = () => {
         isActive,
     } = useFilter(currentPage, setCurrentPage);
 
-    const { currentMovies, totalPages , handleRowClick} = useMovies(
+    const { currentMovies, totalPages, handleRowClick } = useMovies(
         debouncedSearchTerm,
         currentPage,
         appliedFilters

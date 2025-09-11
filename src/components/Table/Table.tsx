@@ -22,7 +22,7 @@ import { movieTableColumns } from '@/components/Table/colums/moviTableColums.tsx
 
 interface TableProps {
     movies: Movie[];
-    handleRowClick: (id: number) => void,
+    handleRowClick: (id: number) => void;
 }
 
 export const Table: FC<TableProps> = ({ movies, handleRowClick }) => {
@@ -52,7 +52,10 @@ export const Table: FC<TableProps> = ({ movies, handleRowClick }) => {
             </TableHeader>
             <TableBody>
                 {table.getRowModel().rows.map(row => (
-                    <TableRow key={row.id} onClick={()=> handleRowClick(row.original.id)}>
+                    <TableRow
+                        key={row.id}
+                        onClick={() => handleRowClick(row.original.id)}
+                    >
                         {row.getVisibleCells().map(cell => {
                             const CellComponent =
                                 cell.column.id === 'poster'
