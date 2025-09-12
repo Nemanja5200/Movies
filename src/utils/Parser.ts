@@ -5,6 +5,7 @@ import {
     RawTMDBResponse,
 } from '@/types/Movies.ts';
 import { Details, RawDetails } from '@/types/Details.ts';
+import { IMAGE_BASE_URL } from '@/utils/constants/Links.ts';
 
 export const ParseMoviesResponse = (
     rawResponce: RawTMDBResponse
@@ -71,12 +72,8 @@ export const ParseDetails = (rawDetails: RawDetails): Details => {
         revenue,
         voteAverage: vote_average,
         voteCount: vote_count,
-        posterUrl: poster_path
-            ? `https://image.tmdb.org/t/p/w500${poster_path}`
-            : null,
-        backdropUrl: backdrop_path
-            ? `https://image.tmdb.org/t/p/w780${backdrop_path}`
-            : null,
+        posterUrl: poster_path ? `${IMAGE_BASE_URL}${poster_path}` : null,
+        backdropUrl: backdrop_path ? `${IMAGE_BASE_URL}${backdrop_path}` : null,
         homepage,
         status,
         imdbId: imdb_id,
