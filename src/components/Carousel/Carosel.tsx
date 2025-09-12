@@ -8,6 +8,7 @@ import {
 import Slider from 'react-slick';
 import { Movie } from '@/types/Movies.ts';
 import { IMAGE_BASE_URL } from '@/utils/constants/Links.ts';
+import { settings } from '@/utils/constants/CarouselSettings.ts';
 
 interface Props {
     movies: Movie[];
@@ -20,41 +21,6 @@ export const Carosel: FC<Props> = ({
     handleCarouselClick,
     prefetchSimilarMovies,
 }) => {
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 600,
-        slidesToShow: 5,
-        slidesToScroll: 1,
-        arrows: true,
-        responsive: [
-            {
-                breakpoint: 1280,
-                settings: {
-                    slidesToShow: 4,
-                },
-            },
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 3,
-                },
-            },
-            {
-                breakpoint: 768,
-                settings: {
-                    slidesToShow: 2,
-                },
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 1,
-                },
-            },
-        ],
-    };
-
     return (
         <CarouselWrapper>
             <Slider {...settings}>
