@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom';
 import { useDetails } from '@/hooks/useDetails.tsx';
 import {
     ActionButton,
-    ButtonsContainer, CarouselContainer,
+    ButtonsContainer,
+    CarouselContainer,
     ContentWrapper,
     DetailsContainer,
     GenresContainer,
@@ -33,7 +34,8 @@ import { Carosel } from '@/components/Carousel';
 export const Details: FC = () => {
     const { id } = useParams<{ id: string }>();
 
-    const { data , similarMovies} = useDetails(id);
+    const { data, similarMovies, handleCarouselClick, prefetchSimilarMovie } =
+        useDetails(id);
     return (
         <>
             <DetailsContainer>
@@ -120,7 +122,11 @@ export const Details: FC = () => {
                         </MovieInfo>
                     </MainInfoSection>
                     <CarouselContainer>
-                        <Carosel movies={similarMovies.results}/>
+                        <Carosel
+                            movies={similarMovies.results}
+                            handleCarouselClick={handleCarouselClick}
+                            prefetchSimilarMovies={prefetchSimilarMovie}
+                        />
                     </CarouselContainer>
                 </ContentWrapper>
             </DetailsContainer>

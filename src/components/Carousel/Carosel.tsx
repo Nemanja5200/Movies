@@ -1,16 +1,25 @@
 import { FC } from 'react';
 import { NoPoster } from '@/pages/Details/styles/Details.styles.tsx';
-import { CarouselPoster, CarouselTitle, CarouselWrapper } from './styles/Carosel.style.ts';
-import Slider from "react-slick";
+import {
+    CarouselPoster,
+    CarouselTitle,
+    CarouselWrapper,
+} from './styles/Carosel.style.ts';
+import Slider from 'react-slick';
 import { Movie } from '@/types/Movies.ts';
 import { IMAGE_BASE_URL } from '@/utils/constants/Links.ts';
 
 interface Props {
-    movies:Movie[],
+    movies: Movie[];
+    handleCarouselClick: (id: number) => void;
+    prefetchSimilarMovies: (id: number) => void;
 }
 
-export const Carosel: FC<Props> = ({movies}) => {
-
+export const Carosel: FC<Props> = ({
+    movies,
+    handleCarouselClick,
+    prefetchSimilarMovies,
+}) => {
     const settings = {
         dots: true,
         infinite: true,
@@ -46,14 +55,20 @@ export const Carosel: FC<Props> = ({movies}) => {
         ],
     };
 
-
     return (
         <CarouselWrapper>
             <Slider {...settings}>
                 {movies.map(movie => (
                     <div key={movie.id}>
                         {movie.poster ? (
-                            <CarouselPoster src={`${IMAGE_BASE_URL}${movie.poster}`} alt={movie.title} />
+                            <CarouselPoster
+                                src={`${IMAGE_BASE_URL}${movie.poster}`}
+                                alt={movie.title}
+                                onClick={() => handleCarouselClick(movie.id)}
+                                onMouseEnter={() =>
+                                    prefetchSimilarMovies(movie.id)
+                                }
+                            />
                         ) : (
                             <NoPoster>
                                 <span>No Poster</span>
@@ -66,5 +81,3 @@ export const Carosel: FC<Props> = ({movies}) => {
         </CarouselWrapper>
     );
 };
-
-

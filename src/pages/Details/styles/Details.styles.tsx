@@ -232,7 +232,5 @@ export const ActionButton = styled.a`
 `;
 
 export const CarouselContainer = styled.div`
-
     width: 100%;
-    
-`
+`;

@@ -6,7 +6,6 @@ import { LoginInfo } from '@/types/LoginInfo.ts';
 import { User } from '@/types/User.ts';
 import { Details } from '@/types/Details.ts';
 
-
 export const tmdbService = {
     gotNowPlayingMovies: async (page: number = 1): Promise<MoviesResponse> => {
         const response = await api.get('/movie/now_playing', {
@@ -74,9 +73,9 @@ export const tmdbService = {
         return ParseDetails(response.data);
     },
 
-    getSimilarMovies: async (id:number): Promise<MoviesResponse> => {
-        const response = await  api.get (`/movie/${id}/similar`);
+    getSimilarMovies: async (id: number): Promise<MoviesResponse> => {
+        const response = await api.get(`/movie/${id}/similar`);
 
-        return ParseMoviesResponse(response.data)
-    }
+        return ParseMoviesResponse(response.data);
+    },
 };
