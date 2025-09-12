@@ -6,7 +6,7 @@ export const PageWrapper = styled.div`
     justify-content: center;
     align-items: flex-start;
     min-height: 90vh;
-    padding-top: 20vh;
+    padding-top: 10vh;
 `;
 
 export const LoginPageContainer = styled.div`
@@ -78,6 +78,18 @@ export const Input = styled.input`
 
     &::placeholder {
         color: #aaa;
+    }
+
+    /* Hide spinner arrows for number inputs */
+    &[type='number'] {
+        -moz-appearance: textfield; /* Firefox */
+        appearance: textfield; /* Standard */
+    }
+
+    &[type='number']::-webkit-inner-spin-button,
+    &[type='number']::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
     }
 `;
 

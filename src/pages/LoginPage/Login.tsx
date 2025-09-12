@@ -19,6 +19,7 @@ export const Login: FC = () => {
         onPasswordChange,
         onChangeName,
         handleSubmit,
+        onCodeChange,
         isError,
         errorMessage,
         isPending,
@@ -30,12 +31,7 @@ export const Login: FC = () => {
                 <HeaderStyle>LogIn</HeaderStyle>
                 <SubHeader>Sign in to continue to your account</SubHeader>
                 <ClipLoader color="#667eea" loading={isPending} size={50} />
-                {isError && errorMessage.includes('401') ? (
-                    <ErrorMessage>Incorrect Email or password </ErrorMessage>
-                ) : null}
-                {isError && errorMessage.includes('Network Error') ? (
-                    <ErrorMessage>Server Connection Error </ErrorMessage>
-                ) : null}
+                {isError ? <ErrorMessage>{errorMessage}</ErrorMessage> : null}
                 <FormContainer onSubmit={handleSubmit}>
                     {/*{Name}*/}
                     <InputGroup>
@@ -59,6 +55,18 @@ export const Login: FC = () => {
                             name="password"
                             placeholder="Enter your password"
                             onChange={onPasswordChange}
+                            required
+                        />
+                    </InputGroup>
+
+                    <InputGroup>
+                        <Label htmlFor="code">Code</Label>
+                        <Input
+                            type="number"
+                            id="code"
+                            name="code"
+                            onChange={onCodeChange}
+                            placeholder="Enter your Code"
                             required
                         />
                     </InputGroup>

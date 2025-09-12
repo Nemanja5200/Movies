@@ -90,7 +90,7 @@ export const tmdbService = {
         const response = await loginApi.post('/login', {
             username: loginInfo.username,
             password: loginInfo.password,
-            code: '12345',
+            code: loginInfo.code.toString(),
         });
 
         return response.data.token;
