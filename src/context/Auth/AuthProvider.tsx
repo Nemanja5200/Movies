@@ -78,7 +78,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }, [queryClient]);
 
     const login = useCallback((newToken: string, userData?: User) => {
-        document.cookie = `authToken=${newToken}; path=/; max-age=30 ; SameSite=Lax`;
+        document.cookie = `authToken=${newToken}; path=/; max-age=600 ; SameSite=Lax`;
 
         setToken(newToken);
 

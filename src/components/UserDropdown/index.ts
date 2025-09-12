@@ -1,1 +1,1 @@
-export { userDropdown } from './userDropdown.tsx';
+export { UserDropdown } from './userDropdown.tsx';

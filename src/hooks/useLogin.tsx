@@ -27,7 +27,6 @@ export const useLogin = () => {
         },
 
         onError: error => {
-            console.log(error.message.toString());
             setIsError(true);
             setErrorMessage(
                 getErrorMessage(error.message.toString()) ||

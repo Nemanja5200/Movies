@@ -1,9 +1,49 @@
 import { api, loginApi } from '../api/api.ts';
 import { MoviesResponse } from '@/types/Movies.ts';
-import { ParseMoviesResponse } from '@/utils/Parser.ts';
+import {
+    ParsePieChartResponse,
+    ParseMoviesResponse,
+    ParseBarChartResponse,
+} from '@/utils/Parser.ts';
 import { TMDBSortOption } from '@/types/Filter.ts';
 import { LoginInfo } from '@/types/LoginInfo.ts';
 import { User } from '@/types/User.ts';
+import { ChartData } from '@/types/Chart.ts';
+
+const fetchMoviesByYear = async (year: number, maxPages: number = 50) => {
+    const initialRes = await api.get('/discover/movie', {
+        params: {
+            page: 1,
+            primary_release_year: year,
+            sort_by: 'popularity.desc',
+        },
+    });
+
+    const totalPages = Math.min(initialRes.data.total_pages, maxPages);
+    const allResults = [...initialRes.data.results];
+
+    const pagePromises = [];
+
+    for (let page = 2; page <= totalPages; page++) {
+        pagePromises.push(
+            api.get('/discover/movie', {
+                params: {
+                    primary_release_year: year,
+                    sort_by: 'popularity.desc',
+                    page,
+                },
+            })
+        );
+    }
+
+    const responses = await Promise.all(pagePromises);
+
+    responses.forEach(res => {
+        allResults.push(...res.data.results);
+    });
+
+    return allResults;
+};
 
 export const tmdbService = {
     gotNowPlayingMovies: async (page: number = 1): Promise<MoviesResponse> => {
@@ -64,5 +104,35 @@ export const tmdbService = {
         });
 
         return response.data;
+    },
+
+    getPieChartData: async (year: number): Promise<ChartData[]> => {
+        const movies = await fetchMoviesByYear(year, 50);
+        return ParsePieChartResponse(movies);
+    },
+
+    getBarChartData: async (year: number): Promise<ChartData[]> => {
+        const movies = await fetchMoviesByYear(year, 3);
+
+        const BATCH_SIZE = 20;
+        const movieDetails = [];
+
+        for (let i = 0; i < movies.length; i += BATCH_SIZE) {
+            const batch = movies.slice(i, i + BATCH_SIZE);
+            const batchPromises = batch.map(movie =>
+                api.get(`/movie/${movie.id}`).catch(err => {
+                    console.error(`Failed to fetch movie ${movie.id}:`, err);
+                    return null;
+                })
+            );
+
+            const batchResults = await Promise.all(batchPromises);
+            const validResults = batchResults
+                .filter(Boolean)
+                .map(response => response?.data);
+            movieDetails.push(...validResults);
+        }
+
+        return ParseBarChartResponse(movieDetails);
     },
 };

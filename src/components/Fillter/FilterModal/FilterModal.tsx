@@ -17,16 +17,24 @@ import {
 } from '@/components/Fillter/FilterModal/styles/FilterModal.style.ts';
 
 import CloseIcon from '@/assets/icons/CloseIcon.svg?react';
-import { FilterParams, GenreId, TMDBSortOption } from '@/types/Filter.ts';
+import { FilterParams, TMDBSortOption } from '@/types/Filter.ts';
 import { generateYearOptions } from '@/utils/genereteYears.ts';
 
 import { SORTING_OPTIONS, SORT_DISPLAY_NAMES } from '@/types/Filter';
-import { GENRE_LIST } from '@/utils/constants/genres.ts';
+import { GENRE_LIST } from '@/utils/constants/GenresList.ts';
+import { GenreId } from '@/types/Genres.ts';
+
+interface FilterSections {
+    showGenres?: boolean;
+    showYear?: boolean;
+    showRating?: boolean;
+    showSort?: boolean;
+}
 
 interface FilterModalProps {
     isModal: boolean;
     onClose: () => void;
-    toggleGenre: (genreId: GenreId) => void;
+    toggleGenre?: (genreId: GenreId) => void;
     filterParams: FilterParams;
     updateFilter: <K extends keyof FilterParams>(
         key: K,
@@ -34,7 +42,9 @@ interface FilterModalProps {
     ) => void;
     onClear: () => void;
     onApply: () => void;
-    prefetchFilter: () => Promise<void>;
+    prefetchFilter?: () => Promise<void>;
+    prefetchChartData?: (newYear: number) => Promise<void>;
+    sections?: FilterSections;
 }
 
 export const FilterModal: FC<FilterModalProps> = ({
@@ -46,6 +56,13 @@ export const FilterModal: FC<FilterModalProps> = ({
     onClear,
     onApply,
     prefetchFilter,
+    prefetchChartData,
+    sections = {
+        showGenres: true,
+        showRating: true,
+        showYear: true,
+        showSort: true,
+    },
 }) => {
     return (
         <>
@@ -58,101 +75,123 @@ export const FilterModal: FC<FilterModalProps> = ({
                         </CloseButton>
                     </ModalHeader>
                     <ModalBody>
-                        {/*{Genres}*/}
-                        <FilterSection>
-                            <FilterTitle>Genres</FilterTitle>
-                            <FilterOptionsGrid>
-                                {GENRE_LIST.map(genre => (
-                                    <FilterOption key={genre.id}>
-                                        <input
-                                            type="checkbox"
-                                            checked={
-                                                filterParams.genres?.includes(
-                                                    genre.id
-                                                ) || false
-                                            }
-                                            onChange={() =>
-                                                toggleGenre(genre.id)
-                                            }
-                                        />
-                                        {genre.name}
-                                    </FilterOption>
-                                ))}
-                            </FilterOptionsGrid>
-                        </FilterSection>
+                        {/* Genres */}
+                        {sections.showGenres && (
+                            <FilterSection>
+                                <FilterTitle>Genres</FilterTitle>
+                                <FilterOptionsGrid>
+                                    {GENRE_LIST.map(genre => (
+                                        <FilterOption key={genre.id}>
+                                            <input
+                                                type="checkbox"
+                                                checked={Boolean(
+                                                    filterParams.genres?.includes(
+                                                        genre.id
+                                                    )
+                                                )}
+                                                onChange={() =>
+                                                    toggleGenre
+                                                        ? toggleGenre(genre.id)
+                                                        : null
+                                                }
+                                            />
+                                            {genre.name}
+                                        </FilterOption>
+                                    ))}
+                                </FilterOptionsGrid>
+                            </FilterSection>
+                        )}
 
                         {/* Year */}
-                        <FilterSection>
-                            <FilterTitle>Release Year</FilterTitle>
-                            <YearSelect
-                                value={filterParams.year || ''}
-                                onChange={e =>
-                                    updateFilter(
-                                        'year',
-                                        e.target.value
+                        {sections.showYear && (
+                            <FilterSection>
+                                <FilterTitle>Release Year</FilterTitle>
+                                <YearSelect
+                                    value={filterParams.year || ''}
+                                    onChange={async e => {
+                                        const newYear = e.target.value
                                             ? parseInt(e.target.value)
-                                            : undefined
-                                    )
-                                }
-                            >
-                                <option value="">All Years</option>
-                                {generateYearOptions().map(year => (
-                                    <option key={year} value={year}>
-                                        {year}
-                                    </option>
-                                ))}
-                            </YearSelect>
-                        </FilterSection>
+                                            : undefined;
+                                        updateFilter(
+                                            'year',
+                                            newYear
+                                                ? parseInt(e.target.value)
+                                                : undefined
+                                        );
+                                        if (prefetchChartData) {
+                                            await prefetchChartData(
+                                                Number(newYear)
+                                            );
+                                        }
+                                    }}
+                                >
+                                    <option value="">All Years</option>
+                                    {generateYearOptions().map(year => (
+                                        <option key={year} value={year}>
+                                            {year}
+                                        </option>
+                                    ))}
+                                </YearSelect>
+                            </FilterSection>
+                        )}
 
-                        {/* Ratings */}
-                        <FilterSection>
-                            <FilterTitle>
-                                Minimum Rating: {filterParams.ratingMin || 0}
-                            </FilterTitle>
-                            <RangeSlider>
-                                <input
-                                    type="range"
-                                    min="0"
-                                    max="10"
-                                    step="0.5"
-                                    value={filterParams.ratingMin || 0}
+                        {/* Rating */}
+                        {sections.showRating && (
+                            <FilterSection>
+                                <FilterTitle>
+                                    Minimum Rating:{' '}
+                                    {filterParams.ratingMin || 0}
+                                </FilterTitle>
+                                <RangeSlider>
+                                    <input
+                                        type="range"
+                                        min="0"
+                                        max="10"
+                                        step="0.5"
+                                        value={filterParams.ratingMin || 0}
+                                        onChange={e =>
+                                            updateFilter(
+                                                'ratingMin',
+                                                parseFloat(e.target.value)
+                                            )
+                                        }
+                                    />
+                                </RangeSlider>
+                            </FilterSection>
+                        )}
+
+                        {/* Sort */}
+                        {sections.showSort && (
+                            <FilterSection>
+                                <FilterTitle>Sort By</FilterTitle>
+                                <YearSelect
+                                    value={
+                                        filterParams.sortBy ||
+                                        SORTING_OPTIONS.POPULARITY_DESC
+                                    }
                                     onChange={e =>
                                         updateFilter(
-                                            'ratingMin',
-                                            parseFloat(e.target.value)
+                                            'sortBy',
+                                            e.target.value as TMDBSortOption
                                         )
                                     }
-                                />
-                            </RangeSlider>
-                        </FilterSection>
-
-                        {/* Sort By */}
-                        <FilterSection>
-                            <FilterTitle>Sort By</FilterTitle>
-                            <YearSelect
-                                value={
-                                    filterParams.sortBy ||
-                                    SORTING_OPTIONS.POPULARITY_DESC
-                                }
-                                onChange={e =>
-                                    updateFilter(
-                                        'sortBy',
-                                        e.target.value as TMDBSortOption
-                                    )
-                                }
-                            >
-                                {Object.values(SORTING_OPTIONS).map(option => (
-                                    <option key={option} value={option}>
-                                        {SORT_DISPLAY_NAMES[option]}
-                                    </option>
-                                ))}
-                            </YearSelect>
-                        </FilterSection>
+                                >
+                                    {Object.values(SORTING_OPTIONS).map(
+                                        option => (
+                                            <option key={option} value={option}>
+                                                {SORT_DISPLAY_NAMES[option]}
+                                            </option>
+                                        )
+                                    )}
+                                </YearSelect>
+                            </FilterSection>
+                        )}
 
                         <ModalFooter>
                             <ClearButton onClick={onClear}>
                                 Clear All
                             </ClearButton>
+
                             <ApplyButton
                                 onClick={onApply}
                                 onMouseEnter={prefetchFilter}

@@ -1,13 +1,14 @@
 // Modified useFilter hook
 import { useState } from 'react';
-import { FilterParams, GenreId } from '@/types/Filter.ts';
+import { FilterParams } from '@/types/Filter.ts';
 import { useUrlState } from '@/hooks/useUrlState.tsx';
 import { filterParamsSerializer } from '@/utils/urlStateSerializers.ts';
 import { getFillterOptions } from '@/queryOptions/getFilterOptions.ts';
-import { QueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
+import { GenreId } from '@/types/Genres.ts';
 export const useFilter = (
-    currentPage: number,
-    setCurrentPage: (value: number) => void
+    currentPage?: number,
+    setCurrentPage?: (value: number) => void
 ) => {
     const [draftFilters, setDraftFilters] = useState<FilterParams>({});
 
@@ -50,7 +51,9 @@ export const useFilter = (
 
     const applyFilters = () => {
         setAppliedFilters(draftFilters);
-        setCurrentPage(1);
+        if (setCurrentPage) {
+            setCurrentPage(1);
+        }
         closeModal();
     };
 
@@ -67,7 +70,7 @@ export const useFilter = (
         );
     };
 
-    const queryClient = new QueryClient();
+    const queryClient = useQueryClient();
     const prefetchFilter = async () => {
         try {
             await queryClient.prefetchQuery(
