@@ -25,7 +25,9 @@ export const Header: FC = () => {
                     <UserDropdown />
                 ) : (
                     <TabStyle>
-                        <LoginButtonStyle onClick={() => navigate(RoutePath.LOGIN)}>
+                        <LoginButtonStyle
+                            onClick={() => navigate(RoutePath.LOGIN)}
+                        >
                             Login
                         </LoginButtonStyle>
                     </TabStyle>

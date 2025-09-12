@@ -4,10 +4,12 @@ import {
     ParsePieChartResponse,
     ParseMoviesResponse,
     ParseBarChartResponse,
+    ParseDetails
 } from '@/utils/Parser.ts';
 import { TMDBSortOption } from '@/types/Filter.ts';
 import { LoginInfo } from '@/types/LoginInfo.ts';
 import { User } from '@/types/User.ts';
+import { Details } from '@/types/Details.ts';
 import { ChartData } from '@/types/Chart.ts';
 
 const fetchMoviesByYear = async (year: number, maxPages: number = 50) => {
@@ -134,5 +136,17 @@ export const tmdbService = {
         }
 
         return ParseBarChartResponse(movieDetails);
+    },
+
+    getDetailsData: async (id: number): Promise<Details> => {
+        const response = await api.get(`/movie/${id}`);
+
+        return ParseDetails(response.data);
+    },
+
+    getSimilarMovies: async (id: number): Promise<MoviesResponse> => {
+        const response = await api.get(`/movie/${id}/similar`);
+
+        return ParseMoviesResponse(response.data);
     },
 };

@@ -40,7 +40,7 @@ export const Home: FC = () => {
         isActive,
     } = useFilter(currentPage, setCurrentPage);
 
-    const { currentMovies, totalPages } = useMovies(
+    const { currentMovies, totalPages, handleRowClick } = useMovies(
         debouncedSearchTerm,
         currentPage,
         appliedFilters
@@ -80,7 +80,7 @@ export const Home: FC = () => {
                         prefetchFilter={prefetchFilter}
                     />
                 </FilterSearchContainer>
-                <Table movies={currentMovies} />
+                <Table movies={currentMovies} handleRowClick={handleRowClick} />
             </TableContainerStyle>
             <Pagination
                 currentPage={currentPage}

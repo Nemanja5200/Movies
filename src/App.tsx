@@ -7,6 +7,7 @@ import { RoutePath } from '@/utils/constants/routes.ts';
 import { ProtectedRoute } from '@/utils/ProtectedRoute.tsx';
 import { Chart } from '@/pages/Chart';
 
+import { Details } from '@/pages/Details';
 
 function App() {
     return (
@@ -16,6 +17,7 @@ function App() {
             <Routes>
                 <Route path={RoutePath.HOME} element={<Home />} />
                 <Route path={RoutePath.LOGIN} element={<Login />} />
+                <Route path={RoutePath.DETAILS} element={<Details />} />
                 <Route element={<ProtectedRoute />}>
                     <Route path={RoutePath.CHART} element={<Chart />} />
                 </Route>
