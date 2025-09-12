@@ -230,3 +230,9 @@ export const ActionButton = styled.a`
         cursor: not-allowed;
     }
 `;
+
+export const CarouselContainer = styled.div`
+
+    width: 100%;
+    
+`

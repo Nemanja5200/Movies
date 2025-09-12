@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useDetails } from '@/hooks/useDetails.tsx';
 import {
     ActionButton,
-    ButtonsContainer,
+    ButtonsContainer, CarouselContainer,
     ContentWrapper,
     DetailsContainer,
     GenresContainer,
@@ -28,11 +28,12 @@ import {
     VoteCount,
 } from '@/pages/Details/styles/Details.styles.tsx';
 import { IMBD_BASE_URL } from '@/utils/constants/Links.ts';
+import { Carosel } from '@/components/Carousel';
 
 export const Details: FC = () => {
     const { id } = useParams<{ id: string }>();
 
-    const { data } = useDetails(id);
+    const { data , similarMovies} = useDetails(id);
     return (
         <>
             <DetailsContainer>
@@ -118,6 +119,9 @@ export const Details: FC = () => {
                             </ButtonsContainer>
                         </MovieInfo>
                     </MainInfoSection>
+                    <CarouselContainer>
+                        <Carosel movies={similarMovies.results}/>
+                    </CarouselContainer>
                 </ContentWrapper>
             </DetailsContainer>
         </>
