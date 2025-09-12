@@ -84,11 +84,11 @@ export const FilterModal: FC<FilterModalProps> = ({
                                         <FilterOption key={genre.id}>
                                             <input
                                                 type="checkbox"
-                                                checked={
+                                                checked={Boolean(
                                                     filterParams.genres?.includes(
                                                         genre.id
-                                                    ) || false
-                                                }
+                                                    )
+                                                )}
                                                 onChange={() =>
                                                     toggleGenre
                                                         ? toggleGenre(genre.id)
@@ -118,7 +118,6 @@ export const FilterModal: FC<FilterModalProps> = ({
                                                 ? parseInt(e.target.value)
                                                 : undefined
                                         );
-                                        console.log(prefetchChartData);
                                         if (prefetchChartData) {
                                             await prefetchChartData(
                                                 Number(newYear)

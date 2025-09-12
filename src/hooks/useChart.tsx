@@ -55,8 +55,6 @@ export const useChart = (
     const prefetchPieChartData = async (yearToPrefetch: number) => {
         if (isActive()) {
             try {
-                console.log(yearToPrefetch);
-
                 await queryClient.prefetchQuery(
                     getPieChartDataOptions(yearToPrefetch, isAuth)
                 );

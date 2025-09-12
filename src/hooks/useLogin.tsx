@@ -21,8 +21,6 @@ export const useLogin = () => {
             );
             loginAuth(token, userData);
 
-            console.log(token);
-
             navigate('/');
         },
 

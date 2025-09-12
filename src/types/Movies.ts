@@ -39,7 +39,6 @@ export interface RawTMDBResponse {
 export interface RawDetails {
     adult: boolean;
     backdrop_path: string | null;
-    belongs_to_collection: any | null;
     budget: number;
     genres: {
         id: number;
