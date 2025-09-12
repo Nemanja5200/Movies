@@ -39,7 +39,7 @@ export const Details: FC = () => {
     return (
         <>
             <DetailsContainer>
-                <HeroSection $backdrop={data.backdropUrl}>
+                <HeroSection $backdrop={data.backdropUrl || undefined}>
                     <HeroOverlay />
                 </HeroSection>
 
