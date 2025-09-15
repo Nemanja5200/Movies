@@ -4,7 +4,7 @@ import {
     ParsePieChartResponse,
     ParseMoviesResponse,
     ParseBarChartResponse,
-    ParseDetails
+    ParseDetails,
 } from '@/utils/Parser.ts';
 import { TMDBSortOption } from '@/types/Filter.ts';
 import { LoginInfo } from '@/types/LoginInfo.ts';

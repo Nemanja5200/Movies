@@ -6,14 +6,18 @@ import { Login } from '@/pages/LoginPage/Login.tsx';
 import { RoutePath } from '@/utils/constants/routes.ts';
 import { ProtectedRoute } from '@/utils/ProtectedRoute.tsx';
 import { Chart } from '@/pages/Chart';
-
 import { Details } from '@/pages/Details';
+import { HistoryWidget } from '@/components/HistoryWidget';
+import { useWidgetVisibility } from '@/hooks/useWidgetVisibility.tsx';
 
 function App() {
+    const shouldShowWidget = useWidgetVisibility();
+
     return (
         <>
             <GlobalStyles />
             <Header />
+            {shouldShowWidget && <HistoryWidget />}
             <Routes>
                 <Route path={RoutePath.HOME} element={<Home />} />
                 <Route path={RoutePath.LOGIN} element={<Login />} />

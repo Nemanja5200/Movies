@@ -36,7 +36,9 @@ export const Carosel: FC<Props> = ({
                                 }
                             />
                         ) : (
-                            <NoPoster onClick={() => handleCarouselClick(movie.id)}>
+                            <NoPoster
+                                onClick={() => handleCarouselClick(movie.id)}
+                            >
                                 <span>No Poster</span>
                             </NoPoster>
                         )}
