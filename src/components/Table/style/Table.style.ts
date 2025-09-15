@@ -51,6 +51,7 @@ export const TableBody = styled.tbody`
 export const TableRow = styled.tr`
     border-bottom: 1px solid gold;
     transition: background-color 0.2s ease;
+    cursor: pointer;
 
     &:hover {
         background: rgba(17, 169, 200, 0.05);

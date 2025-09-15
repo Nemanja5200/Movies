@@ -15,6 +15,7 @@ import { FilterBtn } from '@/components/Fillter/FilterBtn';
 import { FilterModal } from '@/components/Fillter/FilterModal';
 import { useFilter } from '@/hooks/useFilter.tsx';
 import { createPageSerializer } from '@/utils/urlStateSerializers.ts';
+import { useWidget } from '@/hooks/Widget/useWidget.tsx';
 
 export const Home: FC = () => {
     const { searchTerm, debouncedSearchTerm, handleChange } = useSearchTerm();
@@ -63,6 +64,8 @@ export const Home: FC = () => {
         currentFilterParams
     );
 
+    const { addToHistory } = useWidget();
+
     return (
         <HomeContainerStyle>
             <TableContainerStyle>
@@ -80,7 +83,11 @@ export const Home: FC = () => {
                         prefetchFilter={prefetchFilter}
                     />
                 </FilterSearchContainer>
-                <Table movies={currentMovies} handleRowClick={handleRowClick} />
+                <Table
+                    movies={currentMovies}
+                    handleRowClick={handleRowClick}
+                    addToHistory={addToHistory}
+                />
             </TableContainerStyle>
             <Pagination
                 currentPage={currentPage}

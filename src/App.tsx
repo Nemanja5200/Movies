@@ -8,7 +8,7 @@ import { ProtectedRoute } from '@/utils/ProtectedRoute.tsx';
 import { Chart } from '@/pages/Chart';
 import { Details } from '@/pages/Details';
 import { HistoryWidget } from '@/components/HistoryWidget';
-import { useWidgetVisibility } from '@/hooks/useWidgetVisibility.tsx';
+import { useWidgetVisibility } from '@/hooks/Widget/useWidgetVisibility.tsx';
 
 function App() {
     const shouldShowWidget = useWidgetVisibility();

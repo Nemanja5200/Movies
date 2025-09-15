@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import { RoutePath } from '@/utils/constants/routes';
+import { RoutePath } from '@/utils/constants/routes.ts';
 
 const HIDE_WIDGET_PATHS = [RoutePath.LOGIN];
 

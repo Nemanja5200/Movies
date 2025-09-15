@@ -5,15 +5,18 @@ import App from './App.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from '@/context/Auth/AuthProvider.tsx';
+import { MovieHistoryWidgetProvider } from '@/context/HistoryWiget/MovieHistoryWidgetProvider.tsx';
 
-const queryClinet = new QueryClient();
+const queryClient = new QueryClient();
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <BrowserRouter>
-            <QueryClientProvider client={queryClinet}>
-                <AuthProvider>
-                    <App />
-                </AuthProvider>
+            <QueryClientProvider client={queryClient}>
+                <MovieHistoryWidgetProvider>
+                    <AuthProvider>
+                        <App />
+                    </AuthProvider>
+                </MovieHistoryWidgetProvider>
             </QueryClientProvider>
         </BrowserRouter>
     </StrictMode>

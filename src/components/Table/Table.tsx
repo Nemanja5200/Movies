@@ -19,13 +19,20 @@ import {
     IdCell,
 } from './style/Table.style.ts';
 import { movieTableColumns } from '@/components/Table/colums/moviTableColums.tsx';
+import { MovieHistoryItem } from '@/types/HistoryWidget.ts';
+import { IMAGE_BASE_URL } from '@/utils/constants/Links.ts';
 
 interface TableProps {
     movies: Movie[];
     handleRowClick: (id: number) => void;
+    addToHistory: (movie: MovieHistoryItem) => void;
 }
 
-export const Table: FC<TableProps> = ({ movies, handleRowClick }) => {
+export const Table: FC<TableProps> = ({
+    movies,
+    handleRowClick,
+    addToHistory,
+}) => {
     const table = useReactTable({
         data: movies,
         columns: movieTableColumns,
@@ -54,7 +61,14 @@ export const Table: FC<TableProps> = ({ movies, handleRowClick }) => {
                 {table.getRowModel().rows.map(row => (
                     <TableRow
                         key={row.id}
-                        onClick={() => handleRowClick(row.original.id)}
+                        onClick={() => {
+                            addToHistory({
+                                id: row.original.id,
+                                title: row.original.title,
+                                poster: `${IMAGE_BASE_URL}${row.original.poster}`,
+                            });
+                            handleRowClick(row.original.id);
+                        }}
                     >
                         {row.getVisibleCells().map(cell => {
                             const CellComponent =

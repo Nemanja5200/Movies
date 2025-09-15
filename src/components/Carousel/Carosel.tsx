@@ -9,17 +9,20 @@ import Slider from 'react-slick';
 import { Movie } from '@/types/Movies.ts';
 import { IMAGE_BASE_URL } from '@/utils/constants/Links.ts';
 import { settings } from '@/utils/constants/CarouselSettings.ts';
+import { MovieHistoryItem } from '@/types/HistoryWidget.ts';
 
 interface Props {
     movies: Movie[];
     handleCarouselClick: (id: number) => void;
     prefetchSimilarMovies: (id: number) => void;
+    addToHistory: (movie: MovieHistoryItem) => void;
 }
 
 export const Carosel: FC<Props> = ({
     movies,
     handleCarouselClick,
     prefetchSimilarMovies,
+    addToHistory,
 }) => {
     return (
         <CarouselWrapper>
@@ -30,14 +33,28 @@ export const Carosel: FC<Props> = ({
                             <CarouselPoster
                                 src={`${IMAGE_BASE_URL}${movie.poster}`}
                                 alt={movie.title}
-                                onClick={() => handleCarouselClick(movie.id)}
+                                onClick={() => {
+                                    addToHistory({
+                                        id: movie.id,
+                                        title: movie.title,
+                                        poster: `${IMAGE_BASE_URL}${movie.poster}`,
+                                    });
+                                    handleCarouselClick(movie.id);
+                                }}
                                 onMouseEnter={() =>
                                     prefetchSimilarMovies(movie.id)
                                 }
                             />
                         ) : (
                             <NoPoster
-                                onClick={() => handleCarouselClick(movie.id)}
+                                onClick={() => {
+                                    addToHistory({
+                                        id: movie.id,
+                                        title: movie.title,
+                                        poster: `${IMAGE_BASE_URL}${movie.poster}`,
+                                    });
+                                    handleCarouselClick(movie.id);
+                                }}
                             >
                                 <span>No Poster</span>
                             </NoPoster>

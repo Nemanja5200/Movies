@@ -30,12 +30,15 @@ import {
 } from '@/pages/Details/styles/Details.styles.tsx';
 import { IMBD_BASE_URL } from '@/utils/constants/Links.ts';
 import { Carosel } from '@/components/Carousel';
+import { useMovieHistory } from '@/context/HistoryWiget/useMovieHistory.ts';
 
 export const Details: FC = () => {
     const { id } = useParams<{ id: string }>();
 
     const { data, similarMovies, handleCarouselClick, prefetchSimilarMovie } =
         useDetails(id);
+
+    const { addToHistory } = useMovieHistory();
     return (
         <>
             <DetailsContainer>
@@ -126,6 +129,7 @@ export const Details: FC = () => {
                             movies={similarMovies.results}
                             handleCarouselClick={handleCarouselClick}
                             prefetchSimilarMovies={prefetchSimilarMovie}
+                            addToHistory={addToHistory}
                         />
                     </CarouselContainer>
                 </ContentWrapper>

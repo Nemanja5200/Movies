@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const CarouselWrapper = styled.div`
     margin: 2rem 0;
+    cursor: pointer;
     .slick-slide > div {
         padding: 0 10px;
     }

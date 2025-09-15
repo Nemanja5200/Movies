@@ -5,28 +5,23 @@ export const WidgetContainer = styled.div<{ $isExpanded: boolean }>`
     bottom: 20px;
     right: 30px;
     z-index: 100;
-    
-   
-    width: ${props => props.$isExpanded ? '280px' : '60px'};
-    height: ${props => props.$isExpanded ? 'auto' : '60px'};
-    max-height: ${props => props.$isExpanded ? '400px' : '60px'};
-    
-  
-    border-radius: ${props => props.$isExpanded ? '12px' : '50%'};
-    border: 2px solid ${props => props.$isExpanded ? '#2d3748' : '#e0e0e0'};
+
+    width: ${props => (props.$isExpanded ? '280px' : '60px')};
+    height: ${props => (props.$isExpanded ? 'auto' : '60px')};
+    max-height: ${props => (props.$isExpanded ? '400px' : '60px')};
+
+    border-radius: ${props => (props.$isExpanded ? '12px' : '50%')};
+    border: 2px solid ${props => (props.$isExpanded ? '#2d3748' : '#e0e0e0')};
     background-color: #0a0e12;
-    
-  
+
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    
-  
+
     display: flex;
-    justify-content: ${props => props.$isExpanded ? 'stretch' : 'center'};
-    align-items: ${props => props.$isExpanded ? 'stretch' : 'center'};
-    
+    justify-content: ${props => (props.$isExpanded ? 'stretch' : 'center')};
+    align-items: ${props => (props.$isExpanded ? 'stretch' : 'center')};
 
     &:hover {
-        border-color: ${props => props.$isExpanded ? '#2d3748' : 'gold'};
+        border-color: ${props => (props.$isExpanded ? '#2d3748' : 'gold')};
     }
 
     svg {
@@ -36,9 +31,9 @@ export const WidgetContainer = styled.div<{ $isExpanded: boolean }>`
     }
 
     @media (max-width: 748px) {
-        width: ${props => props.$isExpanded ? '260px' : '45px'};
-        height: ${props => props.$isExpanded ? 'auto' : '45px'};
-        max-height: ${props => props.$isExpanded ? '350px' : '45px'};
+        width: ${props => (props.$isExpanded ? '260px' : '45px')};
+        height: ${props => (props.$isExpanded ? 'auto' : '45px')};
+        max-height: ${props => (props.$isExpanded ? '350px' : '45px')};
 
         svg {
             width: 25px;
@@ -48,10 +43,9 @@ export const WidgetContainer = styled.div<{ $isExpanded: boolean }>`
 
     @media (max-width: 480px) {
         right: 15px;
-        width: ${props => props.$isExpanded ? '240px' : '45px'};
+        width: ${props => (props.$isExpanded ? '240px' : '45px')};
     }
 `;
-
 
 export const HistoryPanel = styled.div`
     width: 100%;
@@ -76,7 +70,6 @@ export const HistoryHeader = styled.div`
     }
 `;
 
-
 export const CloseButton = styled.button`
     background: none;
     border: none;
@@ -97,7 +90,6 @@ export const CloseButton = styled.button`
         color: #ffffff;
     }
 `;
-
 
 export const HistoryContent = styled.div`
     flex: 1;
@@ -142,7 +134,7 @@ export const MovieInfo = styled.div`
     display: flex;
     flex-direction: column;
     gap: 4px;
-`
+`;
 
 export const MovieTitle = styled.h4`
     margin: 0;
