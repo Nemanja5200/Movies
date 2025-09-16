@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const DetailsContainer = styled.div`
     min-height: 100vh;
     background: #0a0a0a;
-    position: relative;
 `;
 
 export const HeroSection = styled.div<{ $backdrop?: string }>`
@@ -14,7 +13,7 @@ export const HeroSection = styled.div<{ $backdrop?: string }>`
         props.$backdrop
             ? `linear-gradient(to bottom, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.7) 60%, #0a0a0a 100%), 
            url(${props.$backdrop})`
-            : 'linear-gradient(to bottom, #212529 0%, #0a0a0a 100%)'};
+            : '#0a0a0a'};
     background-size: cover;
     background-position: center top;
     background-repeat: no-repeat;

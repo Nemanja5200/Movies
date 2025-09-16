@@ -7,7 +7,7 @@ import {
 import { GENRE_NAMES, GenreId } from '@/types/Genres.ts';
 import { ChartData } from '@/types/Chart.ts';
 import { Details, RawDetails } from '@/types/Details.ts';
-import { IMAGE_BASE_URL } from '@/utils/constants/Links.ts';
+import { IMAGE_BASE_URL, IMAGE_POSTER_URL } from '@/utils/constants/Links.ts';
 
 export const ParseMoviesResponse = (
     rawResponse: RawTMDBResponse
@@ -121,7 +121,7 @@ export const ParseDetails = (rawDetails: RawDetails): Details => {
         voteAverage: vote_average,
         voteCount: vote_count,
         posterUrl: poster_path ? `${IMAGE_BASE_URL}${poster_path}` : null,
-        backdropUrl: backdrop_path ? `${IMAGE_BASE_URL}${backdrop_path}` : null,
+        backdropUrl: backdrop_path ? `${IMAGE_POSTER_URL}${backdrop_path}` : null,
         homepage,
         status,
         imdbId: imdb_id,
