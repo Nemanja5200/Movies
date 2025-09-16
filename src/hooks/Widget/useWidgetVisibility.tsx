@@ -5,5 +5,5 @@ const HIDE_WIDGET_PATHS = [RoutePath.LOGIN];
 
 export const useWidgetVisibility = () => {
     const location = useLocation();
-    return !HIDE_WIDGET_PATHS.includes(location.pathname);
+    return !HIDE_WIDGET_PATHS.includes(location.pathname as RoutePath);
 };

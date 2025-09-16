@@ -6,8 +6,8 @@ import { QueryClient, useMutation } from '@tanstack/react-query';
 import { getUserOptions } from '@/queryOptions/getUserOptions.ts';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/Auth/useAuth.ts';
-import { getErrorMessage } from '@/utils/MapErrorMessages.ts';
 import { RoutePath } from '@/utils/constants/routes.ts';
+import { getErrorMessage } from '@/utils/Routs/MapErrorMessages.ts';
 
 export const useLogin = () => {
     const queryClient = new QueryClient();
