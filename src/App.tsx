@@ -9,6 +9,7 @@ import { Chart } from '@/pages/Chart';
 import { Details } from '@/pages/Details';
 import { HistoryWidget } from '@/components/HistoryWidget';
 import { useWidgetVisibility } from '@/hooks/Widget/useWidgetVisibility.tsx';
+import { LoginRoute } from '@/utils/Routs/LoginRoute.tsx';
 
 function App() {
     const shouldShowWidget = useWidgetVisibility();
@@ -20,7 +21,9 @@ function App() {
             {shouldShowWidget && <HistoryWidget />}
             <Routes>
                 <Route path={RoutePath.HOME} element={<Home />} />
-                <Route path={RoutePath.LOGIN} element={<Login />} />
+                <Route element={<LoginRoute />}>
+                    <Route path={RoutePath.LOGIN} element={<Login />} />
+                </Route>
                 <Route path={RoutePath.DETAILS} element={<Details />} />
                 <Route element={<ProtectedRoute />}>
                     <Route path={RoutePath.CHART} element={<Chart />} />
