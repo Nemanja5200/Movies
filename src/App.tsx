@@ -10,6 +10,7 @@ import { Details } from '@/pages/Details';
 import { HistoryWidget } from '@/components/HistoryWidget';
 import { useWidgetVisibility } from '@/hooks/Widget/useWidgetVisibility.tsx';
 import { LoginRoute } from '@/utils/Routs/LoginRoute.tsx';
+import { BreadCrumbs } from '@/components/BreadCrumbs';
 
 function App() {
     const shouldShowWidget = useWidgetVisibility();
@@ -18,6 +19,7 @@ function App() {
         <>
             <GlobalStyles />
             <Header />
+            <BreadCrumbs />
             {shouldShowWidget && <HistoryWidget />}
             <Routes>
                 <Route path={RoutePath.HOME} element={<Home />} />
