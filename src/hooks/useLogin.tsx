@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { LoginInfo } from '@/types/LoginInfo.ts';
-import * as React from 'react';
 import { postAuthToken } from '@/query/postAuthToken.ts';
 import { QueryClient, useMutation } from '@tanstack/react-query';
 import { getUserOptions } from '@/queryOptions/getUserOptions.ts';
@@ -35,35 +34,8 @@ export const useLogin = () => {
         },
     });
 
-    const [logInData, setLogInData] = useState<LoginInfo>({
-        username: '',
-        password: '',
-        code: 0,
-    });
-
     const [isError, setIsError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-
-    const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setLogInData(prevState => ({
-            ...prevState,
-            username: e.target.value,
-        }));
-    };
-
-    const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setLogInData(prevState => ({
-            ...prevState,
-            password: e.target.value,
-        }));
-    };
-
-    const onCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setLogInData(prevState => ({
-            ...prevState,
-            code: Number(e.target.value),
-        }));
-    };
     const handleSubmit = (data: LoginInfo) => {
         if (isError) setIsError(false);
 
@@ -71,13 +43,9 @@ export const useLogin = () => {
     };
 
     return {
-        onChangeName,
-        onPasswordChange,
         handleSubmit,
-        onCodeChange,
         isPending,
         errorMessage,
         isError,
-        logIn: logInData,
     };
 };
