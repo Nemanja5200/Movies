@@ -6,7 +6,7 @@ import {
     BreadcrumbSeparator,
     BreadcrumbCurrent,
 } from '@/components/BreadCrumbs/style/BreadCrumbs.style.ts';
-import { RoutePath } from '@/utils/constants/routes.ts';
+
 
 export const BreadCrumbs: FC = () => {
     const location = useLocation();
