@@ -6,6 +6,7 @@ import {
     BreadcrumbSeparator,
     BreadcrumbCurrent,
 } from '@/components/BreadCrumbs/style/BreadCrumbs.style.ts';
+import { RoutePath } from '@/utils/constants/routes.ts';
 
 export const BreadCrumbs: FC = () => {
     const location = useLocation();
@@ -26,7 +27,7 @@ export const BreadCrumbs: FC = () => {
             {breadcrumbs.map((crumb, index) => (
                 <span key={crumb.path}>
                     <BreadcrumbSeparator>{'>'}</BreadcrumbSeparator>
-                    {index === breadcrumbs.length - 1 ? (
+                    {index === breadcrumbs.length - 1  || crumb.label === 'Movie'? (
                         <BreadcrumbCurrent>{crumb.label}</BreadcrumbCurrent>
                     ) : (
                         <BreadcrumbLink to={crumb.path}>
