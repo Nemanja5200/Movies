@@ -10,7 +10,7 @@ export const ChartWrapper = styled.div`
 export const ButtonRow = styled.div`
     width: 100%;
     display: flex;
-    max-width: 300px;
+    max-width: 500px;
     margin-top: 20px;
     align-self: end;
     @media (max-width: 726px) {
