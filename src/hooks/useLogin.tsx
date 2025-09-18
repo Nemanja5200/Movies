@@ -64,43 +64,10 @@ export const useLogin = () => {
             code: Number(e.target.value),
         }));
     };
-
-    const validateForm = (): boolean => {
-        if (!logInData.username.trim()) {
-            setIsError(true);
-            setErrorMessage('Username is required');
-            return false;
-        }
-
-        if (!logInData.password) {
-            setIsError(true);
-            setErrorMessage('Password is required');
-            return false;
-        }
-
-        if (
-            !logInData.code ||
-            isNaN(logInData.code) ||
-            logInData.code < 10000 ||
-            logInData.code > 99999
-        ) {
-            setIsError(true);
-            setErrorMessage('Code must be a 5-digit number');
-            return false;
-        }
-
-        return true;
-    };
-
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const handleSubmit = (data: LoginInfo) => {
         if (isError) setIsError(false);
 
-        if (!validateForm()) {
-            return;
-        }
-
-        login(logInData);
+        login(data);
     };
 
     return {

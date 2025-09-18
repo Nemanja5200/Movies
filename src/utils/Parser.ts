@@ -121,7 +121,9 @@ export const ParseDetails = (rawDetails: RawDetails): Details => {
         voteAverage: vote_average,
         voteCount: vote_count,
         posterUrl: poster_path ? `${IMAGE_BASE_URL}${poster_path}` : null,
-        backdropUrl: backdrop_path ? `${IMAGE_POSTER_URL}${backdrop_path}` : null,
+        backdropUrl: backdrop_path
+            ? `${IMAGE_POSTER_URL}${backdrop_path}`
+            : null,
         homepage,
         status,
         imdbId: imdb_id,

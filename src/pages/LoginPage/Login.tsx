@@ -13,17 +13,26 @@ import {
 } from '@/pages/LoginPage/styles/LoginPage.style.ts';
 import { useLogin } from '@/hooks/useLogin.tsx';
 import { ClipLoader } from 'react-spinners';
+import { useForm } from 'react-hook-form';
+import { LoginInfo } from '@/types/LoginInfo.ts';
 
 export const Login: FC = () => {
     const {
-        onPasswordChange,
-        onChangeName,
-        handleSubmit,
-        onCodeChange,
+        handleSubmit: handleLoginSubmit,
         isError,
         errorMessage,
         isPending,
     } = useLogin();
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<LoginInfo>();
+
+    const onSubmit = (data: LoginInfo) => {
+        handleLoginSubmit(data);
+    };
 
     return (
         <PageWrapper>
@@ -32,18 +41,23 @@ export const Login: FC = () => {
                 <SubHeader>Sign in to continue to your account</SubHeader>
                 <ClipLoader color="#667eea" loading={isPending} size={50} />
                 {isError ? <ErrorMessage>{errorMessage}</ErrorMessage> : null}
-                <FormContainer onSubmit={handleSubmit}>
+                <FormContainer onSubmit={handleSubmit(onSubmit)}>
                     {/*{Name}*/}
                     <InputGroup>
                         <Label htmlFor="email">Username</Label>
                         <Input
                             type="text"
                             id="name"
-                            name="name"
                             placeholder="Enter your Username"
-                            required
-                            onChange={onChangeName}
+                            {...register('username', {
+                                required: 'Username is required',
+                            })}
                         />
+                        {errors.username && (
+                            <ErrorMessage>
+                                {errors.username.message}
+                            </ErrorMessage>
+                        )}
                     </InputGroup>
 
                     {/*{Password}*/}
@@ -52,11 +66,21 @@ export const Login: FC = () => {
                         <Input
                             type="password"
                             id="password"
-                            name="password"
                             placeholder="Enter your password"
-                            onChange={onPasswordChange}
-                            required
+                            {...register('password', {
+                                required: 'Pasword is required',
+                                minLength: {
+                                    value: 6,
+                                    message:
+                                        'Password must be at least 6 characters',
+                                },
+                            })}
                         />
+                        {errors.password && (
+                            <ErrorMessage>
+                                {errors.password.message}
+                            </ErrorMessage>
+                        )}
                     </InputGroup>
 
                     <InputGroup>
@@ -64,11 +88,21 @@ export const Login: FC = () => {
                         <Input
                             type="number"
                             id="code"
-                            name="code"
-                            onChange={onCodeChange}
                             placeholder="Enter your Code"
-                            required
+                            {...register('code', {
+                                minLength: {
+                                    value: 5,
+                                    message: 'Code must be exactly 5 digits',
+                                },
+                                maxLength: {
+                                    value: 5,
+                                    message: 'Code must be exactly 5 digits',
+                                },
+                            })}
                         />
+                        {errors.code && (
+                            <ErrorMessage>{errors.code.message}</ErrorMessage>
+                        )}
                     </InputGroup>
 
                     {/*{Login}*/}
