@@ -54,6 +54,18 @@ export const PosterContainer = styled.div`
     width: 100%;
     max-width: 300px;
     margin: 0 auto;
+
+    &:hover .play-button {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    &:hover img {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 15px 50px rgba(255, 215, 0, 0.2);
+        border-color: gold;
+    }
+    
 `;
 
 export const Poster = styled.img`
@@ -69,6 +81,45 @@ export const Poster = styled.img`
         border-color: gold;
     }
 `;
+
+
+
+export const PlayButton = styled.div`
+    position: absolute;
+    cursor: pointer;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(255, 215, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
+
+    &:hover {
+        background: gold;
+        transform: translate(-50%, -50%) scale(1.1);
+        box-shadow: 0 6px 25px rgba(255, 215, 0, 0.6);
+    }
+
+    &::before {
+        content: '';
+        width: 0;
+        height: 0;
+        border-left: 20px solid #0a0a0a;
+        border-top: 12px solid transparent;
+        border-bottom: 12px solid transparent;
+        margin-left: 4px;
+    }
+`;
+
+
 
 export const NoPoster = styled.div`
     width: 100%;

@@ -149,4 +149,20 @@ export const tmdbService = {
 
         return ParseMoviesResponse(response.data);
     },
+
+    getMovieTrailer: async (id: string): Promise<string> => {
+        const response = await api.get(`/movie/${id}/videos`);
+
+
+        const trailers = response.data.results?.filter(
+            (video: any) => video.type === 'Trailer' && video.site === 'YouTube'
+        );
+
+        if (!trailers || trailers.length === 0) {
+            throw new Error('No trailer found');
+        }
+
+
+        return trailers[0].key;
+    }
 };
