@@ -13,13 +13,12 @@ export const useVideoPlayerModal = (id: string | undefined) => {
         setIsModalOpen(false);
     };
 
-    const { data, isError } = useQuery(getTrailerOptions(id as string));
+    const { data } = useQuery(getTrailerOptions(id as string));
 
     return {
         openModal,
         closeModal,
         isModalOpen,
         trailerCode: data,
-        isError,
     };
 };
