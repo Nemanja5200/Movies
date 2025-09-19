@@ -14,14 +14,12 @@ import { MovieHistoryItem } from '@/types/HistoryWidget.ts';
 interface Props {
     movies: Movie[];
     handleCarouselClick: (id: number) => void;
-    prefetchSimilarMovies: (id: number) => void;
     addToHistory: (movie: MovieHistoryItem) => void;
 }
 
-export const Carosel: FC<Props> = ({
+export const Carousel: FC<Props> = ({
     movies,
     handleCarouselClick,
-    prefetchSimilarMovies,
     addToHistory,
 }) => {
     return (
@@ -41,9 +39,6 @@ export const Carosel: FC<Props> = ({
                                     });
                                     handleCarouselClick(movie.id);
                                 }}
-                                onMouseEnter={() =>
-                                    prefetchSimilarMovies(movie.id)
-                                }
                             />
                         ) : (
                             <NoPoster

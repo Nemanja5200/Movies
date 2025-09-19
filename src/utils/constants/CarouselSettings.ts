@@ -1,9 +1,9 @@
 export const settings = {
     dots: true,
     infinite: true,
-    speed: 600,
+    speed: 500,
     slidesToShow: 5,
-    slidesToScroll: 3,
+    slidesToScroll: 2,
     arrows: true,
     responsive: [
         {

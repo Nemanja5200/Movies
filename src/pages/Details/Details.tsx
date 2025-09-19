@@ -29,14 +29,13 @@ import {
     VoteCount,
 } from '@/pages/Details/styles/Details.styles.tsx';
 import { IMBD_BASE_URL } from '@/utils/constants/Links.ts';
-import { Carosel } from '@/components/Carousel';
+import { Carousel } from '@/components/Carousel';
 import { useMovieHistory } from '@/context/HistoryWiget/useMovieHistory.ts';
 
 export const Details: FC = () => {
     const { id } = useParams<{ id: string }>();
 
-    const { data, similarMovies, handleCarouselClick, prefetchSimilarMovie } =
-        useDetails(id);
+    const { data, similarMovies, handleCarouselClick } = useDetails(id);
 
     const { addToHistory } = useMovieHistory();
     return (
@@ -125,10 +124,9 @@ export const Details: FC = () => {
                         </MovieInfo>
                     </MainInfoSection>
                     <CarouselContainer>
-                        <Carosel
+                        <Carousel
                             movies={similarMovies.results}
                             handleCarouselClick={handleCarouselClick}
-                            prefetchSimilarMovies={prefetchSimilarMovie}
                             addToHistory={addToHistory}
                         />
                     </CarouselContainer>

@@ -1,4 +1,4 @@
-import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { getDetailsOption } from '@/queryOptions/getDetailsOption.ts';
 import { getSimilarMovies } from '@/queryOptions/getSimilarMovies.ts';
 import { RoutePath } from '@/utils/constants/routes.ts';
@@ -17,19 +17,9 @@ export const useDetails = (id: string | undefined) => {
         navigate(`${RoutePath.DETAILS.replace(':id', String(id))}`);
     };
 
-    const queryClient = useQueryClient();
-    const prefetchSimilarMovie = async (id: number) => {
-        try {
-            await queryClient.prefetchQuery(getSimilarMovies(id));
-        } catch (error) {
-            console.error('Prefetch Similar movies fails', error);
-        }
-    };
-
     return {
         data,
         similarMovies,
         handleCarouselClick,
-        prefetchSimilarMovie,
     };
 };
