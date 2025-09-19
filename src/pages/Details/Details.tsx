@@ -41,9 +41,11 @@ export const Details: FC = () => {
     const { data, similarMovies, handleCarouselClick, prefetchSimilarMovie } =
         useDetails(id);
 
-    const { openModal, closeModal, isModalOpen, trailerCode } =
+    const { openModal, closeModal, isModalOpen, trailerCode, isError } =
         useVideoPlayerModal(id);
-
+    {
+        console.log(isError);
+    }
     const { addToHistory } = useMovieHistory();
     return (
         <>
@@ -61,11 +63,14 @@ export const Details: FC = () => {
                                         src={data.posterUrl}
                                         alt={data.title}
                                     />
-                                    <PlayButton
-                                        className="play-button"
-                                        onClick={() => openModal()}
-                                    />
-                                    {isModalOpen ? (
+                                    {trailerCode ? (
+                                        <PlayButton
+                                            className="play-button"
+                                            onClick={() => openModal()}
+                                        />
+                                    ) : null}
+
+                                    {isModalOpen && trailerCode ? (
                                         <VideoPlayerModal
                                             onClose={closeModal}
                                             movieId={trailerCode}
@@ -75,7 +80,12 @@ export const Details: FC = () => {
                             ) : (
                                 <>
                                     <NoPoster>No Poster Available</NoPoster>
-                                    <PlayButton className="play-button" />
+                                    {trailerCode ? (
+                                        <PlayButton
+                                            className="play-button"
+                                            onClick={() => openModal()}
+                                        />
+                                    ) : null}
                                 </>
                             )}
                         </PosterContainer>

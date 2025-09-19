@@ -150,7 +150,7 @@ export const tmdbService = {
         return ParseMoviesResponse(response.data);
     },
 
-    getMovieTrailer: async (id: string): Promise<string> => {
+    getMovieTrailer: async (id: string): Promise<string | null> => {
         const response = await api.get(`/movie/${id}/videos`);
 
         const trailers = response.data.results?.filter(
@@ -159,7 +159,7 @@ export const tmdbService = {
         );
 
         if (!trailers || trailers.length === 0) {
-            throw new Error('No trailer found');
+            return null;
         }
 
         return trailers[0].key;

@@ -7,6 +7,9 @@ export const getTrailerOptions = (id: string) => {
         queryKey: ['trailer-key', id],
         queryFn: () => tmdbService.getMovieTrailer(id),
         enabled: !!id,
+        retry: 0,
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
         staleTime: getTime(5),
     });
 };

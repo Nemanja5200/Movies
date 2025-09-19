@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { getTrailerOptions } from '@/queryOptions/getTrailerOptions.tsx';
+import { getTrailerOptions } from '@/queryOptions/getTrailerOptions.ts';
 
 export const useVideoPlayerModal = (id: string | undefined) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,12 +13,13 @@ export const useVideoPlayerModal = (id: string | undefined) => {
         setIsModalOpen(false);
     };
 
-    const { data } = useQuery(getTrailerOptions(id as string));
+    const { data, isError } = useQuery(getTrailerOptions(id as string));
 
     return {
         openModal,
         closeModal,
         isModalOpen,
         trailerCode: data,
+        isError,
     };
 };
