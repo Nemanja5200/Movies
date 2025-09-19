@@ -6,6 +6,7 @@ import { filterParamsSerializer } from '@/utils/urlStateSerializers.ts';
 import { getFillterOptions } from '@/queryOptions/getFilterOptions.ts';
 import { useQueryClient } from '@tanstack/react-query';
 import { GenreId } from '@/types/Genres.ts';
+import { useScrollLock } from '@/hooks/useScrollLock.tsx';
 export const useFilter = (
     currentPage?: number,
     setCurrentPage?: (value: number) => void
@@ -20,6 +21,8 @@ export const useFilter = (
     });
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    useScrollLock(isModalOpen);
 
     const openModal = () => {
         setDraftFilters(appliedFilters);
