@@ -1,1 +1,1 @@
-export {VideoPlayerModal} from './VideoPlayerModal.tsx'
+export { VideoPlayerModal } from './VideoPlayerModal.tsx';

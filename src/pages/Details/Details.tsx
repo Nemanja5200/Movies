@@ -17,7 +17,8 @@ import {
     MetaLabel,
     MetaValue,
     MovieInfo,
-    NoPoster, PlayButton,
+    NoPoster,
+    PlayButton,
     Poster,
     PosterContainer,
     Rating,
@@ -40,7 +41,8 @@ export const Details: FC = () => {
     const { data, similarMovies, handleCarouselClick, prefetchSimilarMovie } =
         useDetails(id);
 
-    const {openModal,closeModal,isModalOpen , trailerCode} = useVideoPlayerModal(id)
+    const { openModal, closeModal, isModalOpen, trailerCode } =
+        useVideoPlayerModal(id);
 
     const { addToHistory } = useMovieHistory();
     return (
@@ -55,15 +57,25 @@ export const Details: FC = () => {
                         <PosterContainer>
                             {data.posterUrl ? (
                                 <>
-                                    <Poster src={data.posterUrl} alt={data.title} />
-                                    <PlayButton className="play-button" onClick={() => openModal()} />
-                                    {isModalOpen ? <VideoPlayerModal onClose={closeModal} movieId={trailerCode} /> : null}
+                                    <Poster
+                                        src={data.posterUrl}
+                                        alt={data.title}
+                                    />
+                                    <PlayButton
+                                        className="play-button"
+                                        onClick={() => openModal()}
+                                    />
+                                    {isModalOpen ? (
+                                        <VideoPlayerModal
+                                            onClose={closeModal}
+                                            movieId={trailerCode}
+                                        />
+                                    ) : null}
                                 </>
                             ) : (
                                 <>
                                     <NoPoster>No Poster Available</NoPoster>
                                     <PlayButton className="play-button" />
-
                                 </>
                             )}
                         </PosterContainer>

@@ -65,7 +65,6 @@ export const PosterContainer = styled.div`
         box-shadow: 0 15px 50px rgba(255, 215, 0, 0.2);
         border-color: gold;
     }
-    
 `;
 
 export const Poster = styled.img`
@@ -81,8 +80,6 @@ export const Poster = styled.img`
         border-color: gold;
     }
 `;
-
-
 
 export const PlayButton = styled.div`
     position: absolute;
@@ -118,8 +115,6 @@ export const PlayButton = styled.div`
         margin-left: 4px;
     }
 `;
-
-
 
 export const NoPoster = styled.div`
     width: 100%;

@@ -1,7 +1,4 @@
-
-
 import styled from 'styled-components';
-
 
 export const ModalOverlay = styled.div`
     position: fixed;
@@ -68,7 +65,6 @@ export const VideoIframe = styled.iframe`
     border: none;
 `;
 
-
 export const ErrorMessage = styled.div`
     display: flex;
     align-items: center;
@@ -80,4 +76,3 @@ export const ErrorMessage = styled.div`
     flex-direction: column;
     gap: 1rem;
 `;
-
