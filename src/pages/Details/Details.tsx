@@ -18,6 +18,7 @@ import {
     MetaValue,
     MovieInfo,
     NoPoster,
+    PlayButton,
     Poster,
     PosterContainer,
     Rating,
@@ -31,12 +32,19 @@ import {
 import { IMBD_BASE_URL } from '@/utils/constants/Links.ts';
 import { Carousel } from '@/components/Carousel';
 import { useMovieHistory } from '@/context/HistoryWiget/useMovieHistory.ts';
+import { VideoPlayerModal } from '@/components/VideoPlayerModal';
+import { useVideoPlayerModal } from '@/hooks/useVideoPlayerModal.tsx';
 
 export const Details: FC = () => {
     const { id } = useParams<{ id: string }>();
 
     const { data, similarMovies, handleCarouselClick } = useDetails(id);
 
+    const { openModal, closeModal, isModalOpen, trailerCode, isError } =
+        useVideoPlayerModal(id);
+    {
+        console.log(isError);
+    }
     const { addToHistory } = useMovieHistory();
     return (
         <>
@@ -49,9 +57,35 @@ export const Details: FC = () => {
                     <MainInfoSection>
                         <PosterContainer>
                             {data.posterUrl ? (
-                                <Poster src={data.posterUrl} alt={data.title} />
+                                <>
+                                    <Poster
+                                        src={data.posterUrl}
+                                        alt={data.title}
+                                    />
+                                    {trailerCode ? (
+                                        <PlayButton
+                                            className="play-button"
+                                            onClick={() => openModal()}
+                                        />
+                                    ) : null}
+
+                                    {isModalOpen && trailerCode ? (
+                                        <VideoPlayerModal
+                                            onClose={closeModal}
+                                            movieId={trailerCode}
+                                        />
+                                    ) : null}
+                                </>
                             ) : (
-                                <NoPoster>No Poster Available</NoPoster>
+                                <>
+                                    <NoPoster>No Poster Available</NoPoster>
+                                    {trailerCode ? (
+                                        <PlayButton
+                                            className="play-button"
+                                            onClick={() => openModal()}
+                                        />
+                                    ) : null}
+                                </>
                             )}
                         </PosterContainer>
 

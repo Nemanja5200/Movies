@@ -15,6 +15,12 @@ export const ChartsContainer = styled.div`
     @media (max-width: 973px) {
         width: 100%;
     }
+
+    .recharts-wrapper *:focus,
+    .recharts-wrapper *:focus-visible {
+        outline: none !important;
+        box-shadow: none !important;
+    }
 `;
 
 export const ChartPageWrapper = styled.div`
