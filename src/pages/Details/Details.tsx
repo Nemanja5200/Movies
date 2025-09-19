@@ -40,11 +40,8 @@ export const Details: FC = () => {
 
     const { data, similarMovies, handleCarouselClick } = useDetails(id);
 
-    const { openModal, closeModal, isModalOpen, trailerCode, isError } =
+    const { openModal, closeModal, isModalOpen, trailerCode } =
         useVideoPlayerModal(id);
-    {
-        console.log(isError);
-    }
     const { addToHistory } = useMovieHistory();
     return (
         <>
