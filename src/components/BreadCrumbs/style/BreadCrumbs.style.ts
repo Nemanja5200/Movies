@@ -6,6 +6,16 @@ export const BreadcrumbContainer = styled.nav`
     align-items: center;
     padding: 0.5rem 0;
     font-size: 0.875rem;
+    position: absolute;
+    top: 90px;
+    left: 20px;
+    right: 0;
+    z-index: 10;
+    
+    @media (max-width: 31.313em) {
+        top: 160px;
+        left: 20px;
+    }
 `;
 
 export const BreadcrumbLink = styled(Link)`

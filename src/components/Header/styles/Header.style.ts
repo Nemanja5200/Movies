@@ -16,7 +16,7 @@ export const HeaderStyle = styled.header`
         margin-left: auto;
     }
 
-    @media (max-width: 446px) {
+    @media (max-width: 31.313em) {
         flex-direction: column;
         justify-content: center;
         align-items: center;
