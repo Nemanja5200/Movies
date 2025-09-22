@@ -40,4 +40,15 @@ export const PaginationButton = styled.button`
         transform: scale(1.1);
         box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
     }
+
+
+    @media (max-width: 768px) {
+        width: 30px;
+        height: 30px;
+    }
+
+    @media (max-width: 644px) {
+        width: 25px;
+        height: 25px;
+    }
 `;
