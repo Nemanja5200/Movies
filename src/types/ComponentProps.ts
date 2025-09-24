@@ -26,3 +26,8 @@ export interface VideoPlayerModalProps {
     movieId: string | undefined;
     onClose: () => void;
 }
+
+export interface CarouselProps {
+    movies: Movie[];
+    handleCarouselClick: (id: number) => void;
+}
