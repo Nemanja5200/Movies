@@ -60,7 +60,8 @@ export const Home: FC = () => {
         setCurrentPage,
         clearCurrentPage,
         isActive,
-        currentFilterParams
+        currentFilterParams,
+        currentMovies.length
     );
 
     return (

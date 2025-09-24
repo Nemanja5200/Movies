@@ -9,7 +9,8 @@ export const usePagination = (
     updateValue: (value: number) => void,
     clearCurrentPage: () => void,
     isActive: () => boolean,
-    currentFilterParams: FilterParams
+    currentFilterParams: FilterParams,
+    movieSize: number
 ) => {
     const queryClient = useQueryClient();
 
@@ -115,7 +116,7 @@ export const usePagination = (
         return pages;
     };
 
-    const hasNext = currentPage < 500;
+    const hasNext = currentPage < totalPages && movieSize >= 20;
     const hasPrev = currentPage > 1;
 
     return {

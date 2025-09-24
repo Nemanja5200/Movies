@@ -3,7 +3,7 @@ import {
     PaginationButton,
     PaginationContainer,
 } from '@/components/Pagination/styles/Pagination.style.ts';
-import { PaginationPropsType} from '@/types/ComponentProps.ts';
+import { PaginationPropsType } from '@/types/ComponentProps.ts';
 
 export const Pagination: FC<PaginationPropsType> = ({
     currentPage,
@@ -17,17 +17,19 @@ export const Pagination: FC<PaginationPropsType> = ({
     hasPrev,
 }) => {
     return (
-        <>
+        <PaginationContainer>
             {/* First Page */}
-            <PaginationContainer>
+            {hasPrev ? (
                 <PaginationButton
                     onClick={() => onPageChange(1)}
                     disabled={!hasPrev}
                 >
                     {'<<'}
                 </PaginationButton>
+            ) : null}
 
-                {/* Previus Page */}
+            {/* Previous Page */}
+            {hasPrev ? (
                 <PaginationButton
                     onClick={() => onPageChange(currentPage - 1)}
                     onMouseEnter={() => preFetchPrevPage()}
@@ -35,18 +37,21 @@ export const Pagination: FC<PaginationPropsType> = ({
                 >
                     {'<'}
                 </PaginationButton>
+            ) : null}
 
-                {pageRange(4).map(page => (
-                    <PaginationButton
-                        key={page}
-                        onClick={() => onPageChange(page)}
-                        disabled={page === currentPage}
-                    >
-                        {page}
-                    </PaginationButton>
-                ))}
+            {/* Page Range */}
+            {pageRange(4).map(page => (
+                <PaginationButton
+                    key={page}
+                    onClick={() => onPageChange(page)}
+                    disabled={page === currentPage}
+                >
+                    {page}
+                </PaginationButton>
+            ))}
 
-                {/* Next Page */}
+            {/* Next Page */}
+            {hasNext ? (
                 <PaginationButton
                     onClick={() => onPageChange(currentPage + 1)}
                     onMouseEnter={() => preFetchNextPage()}
@@ -54,8 +59,10 @@ export const Pagination: FC<PaginationPropsType> = ({
                 >
                     {'>'}
                 </PaginationButton>
+            ) : null}
 
-                {/* Last Page */}
+            {/* Last Page */}
+            {hasNext && (
                 <PaginationButton
                     onClick={() => onPageChange(totalPages)}
                     onMouseEnter={() => preFetchLastPage()}
@@ -63,7 +70,7 @@ export const Pagination: FC<PaginationPropsType> = ({
                 >
                     {'>>'}
                 </PaginationButton>
-            </PaginationContainer>
-        </>
+            )}
+        </PaginationContainer>
     );
 };
