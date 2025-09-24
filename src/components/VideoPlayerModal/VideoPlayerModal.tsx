@@ -7,13 +7,12 @@ import {
     VideoIframe,
 } from '@/components/VideoPlayerModal/styled/VideoPlayerModal.style.ts';
 import { YOUTUBE_URL } from '@/utils/constants/Links.ts';
+import { VideoPlayerModalProps } from '@/types/ComponentProps.ts';
 
-interface Props {
-    movieId: string | undefined;
-    onClose: () => void;
-}
-
-export const VideoPlayerModal: FC<Props> = ({ movieId, onClose }) => {
+export const VideoPlayerModal: FC<VideoPlayerModalProps> = ({
+    movieId,
+    onClose,
+}) => {
     return (
         <>
             <ModalOverlay>

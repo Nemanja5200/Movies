@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { Movie } from '@/types/Movies.ts';
 import {
     useReactTable,
     getCoreRowModel,
@@ -19,11 +18,7 @@ import {
     IdCell,
 } from './style/Table.style.ts';
 import { movieTableColumns } from '@/components/Table/colums/moviTableColums.tsx';
-
-interface TableProps {
-    movies: Movie[];
-    handleRowClick: (id: number) => void;
-}
+import { TableProps } from '@/types/ComponentProps.ts';
 
 export const Table: FC<TableProps> = ({ movies, handleRowClick }) => {
     const table = useReactTable({

@@ -5,11 +5,7 @@ import {
     SearchWrapper,
     SearchInput, // Import SearchInput instead of SearchBar
 } from '@/components/SearchBar/styles/SearchBar.style.tsx';
-
-interface SearchBarProps {
-    value: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
+import { SearchBarProps } from '@/types/ComponentProps.ts';
 
 export const SearchBar: FC<SearchBarProps> = ({ value, onChange }) => {
     return (

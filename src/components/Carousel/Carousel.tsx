@@ -10,12 +10,15 @@ import { Movie } from '@/types/Movies.ts';
 import { IMAGE_BASE_URL } from '@/utils/constants/Links.ts';
 import { settings } from '@/utils/constants/CarouselSettings.ts';
 
-interface Props {
+interface CarouselProps {
     movies: Movie[];
     handleCarouselClick: (id: number) => void;
 }
 
-export const Carousel: FC<Props> = ({ movies, handleCarouselClick }) => {
+export const Carousel: FC<CarouselProps> = ({
+    movies,
+    handleCarouselClick,
+}) => {
     return (
         <CarouselWrapper>
             <Slider {...settings}>

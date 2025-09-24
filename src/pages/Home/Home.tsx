@@ -15,7 +15,6 @@ import { FilterBtn } from '@/components/Fillter/FilterBtn';
 import { FilterModal } from '@/components/Fillter/FilterModal';
 import { useFilter } from '@/hooks/useFilter.tsx';
 import { createPageSerializer } from '@/utils/urlStateSerializers.ts';
-import { useWidget } from '@/hooks/Widget/useWidget.tsx';
 
 export const Home: FC = () => {
     const { searchTerm, debouncedSearchTerm, handleChange } = useSearchTerm();

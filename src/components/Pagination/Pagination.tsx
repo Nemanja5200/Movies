@@ -3,18 +3,7 @@ import {
     PaginationButton,
     PaginationContainer,
 } from '@/components/Pagination/styles/Pagination.style.ts';
-
-interface PaginationProps {
-    currentPage: number;
-    totalPages: number;
-    onPageChange: (page: number) => void;
-    preFetchNextPage: () => void;
-    preFetchLastPage: () => void;
-    preFetchPrevPage: () => void;
-    pageRange: (windowSize: number) => number[];
-    hasNext: boolean;
-    hasPrev: boolean;
-}
+import { PaginationProps } from '@/types/ComponentProps.ts';
 
 export const Pagination: FC<PaginationProps> = ({
     currentPage,
