@@ -9,6 +9,7 @@ export const CarouselWrapper = styled.div`
 
     .slick-dots li button:before {
         color: gold;
+        font-size: 10px;
     }
 
     .slick-prev,
