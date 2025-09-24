@@ -9,19 +9,13 @@ import Slider from 'react-slick';
 import { Movie } from '@/types/Movies.ts';
 import { IMAGE_BASE_URL } from '@/utils/constants/Links.ts';
 import { settings } from '@/utils/constants/CarouselSettings.ts';
-import { MovieHistoryItem } from '@/types/HistoryWidget.ts';
 
 interface Props {
     movies: Movie[];
     handleCarouselClick: (id: number) => void;
-    addToHistory: (movie: MovieHistoryItem) => void;
 }
 
-export const Carousel: FC<Props> = ({
-    movies,
-    handleCarouselClick,
-    addToHistory,
-}) => {
+export const Carousel: FC<Props> = ({ movies, handleCarouselClick }) => {
     return (
         <CarouselWrapper>
             <Slider {...settings}>
@@ -32,22 +26,12 @@ export const Carousel: FC<Props> = ({
                                 src={`${IMAGE_BASE_URL}${movie.poster}`}
                                 alt={movie.title}
                                 onClick={() => {
-                                    addToHistory({
-                                        id: movie.id,
-                                        title: movie.title,
-                                        poster: `${IMAGE_BASE_URL}${movie.poster}`,
-                                    });
                                     handleCarouselClick(movie.id);
                                 }}
                             />
                         ) : (
                             <NoPoster
                                 onClick={() => {
-                                    addToHistory({
-                                        id: movie.id,
-                                        title: movie.title,
-                                        poster: `${IMAGE_BASE_URL}${movie.poster}`,
-                                    });
                                     handleCarouselClick(movie.id);
                                 }}
                             >

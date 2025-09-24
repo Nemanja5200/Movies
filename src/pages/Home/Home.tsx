@@ -64,8 +64,6 @@ export const Home: FC = () => {
         currentFilterParams
     );
 
-    const { addToHistory } = useWidget();
-
     return (
         <HomeContainerStyle>
             <TableContainerStyle>
@@ -83,11 +81,7 @@ export const Home: FC = () => {
                         prefetchFilter={prefetchFilter}
                     />
                 </FilterSearchContainer>
-                <Table
-                    movies={currentMovies}
-                    handleRowClick={handleRowClick}
-                    addToHistory={addToHistory}
-                />
+                <Table movies={currentMovies} handleRowClick={handleRowClick} />
             </TableContainerStyle>
             <Pagination
                 currentPage={currentPage}

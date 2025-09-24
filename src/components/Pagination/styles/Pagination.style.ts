@@ -41,7 +41,6 @@ export const PaginationButton = styled.button`
         box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
     }
 
-
     @media (max-width: 768px) {
         width: 30px;
         height: 30px;

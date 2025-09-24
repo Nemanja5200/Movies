@@ -11,7 +11,7 @@ export const BreadcrumbContainer = styled.nav`
     left: 20px;
     right: 0;
     z-index: 10;
-    
+
     @media (max-width: 31.313em) {
         top: 160px;
         left: 20px;

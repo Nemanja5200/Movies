@@ -31,7 +31,6 @@ import {
 } from '@/pages/Details/styles/Details.styles.tsx';
 import { IMBD_BASE_URL } from '@/utils/constants/Links.ts';
 import { Carousel } from '@/components/Carousel';
-import { useMovieHistory } from '@/context/HistoryWiget/useMovieHistory.ts';
 import { VideoPlayerModal } from '@/components/VideoPlayerModal';
 import { useVideoPlayerModal } from '@/hooks/useVideoPlayerModal.tsx';
 
@@ -42,7 +41,6 @@ export const Details: FC = () => {
 
     const { openModal, closeModal, isModalOpen, trailerCode } =
         useVideoPlayerModal(id);
-    const { addToHistory } = useMovieHistory();
     return (
         <>
             <DetailsContainer>
@@ -158,7 +156,6 @@ export const Details: FC = () => {
                         <Carousel
                             movies={similarMovies.results}
                             handleCarouselClick={handleCarouselClick}
-                            addToHistory={addToHistory}
                         />
                     </CarouselContainer>
                 </ContentWrapper>

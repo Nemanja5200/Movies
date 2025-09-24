@@ -12,16 +12,10 @@ import {
 } from '@/components/HistoryWidget/styles/HistoryWidget.style.ts';
 import WidgetIcon from '@/assets/icons/WidgetIcon.svg?react';
 import { useWidget } from '@/hooks/Widget/useWidget.tsx';
-import { IMAGE_BASE_URL } from '@/utils/constants/Links.ts';
 
 export const HistoryWidget: FC = () => {
-    const {
-        isExpanded,
-        toggleExpanded,
-        handleMovieClick,
-        movieHistory,
-        addToHistory,
-    } = useWidget();
+    const { isExpanded, toggleExpanded, handleMovieClick, movieHistory } =
+        useWidget();
     return (
         <>
             <WidgetContainer $isExpanded={isExpanded}>
@@ -43,11 +37,6 @@ export const HistoryWidget: FC = () => {
                                 <HistoryItem
                                     key={movie.id}
                                     onClick={() => {
-                                        addToHistory({
-                                            id: movie.id,
-                                            title: movie.title,
-                                            poster: `${IMAGE_BASE_URL}${movie.poster}`,
-                                        });
                                         handleMovieClick(movie.id);
                                     }}
                                 >
