@@ -5,9 +5,9 @@ import {
     SearchWrapper,
     SearchInput, // Import SearchInput instead of SearchBar
 } from '@/components/SearchBar/styles/SearchBar.style.tsx';
-import { SearchBarProps } from '@/types/ComponentProps.ts';
+import { SearchBarPropsType } from '@/types/ComponentProps.ts';
 
-export const SearchBar: FC<SearchBarProps> = ({ value, onChange }) => {
+export const SearchBar: FC<SearchBarPropsType> = ({ value, onChange }) => {
     return (
         <SearchBarContainerStyle>
             <SearchWrapper>

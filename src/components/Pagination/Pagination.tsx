@@ -3,9 +3,9 @@ import {
     PaginationButton,
     PaginationContainer,
 } from '@/components/Pagination/styles/Pagination.style.ts';
-import { PaginationProps } from '@/types/ComponentProps.ts';
+import { PaginationPropsType} from '@/types/ComponentProps.ts';
 
-export const Pagination: FC<PaginationProps> = ({
+export const Pagination: FC<PaginationPropsType> = ({
     currentPage,
     totalPages,
     onPageChange,

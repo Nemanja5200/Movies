@@ -18,9 +18,9 @@ import {
     IdCell,
 } from './style/Table.style.ts';
 import { movieTableColumns } from '@/components/Table/colums/moviTableColums.tsx';
-import { TableProps } from '@/types/ComponentProps.ts';
+import { TablePropsType } from '@/types/ComponentProps.ts';
 
-export const Table: FC<TableProps> = ({ movies, handleRowClick }) => {
+export const Table: FC<TablePropsType> = ({ movies, handleRowClick }) => {
     const table = useReactTable({
         data: movies,
         columns: movieTableColumns,

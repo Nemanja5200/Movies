@@ -8,9 +8,9 @@ import {
 import Slider from 'react-slick';
 import { IMAGE_BASE_URL } from '@/utils/constants/Links.ts';
 import { settings } from '@/utils/constants/CarouselSettings.ts';
-import { CarouselProps } from '@/types/ComponentProps.ts';
+import { CarouselPropsType } from '@/types/ComponentProps.ts';
 
-export const Carousel: FC<CarouselProps> = ({
+export const Carousel: FC<CarouselPropsType> = ({
     movies,
     handleCarouselClick,
 }) => {

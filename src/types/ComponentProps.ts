@@ -1,6 +1,6 @@
 import { Movie } from '@/types/Movies.ts';
 
-export interface PaginationProps {
+export interface PaginationPropsType {
     currentPage: number;
     totalPages: number;
     onPageChange: (page: number) => void;
@@ -12,22 +12,22 @@ export interface PaginationProps {
     hasPrev: boolean;
 }
 
-export interface SearchBarProps {
+export interface SearchBarPropsType {
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export interface TableProps {
+export interface TablePropsType {
     movies: Movie[];
     handleRowClick: (id: number) => void;
 }
 
-export interface VideoPlayerModalProps {
+export interface VideoPlayerModalPropsType {
     movieId: string | undefined;
     onClose: () => void;
 }
 
-export interface CarouselProps {
+export interface CarouselPropsType {
     movies: Movie[];
     handleCarouselClick: (id: number) => void;
 }
