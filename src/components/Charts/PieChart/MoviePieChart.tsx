@@ -13,7 +13,6 @@ export const MoviePieChart: FC<MoviePieChartPropsType> = ({
     radius,
     containerRef,
 }) => {
-    console.log(radius);
     return (
         <>
             <ChartPageWrapper>
