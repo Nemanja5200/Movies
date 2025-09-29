@@ -7,7 +7,6 @@ export const ChartsContainer = styled.div`
     align-items: center;
     width: 100%;
     height: 500px;
-    padding: 20px;
     background: #0a0e12;
     color: white;
     border-radius: 8px;
@@ -28,7 +27,6 @@ export const ChartPageWrapper = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding: 20px;
 `;
 
 export const ChartTitle = styled.h2`

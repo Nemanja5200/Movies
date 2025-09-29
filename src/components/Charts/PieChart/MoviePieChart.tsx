@@ -28,6 +28,7 @@ export const MoviePieChart: FC<MoviePieChartPropsType> = ({
                                 cy="50%"
                                 labelLine={false}
                                 outerRadius={radius}
+                                width={500}
                                 fill="#8884d8"
                                 dataKey="value"
                                 label={({ name, percent }) =>
