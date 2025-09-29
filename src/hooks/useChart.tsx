@@ -14,7 +14,7 @@ export const useChart = (
     const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        handleResize(); // Initial call
+        handleResize();
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, [containerRef]);
@@ -23,12 +23,15 @@ export const useChart = (
         if (containerRef.current) {
             const width = containerRef.current.offsetWidth;
 
-            if (width < 480) {
-                setRadius(90);
-            } else if (width < 768) {
-                setRadius(120);
-            } else {
-                setRadius(150);
+            switch (true) {
+                case width < 480:
+                    setRadius(90);
+                    break;
+                case width < 768:
+                    setRadius(120);
+                    break;
+                default:
+                    setRadius(150);
             }
         }
     };
