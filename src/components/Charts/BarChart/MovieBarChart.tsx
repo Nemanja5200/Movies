@@ -10,22 +10,24 @@ import {
     XAxis,
     YAxis,
 } from 'recharts';
-import { ChartsContainer } from '@/components/Charts/PieChart/style/MoviePieChart.style.ts';
-import { ChartData } from '@/types/Chart.ts';
+import {
+    ChartsContainer,
+    ChartTitle,
+} from '@/components/Charts/PieChart/style/MoviePieChart.style.ts';
+import { MovieBarChartPropsType } from '@/types/ComponentProps.ts';
 
-interface Props {
-    barChartdata?: ChartData[];
-}
-
-export const MovieBarChart: FC<Props> = ({ barChartdata }) => {
+export const MovieBarChart: FC<MovieBarChartPropsType> = ({ barChartData }) => {
     return (
         <>
             <ChartsContainer>
+                <ChartTitle>
+                    Number of movies by each Country by year
+                </ChartTitle>
                 <ResponsiveContainer width="90%" height="90%">
                     <BarChart
                         width={400}
                         height={100}
-                        data={barChartdata}
+                        data={barChartData}
                         margin={{
                             top: 20,
                             right: 30,

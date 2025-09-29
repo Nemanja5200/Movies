@@ -1,4 +1,6 @@
 import { Movie } from '@/types/Movies.ts';
+import { ChartData } from '@/types/Chart.ts';
+import { RefObject } from 'react';
 
 export interface PaginationPropsType {
     currentPage: number;
@@ -30,4 +32,14 @@ export interface VideoPlayerModalPropsType {
 export interface CarouselPropsType {
     movies: Movie[];
     handleCarouselClick: (id: number) => void;
+}
+
+export interface MoviePieChartPropsType {
+    filtered: ChartData[];
+    radius: number;
+    containerRef: RefObject<HTMLDivElement | null>;
+}
+
+export interface MovieBarChartPropsType {
+    barChartData?: ChartData[];
 }

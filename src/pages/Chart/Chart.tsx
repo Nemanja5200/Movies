@@ -19,10 +19,8 @@ export const Chart: FC = () => {
         filterParams,
     } = useFilter();
 
-    const { filtered, prefetchChartData, barChartData } = useChart(
-        appliedFilters,
-        isActive
-    );
+    const { filtered, prefetchChartData, barChartData, radius, containerRef } =
+        useChart(appliedFilters, isActive);
 
     return (
         <>
@@ -45,8 +43,12 @@ export const Chart: FC = () => {
                 <ButtonRow>
                     <FilterBtn onClick={openModal} />
                 </ButtonRow>
-                <MoviePieChart filtered={filtered} />
-                <MovieBarChart barChartdata={barChartData} />
+                <MoviePieChart
+                    filtered={filtered}
+                    radius={radius}
+                    containerRef={containerRef}
+                />
+                <MovieBarChart barChartData={barChartData} />
             </ChartWrapper>
         </>
     );

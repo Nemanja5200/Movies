@@ -2,7 +2,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getPieChartDataOptions } from '@/queryOptions/getPieChartDataOptions.tsx';
 import { useAuth } from '@/context/Auth/useAuth.ts';
 import { FilterParams } from '@/types/Filter.ts';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { ChartData } from '@/types/Chart.ts';
 import { getBarChartOptions } from '@/queryOptions/getBarChartOptions.ts';
 
@@ -10,6 +10,28 @@ export const useChart = (
     appliedFilters: FilterParams,
     isActive: () => boolean
 ) => {
+    const [radius, setRadius] = useState(150);
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        handleResize(); // Initial call
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [containerRef]);
+
+    const handleResize = () => {
+        if (containerRef.current) {
+            const width = containerRef.current.offsetWidth;
+
+            if (width < 480) {
+                setRadius(90);
+            } else if (width < 768) {
+                setRadius(120);
+            } else {
+                setRadius(150);
+            }
+        }
+    };
     const { isAuth } = useAuth();
     const queryClient = useQueryClient();
 
@@ -72,5 +94,8 @@ export const useChart = (
         filtered: processedPieChartData,
         prefetchChartData: prefetchPieChartData,
         barChartData,
+        radius,
+        setRadius,
+        containerRef,
     };
 };

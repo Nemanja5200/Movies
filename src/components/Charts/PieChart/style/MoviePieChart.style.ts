@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const ChartsContainer = styled.div`
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -28,4 +29,16 @@ export const ChartPageWrapper = styled.div`
     flex-direction: column;
     width: 100%;
     padding: 20px;
+`;
+
+export const ChartTitle = styled.h2`
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+    color: gold;
+
+    @media (max-width: 421px) {
+        font-size: 20px;
+    }
 `;

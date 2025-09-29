@@ -4,17 +4,22 @@ import { COLORS } from '@/utils/constants/PiceChartColors.ts';
 import {
     ChartPageWrapper,
     ChartsContainer,
+    ChartTitle,
 } from '@/components/Charts/PieChart/style/MoviePieChart.style.ts';
-import { ChartData } from '@/types/Chart.ts';
+import { MoviePieChartPropsType } from '@/types/ComponentProps.ts';
 
-interface Props {
-    filtered: ChartData[];
-}
-export const MoviePieChart: FC<Props> = ({ filtered }) => {
+export const MoviePieChart: FC<MoviePieChartPropsType> = ({
+    filtered,
+    radius,
+    containerRef,
+}) => {
     return (
         <>
             <ChartPageWrapper>
-                <ChartsContainer>
+                <ChartsContainer ref={containerRef}>
+                    <ChartTitle>
+                        Movie Distribution of genres by year
+                    </ChartTitle>
                     <ResponsiveContainer width="100%" height="100%">
                         <PieChart>
                             <Pie
@@ -22,7 +27,7 @@ export const MoviePieChart: FC<Props> = ({ filtered }) => {
                                 cx="50%"
                                 cy="50%"
                                 labelLine={false}
-                                outerRadius={150}
+                                outerRadius={radius}
                                 fill="#8884d8"
                                 dataKey="value"
                                 label={({ name, percent }) =>
