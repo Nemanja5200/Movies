@@ -5,9 +5,11 @@ import { useAuth } from '@/context/Auth/useAuth.ts';
 const HIDE_WIDGET_PATHS = [RoutePath.LOGIN];
 
 export const useWidgetVisibility = () => {
-    const {isAuth} = useAuth()
+    const { isAuth } = useAuth();
     const location = useLocation();
-    const isOnHiddenPath = HIDE_WIDGET_PATHS.includes(location.pathname as RoutePath);
+    const isOnHiddenPath = HIDE_WIDGET_PATHS.includes(
+        location.pathname as RoutePath
+    );
 
     return isAuth && !isOnHiddenPath;
 };

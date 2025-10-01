@@ -7,7 +7,11 @@ import {
 } from '@/components/SearchBar/styles/SearchBar.style.tsx';
 import { SearchBarPropsType } from '@/types/ComponentProps.ts';
 
-export const SearchBar: FC<SearchBarPropsType> = ({ value, onChange , isActive }) => {
+export const SearchBar: FC<SearchBarPropsType> = ({
+    value,
+    onChange,
+    isActive,
+}) => {
     return (
         <SearchBarContainerStyle>
             <SearchWrapper>

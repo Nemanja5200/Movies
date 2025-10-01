@@ -21,17 +21,19 @@ export const VideoPlayerModal: FC<VideoPlayerModalPropsType> = ({
                 <ModalContent>
                     <CloseButton onClick={() => onClose()}>×</CloseButton>
                     <VideoContainer>
-                        {videoType === VIDEO_TYPES.TRAILER ?(<VideoIframe
-                            src={`${YOUTUBE_URL}${movieId}`}
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowFullScreen
-                        />): videoType === VIDEO_TYPES.MOVIE ?(
+                        {videoType === VIDEO_TYPES.TRAILER ? (
+                            <VideoIframe
+                                src={`${YOUTUBE_URL}${movieId}`}
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowFullScreen
+                            />
+                        ) : videoType === VIDEO_TYPES.MOVIE ? (
                             <VideoIframe
                                 src={`${import.meta.env.VITE_MOVIE_LINK}${movieId}`}
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowFullScreen
                             />
-                        ): null}
+                        ) : null}
                     </VideoContainer>
                 </ModalContent>
             </ModalOverlay>

@@ -41,7 +41,7 @@ export const Chart: FC = () => {
             />
             <ChartWrapper>
                 <ButtonRow>
-                    <FilterBtn onClick={openModal} isActive={isActive()}/>
+                    <FilterBtn onClick={openModal} isActive={isActive()} />
                 </ButtonRow>
                 <MoviePieChart
                     filtered={filtered}

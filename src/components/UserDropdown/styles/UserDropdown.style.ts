@@ -59,7 +59,6 @@ export const LogoutItem = styled.button`
     font-size: 0.9rem;
     font-weight: 600;
 
-
     &:hover {
         background: rgba(17, 169, 200, 0.1);
     }

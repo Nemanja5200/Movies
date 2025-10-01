@@ -7,17 +7,17 @@ import { VideoType } from '@/utils/constants/VideoType.ts';
 export const useVideoPlayerModal = (id: string | undefined) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [videoLink, setVideoLink] = useState({
-        type: "" as VideoType | "",
-        source: ""
+        type: '' as VideoType | '',
+        source: '',
     });
     useScrollLock(isModalOpen);
 
-    const openModal = (type: VideoType, source:string) => {
+    const openModal = (type: VideoType, source: string) => {
         setIsModalOpen(true);
         setVideoLink({
             type: type,
             source: source,
-        })
+        });
     };
 
     const closeModal = () => {

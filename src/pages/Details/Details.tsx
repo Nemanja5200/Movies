@@ -40,7 +40,7 @@ export const Details: FC = () => {
 
     const { data, similarMovies, handleCarouselClick } = useDetails(id);
 
-    const { openModal, closeModal, isModalOpen, trailerCode , videoLink } =
+    const { openModal, closeModal, isModalOpen, trailerCode, videoLink } =
         useVideoPlayerModal(id);
     return (
         <>
@@ -61,7 +61,12 @@ export const Details: FC = () => {
                                     {trailerCode ? (
                                         <PlayButton
                                             className="play-button"
-                                            onClick={() => openModal(VIDEO_TYPES.MOVIE, data.imdbId)}
+                                            onClick={() =>
+                                                openModal(
+                                                    VIDEO_TYPES.MOVIE,
+                                                    data.imdbId
+                                                )
+                                            }
                                         />
                                     ) : null}
 
@@ -79,7 +84,12 @@ export const Details: FC = () => {
                                     {trailerCode ? (
                                         <PlayButton
                                             className="play-button"
-                                            onClick={() => openModal(VIDEO_TYPES.MOVIE, data.imdbId)}
+                                            onClick={() =>
+                                                openModal(
+                                                    VIDEO_TYPES.MOVIE,
+                                                    data.imdbId
+                                                )
+                                            }
                                         />
                                     ) : null}
                                 </>
@@ -151,9 +161,18 @@ export const Details: FC = () => {
                                         View on IMDb →
                                     </ActionButton>
                                 )}
-                                {trailerCode? (<ActionButton onClick={() => openModal(VIDEO_TYPES.TRAILER, trailerCode)}>
-                                    Official trailer
-                                </ActionButton>): null}
+                                {trailerCode ? (
+                                    <ActionButton
+                                        onClick={() =>
+                                            openModal(
+                                                VIDEO_TYPES.TRAILER,
+                                                trailerCode
+                                            )
+                                        }
+                                    >
+                                        Official trailer
+                                    </ActionButton>
+                                ) : null}
                             </ButtonsContainer>
                         </MovieInfo>
                     </MainInfoSection>
