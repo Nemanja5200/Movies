@@ -12,7 +12,6 @@ export const FilterBtn: FC<FilterBtnPropsType> = ({
     className,
     isActive,
 }) => {
-    console.log(isActive);
     return (
         <FillterContainerStyle className={className}>
             <FilterButtonWithIcon onClick={onClick} $isActive={isActive}>
