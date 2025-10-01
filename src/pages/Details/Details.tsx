@@ -33,13 +33,14 @@ import { IMBD_BASE_URL } from '@/utils/constants/Links.ts';
 import { Carousel } from '@/components/Carousel';
 import { VideoPlayerModal } from '@/components/VideoPlayerModal';
 import { useVideoPlayerModal } from '@/hooks/useVideoPlayerModal.tsx';
+import { VIDEO_TYPES } from '@/utils/constants/VideoType.ts';
 
 export const Details: FC = () => {
     const { id } = useParams<{ id: string }>();
 
     const { data, similarMovies, handleCarouselClick } = useDetails(id);
 
-    const { openModal, closeModal, isModalOpen, trailerCode } =
+    const { openModal, closeModal, isModalOpen, trailerCode , videoLink } =
         useVideoPlayerModal(id);
     return (
         <>
@@ -60,14 +61,15 @@ export const Details: FC = () => {
                                     {trailerCode ? (
                                         <PlayButton
                                             className="play-button"
-                                            onClick={() => openModal()}
+                                            onClick={() => openModal(VIDEO_TYPES.MOVIE, data.imdbId)}
                                         />
                                     ) : null}
 
                                     {isModalOpen && trailerCode ? (
                                         <VideoPlayerModal
                                             onClose={closeModal}
-                                            movieId={trailerCode}
+                                            movieId={videoLink.source}
+                                            videoType={videoLink.type}
                                         />
                                     ) : null}
                                 </>
@@ -77,7 +79,7 @@ export const Details: FC = () => {
                                     {trailerCode ? (
                                         <PlayButton
                                             className="play-button"
-                                            onClick={() => openModal()}
+                                            onClick={() => openModal(VIDEO_TYPES.MOVIE, data.imdbId)}
                                         />
                                     ) : null}
                                 </>
@@ -149,6 +151,9 @@ export const Details: FC = () => {
                                         View on IMDb →
                                     </ActionButton>
                                 )}
+                                {trailerCode? (<ActionButton onClick={() => openModal(VIDEO_TYPES.TRAILER, trailerCode)}>
+                                    Official trailer
+                                </ActionButton>): null}
                             </ButtonsContainer>
                         </MovieInfo>
                     </MainInfoSection>

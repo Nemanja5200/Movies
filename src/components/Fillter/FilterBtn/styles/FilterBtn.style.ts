@@ -15,14 +15,14 @@ export const FillterContainerStyle = styled.div`
     }
 `;
 
-export const FilterButtonWithIcon = styled.button`
+export const FilterButtonWithIcon = styled.button<{$isActive?:boolean}>`
     display: flex;
     align-items: center;
     gap: 8px;
     min-width: 140px;
     height: 45px;
     padding: 0 20px;
-    border: 2px solid #e0e0e0;
+    border: 2px solid ${props => props.$isActive? 'gold' : ' #e0e0e0'};
     color: #333;
     font-size: 15px;
     font-weight: 500;

@@ -7,7 +7,7 @@ import {
 } from '@/components/SearchBar/styles/SearchBar.style.tsx';
 import { SearchBarPropsType } from '@/types/ComponentProps.ts';
 
-export const SearchBar: FC<SearchBarPropsType> = ({ value, onChange }) => {
+export const SearchBar: FC<SearchBarPropsType> = ({ value, onChange , isActive }) => {
     return (
         <SearchBarContainerStyle>
             <SearchWrapper>
@@ -17,6 +17,7 @@ export const SearchBar: FC<SearchBarPropsType> = ({ value, onChange }) => {
                     placeholder="Search movies..."
                     value={value}
                     onChange={onChange}
+                    disabled={isActive}
                 />
             </SearchWrapper>
         </SearchBarContainerStyle>

@@ -34,6 +34,12 @@ export const SearchInput = styled.input`
         border-color: gold;
         box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
     }
+
+    &:disabled {
+        background-color: #f5f5f5;
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
 `;
 
 export const SearchButton = styled.button`
@@ -43,7 +49,6 @@ export const SearchButton = styled.button`
     border: none;
     background: #11a9c8;
     color: white;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -17,6 +17,7 @@ export interface PaginationPropsType {
 export interface SearchBarPropsType {
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    isActive: boolean;
 }
 
 export interface TablePropsType {
@@ -26,6 +27,7 @@ export interface TablePropsType {
 
 export interface VideoPlayerModalPropsType {
     movieId: string | undefined;
+    videoType?: string;
     onClose: () => void;
 }
 
@@ -42,4 +44,10 @@ export interface MoviePieChartPropsType {
 
 export interface MovieBarChartPropsType {
     barChartData?: ChartData[];
+}
+
+export interface FilterBtnPropsType {
+    onClick?: () => void;
+    className?: string;
+    isActive: boolean;
 }

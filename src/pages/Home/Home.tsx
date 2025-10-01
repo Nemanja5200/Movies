@@ -68,8 +68,8 @@ export const Home: FC = () => {
         <HomeContainerStyle>
             <TableContainerStyle>
                 <FilterSearchContainer>
-                    <SearchBar value={searchTerm} onChange={handleChange} />
-                    <FilterBtn onClick={openModal} />
+                    <SearchBar value={searchTerm} onChange={handleChange} isActive={isActive()} />
+                    <FilterBtn onClick={openModal} isActive={isActive()} />
                     <FilterModal
                         isModal={isModalOpen}
                         onClose={closeModal}

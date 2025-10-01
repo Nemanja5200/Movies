@@ -5,15 +5,16 @@ import {
     SvgContainer,
 } from '@/components/Fillter/FilterBtn/styles/FilterBtn.style.ts';
 import FilterIcon from '@/assets/icons/FilterIcon.svg?react';
-interface FilterBtnProps {
-    onClick?: () => void;
-    className?: string;
-}
+import { FilterBtnPropsType } from '@/types/ComponentProps.ts';
 
-export const FilterBtn: FC<FilterBtnProps> = ({ onClick, className }) => {
+
+export const FilterBtn: FC<FilterBtnPropsType> = ({ onClick, className  , isActive}) => {
+    console.log(isActive);
     return (
         <FillterContainerStyle className={className}>
-            <FilterButtonWithIcon onClick={onClick}>
+            <FilterButtonWithIcon onClick={onClick}
+                                  $isActive={isActive}
+            >
                 <SvgContainer>
                     <FilterIcon />
                 </SvgContainer>
