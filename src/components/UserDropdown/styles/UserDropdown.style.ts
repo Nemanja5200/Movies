@@ -43,6 +43,7 @@ export const DropdownMenu = styled.div<{ $isOpen: boolean }>`
     right: 0;
     background: #1a1a1a;
     border: 2px solid #11a9c8;
+    z-index: 3;
     border-radius: 3px;
     display: ${props => (props.$isOpen ? 'block' : 'none')};
     min-width: 100px;
@@ -57,6 +58,7 @@ export const LogoutItem = styled.button`
     cursor: pointer;
     font-size: 0.9rem;
     font-weight: 600;
+
 
     &:hover {
         background: rgba(17, 169, 200, 0.1);
